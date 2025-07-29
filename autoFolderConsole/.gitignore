@@ -1,0 +1,41 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code settings
+.vscode/
+
+# Dotnet CLI
+.project.lock.json
+project.lock.json
+artifacts/
+
+# Visual Studio for Mac
+.vscode/
+.idea/
+*.userprefs
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Backup files
+*.bak
+*.tmp
+
+# Rider IDE
+.idea/
+*.sln.iml
+
+# Publish folder (optional)
+publish/
