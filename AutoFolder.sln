@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFolder.ConsoleApp", "AutoFolder.ConsoleApp\AutoFolder.ConsoleApp.csproj", "{162747B4-91BF-4F49-915A-10B5495B720F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFolder.Core", "AutoFolder.Core\AutoFolder.Core.csproj", "{823D913B-E06D-49F3-8EDA-E5FAAA08EFD2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{162747B4-91BF-4F49-915A-10B5495B720F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162747B4-91BF-4F49-915A-10B5495B720F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162747B4-91BF-4F49-915A-10B5495B720F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162747B4-91BF-4F49-915A-10B5495B720F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{823D913B-E06D-49F3-8EDA-E5FAAA08EFD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{823D913B-E06D-49F3-8EDA-E5FAAA08EFD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{823D913B-E06D-49F3-8EDA-E5FAAA08EFD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{823D913B-E06D-49F3-8EDA-E5FAAA08EFD2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
