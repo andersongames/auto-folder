@@ -39,3 +39,8 @@ desktop.ini
 
 # Publish folder (optional)
 publish/
+
+#Test results
+test/test-files/*
+!test/test-files/*.pdf
+!test/test-files/*.txt
