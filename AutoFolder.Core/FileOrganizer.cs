@@ -32,6 +32,9 @@ public class FileOrganizer
     // Group files by name prefix
     Dictionary<string, List<string>> groupedFiles = GroupFilesByPrefix(filteredFiles);
 
+    // Count the total number of files successfully processed
+    int processedCount = 0;
+
     // For each group, create a folder and copy the files into it
     foreach (var group in groupedFiles)
     {
@@ -40,6 +43,10 @@ public class FileOrganizer
 
       // Ensure the group folder exists
       Directory.CreateDirectory(targetFolder);
+
+      // Keep track of the preocessed files per group
+      int totalFiles = group.Value.Count();
+      int groupProcessedCount = 0;
 
       foreach (var filePath in group.Value)
       {
@@ -55,6 +62,10 @@ public class FileOrganizer
           {
             File.Delete(filePath);
           }
+
+          // Increment the counters only if the file was successfully handled
+          groupProcessedCount++;
+          processedCount++;
         }
         catch (Exception ex)
         {
@@ -62,10 +73,15 @@ public class FileOrganizer
           Console.WriteLine($"⚠️ Failed to process file: {Path.GetFileName(filePath)}");
           Console.WriteLine($"   → Reason: {ex.Message}");
         }
+
+        // Show progress line after each file
+        Console.WriteLine($"   [{groupProcessedCount}/{totalFiles}] {Path.GetFileName(filePath)} processed");
       }
 
       Console.WriteLine($"📁 Group '{groupName}' organized with {group.Value.Count} file(s).");
     }
+    Console.WriteLine();
+    Console.WriteLine($"💯 Total of '{processedCount}' file(s) organized.");
   }
 
   /// <summary>

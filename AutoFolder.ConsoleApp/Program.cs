@@ -1,9 +1,13 @@
-﻿using AutoFolder.Core;
+﻿using System.Text;
+using AutoFolder.Core;
 
 class Program
 {
   static void Main()
   {
+    // Set console output encoding to UTF-8 for emoji support
+    Console.OutputEncoding = Encoding.UTF8;
+
     Console.WriteLine("==== Auto Folder Console ====");
     Console.WriteLine();
 
