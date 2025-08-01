@@ -22,13 +22,17 @@ class Program
     Console.WriteLine("Delete original files after copy? (y/n): ");
     bool deleteOriginals = Console.ReadLine()?.Trim().ToLower() == "y";
 
+    // Ask for normalize folder names
+    Console.Write("Normalize group folder names? (remove spaces/symbols, use lowercase) (y/n): ");
+    bool normalizeGroupNames = Console.ReadLine()?.Trim().ToLower() == "y";
+
     Console.WriteLine();
     Console.WriteLine("Starting file organization...");
 
     try
     {
       var organizer = new FileOrganizer();
-      organizer.Organize(sourceDirectory, extension, deleteOriginals);
+      organizer.Organize(sourceDirectory, extension, deleteOriginals, normalizeGroupNames);
 
       Console.WriteLine();
       Console.WriteLine("✅ File organization completed successfully!");

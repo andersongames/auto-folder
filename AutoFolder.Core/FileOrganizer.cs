@@ -18,7 +18,8 @@ public class FileOrganizer
   /// <param name="sourceDirectory">Directory to scan for files</param>
   /// <param name="extensionFilter">Optional file extension to filter (e.g. ".mp4")</param>
   /// <param name="deleteOriginals">If true, original files will be deleted after copying</param>
-  public void Organize(string sourceDirectory, string? extensionFilter, bool deleteOriginals)
+  /// <param name="normalizeGroupNames">If true, group names will be normaized (remove spaces/symbols, use lowercase)</param>
+  public void Organize(string sourceDirectory, string? extensionFilter, bool deleteOriginals, bool normalizeGroupNames)
   {
     // Get all files in the directory (not recursive)
     string[] allFiles = Directory.GetFiles(sourceDirectory);
@@ -39,6 +40,14 @@ public class FileOrganizer
     foreach (var group in groupedFiles)
     {
       string groupName = group.Key;
+
+      // Optionally normalize group name
+      if (normalizeGroupNames)
+      {
+        groupName = normalizeGroupName(groupName);
+      }
+
+      // Generate the target folder path
       string targetFolder = Path.Combine(sourceDirectory, groupName);
 
       // Ensure the group folder exists
@@ -112,5 +121,24 @@ public class FileOrganizer
     }
 
     return groups;
+  }
+
+  /// <summary>
+  /// Normalizes a folder name by trimming, removing special characters,
+  /// replacing spaces with dashes, and converting to lowercase.
+  /// </summary>
+  private string normalizeGroupName(string name)
+  {
+    // Trim leading/trailing spaces
+    string result = name.Trim();
+
+    // Replace spaces and underscores with dashes
+    result = result.Replace(" ", "-").Replace("_", "-");
+
+    // Remove unwanted symbols (keep letters, numbers, dashes)
+    result = Regex.Replace(result, @"[^a-zA-Z0-9\-]", "");
+
+    // Convert to lowercase
+    return result.ToLower();
   }
 }
