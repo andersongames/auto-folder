@@ -45,13 +45,22 @@ public class FileOrganizer
       {
         string destinationPath = Path.Combine(targetFolder, Path.GetFileName(filePath));
 
-        // Copy the file to the new folder (overwrite if needed)
-        File.Copy(filePath, destinationPath, overwrite: true);
-
-        // Delete the original file if the user requested
-        if (deleteOriginals)
+        try
         {
-          File.Delete(filePath);
+          // Attempt to copy the file to the target folder (overwrite if needed)
+          File.Copy(filePath, destinationPath, overwrite: true);
+
+          // Optionally delete the original file after a successful copy
+          if (deleteOriginals)
+          {
+            File.Delete(filePath);
+          }
+        }
+        catch (Exception ex)
+        {
+          // If something fails, report it and continue with the next file
+          Console.WriteLine($"⚠️ Failed to process file: {Path.GetFileName(filePath)}");
+          Console.WriteLine($"   → Reason: {ex.Message}");
         }
       }
 
