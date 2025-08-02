@@ -51,6 +51,8 @@ public class FileOrganizer
       // Generate the target folder path
       string targetFolder = Path.Combine(sourceDirectory, groupName);
 
+      Logger.Log($"Starting group '{groupName}' with {group.Value.Count} file(s).");
+
       if (!dryRun)
       {
         // Ensure the group folder exists (if not dry-run mode)
@@ -70,12 +72,12 @@ public class FileOrganizer
           if (dryRun)
           {
             // Simulate copy
-            Console.WriteLine($"[DRY-RUN] Would copy: {filePath} → {destinationPath}");
+            Logger.Log($"[DRY-RUN] Would copy: {filePath} → {destinationPath}", true);
 
             if (deleteOriginals)
             {
               // Simulate deletion
-              Console.WriteLine($"[DRY-RUN] Would delete: {filePath}");
+              Logger.Log($"[DRY-RUN] Would delete: {filePath}", true);
             }
 
             groupProcessedCount++;
@@ -85,11 +87,13 @@ public class FileOrganizer
 
           // Attempt to copy the file to the target folder (overwrite if needed)
           File.Copy(filePath, destinationPath, overwrite: true);
+          Logger.Log($"Copied: {filePath} → {destinationPath}");
 
           // Optionally delete the original file after a successful copy
           if (deleteOriginals)
           {
             File.Delete(filePath);
+            Logger.Log($"Deleted: {filePath}");
           }
 
           // Increment the counters only if the file was successfully handled
@@ -101,6 +105,7 @@ public class FileOrganizer
           // If something fails, report it and continue with the next file
           Console.WriteLine($"⚠️ Failed to process file: {Path.GetFileName(filePath)}");
           Console.WriteLine($"   → Reason: {ex.Message}");
+          Logger.Log($"ERROR: Failed to process {filePath} → {ex.Message}");
         }
 
         // Show progress line after each file
@@ -111,6 +116,9 @@ public class FileOrganizer
     }
     Console.WriteLine();
     Console.WriteLine($"💯 Total of '{processedCount}' file(s) organized.");
+    Logger.Log(dryRun
+      ? "Dry-run finished. No files were modified."
+      : "File organization completed.");
   }
 
   /// <summary>
