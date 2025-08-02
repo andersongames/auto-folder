@@ -26,16 +26,52 @@ class Program
     Console.Write("Normalize group folder names? (remove spaces/symbols, use lowercase) (y/n): ");
     bool normalizeGroupNames = Console.ReadLine()?.Trim().ToLower() == "y";
 
+    // Ask for dry-run mode
+    Console.Write("Simulate actions only (dry-run mode)? (y/n): ");
+    bool dryRun = Console.ReadLine()?.Trim().ToLower() == "y";
+
     Console.WriteLine();
-    Console.WriteLine("Starting file organization...");
+     Console.WriteLine(dryRun ? "Starting dry-run simulation..." : "Starting file organization...");
 
     try
     {
       var organizer = new FileOrganizer();
-      organizer.Organize(sourceDirectory, extension, deleteOriginals, normalizeGroupNames);
+
+      // First execution (could be dry-run or real)
+      organizer.Organize(sourceDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun);
 
       Console.WriteLine();
-      Console.WriteLine("✅ File organization completed successfully!");
+
+      // If it was a dry-run, ask if user wants to run the operation for real
+      if (dryRun)
+      {
+        // Inform the user that no actual file operations were performed (if dry-run mode)
+        Console.WriteLine("🔍 Dry-run complete. No files were copied or deleted.");
+        Console.WriteLine();
+
+        // Ask the user if he wants to perform the operations for real
+        Console.Write("Execute now for real using the same options? (y/n): ");
+        bool confirmRealRun = Console.ReadLine()?.Trim().ToLower() == "y";
+
+        if (confirmRealRun)
+        {
+          Console.WriteLine();
+          Console.WriteLine("Executing for real...");
+          organizer.Organize(sourceDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun = false);
+          Console.WriteLine();
+          Console.WriteLine("✅ File organization completed successfully!");
+        }
+        else
+        {
+          Console.WriteLine();
+          Console.WriteLine("🚫 Operation cancelled by user.");
+        }
+      }
+      else
+      {
+        Console.WriteLine();
+        Console.WriteLine("✅ File organization completed successfully!");
+      }
     }
     catch (Exception ex)
     {

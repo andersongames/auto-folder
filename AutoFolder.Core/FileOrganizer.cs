@@ -19,7 +19,8 @@ public class FileOrganizer
   /// <param name="extensionFilter">Optional file extension to filter (e.g. ".mp4")</param>
   /// <param name="deleteOriginals">If true, original files will be deleted after copying</param>
   /// <param name="normalizeGroupNames">If true, group names will be normaized (remove spaces/symbols, use lowercase)</param>
-  public void Organize(string sourceDirectory, string? extensionFilter, bool deleteOriginals, bool normalizeGroupNames)
+  /// <param name="dryRun">If true, it will show the actions that will be performed, but no files will actually be copied or deleted.</param>
+  public void Organize(string sourceDirectory, string? extensionFilter, bool deleteOriginals, bool normalizeGroupNames, bool dryRun)
   {
     // Get all files in the directory (not recursive)
     string[] allFiles = Directory.GetFiles(sourceDirectory);
@@ -50,8 +51,11 @@ public class FileOrganizer
       // Generate the target folder path
       string targetFolder = Path.Combine(sourceDirectory, groupName);
 
-      // Ensure the group folder exists
-      Directory.CreateDirectory(targetFolder);
+      if (!dryRun)
+      {
+        // Ensure the group folder exists (if not dry-run mode)
+        Directory.CreateDirectory(targetFolder);
+      }
 
       // Keep track of the preocessed files per group
       int totalFiles = group.Value.Count();
@@ -63,6 +67,22 @@ public class FileOrganizer
 
         try
         {
+          if (dryRun)
+          {
+            // Simulate copy
+            Console.WriteLine($"[DRY-RUN] Would copy: {filePath} → {destinationPath}");
+
+            if (deleteOriginals)
+            {
+              // Simulate deletion
+              Console.WriteLine($"[DRY-RUN] Would delete: {filePath}");
+            }
+
+            groupProcessedCount++;
+            processedCount++;
+            continue;
+          }
+
           // Attempt to copy the file to the target folder (overwrite if needed)
           File.Copy(filePath, destinationPath, overwrite: true);
 
