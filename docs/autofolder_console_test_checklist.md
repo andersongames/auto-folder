@@ -2,12 +2,12 @@
 ### 📁 1. Agrupamento de arquivos (GroupFilesByPrefix)
 Testa se arquivos com nomes semelhantes são agrupados corretamente.
 
-- [ ] Agrupar arquivos com prefixo comum:  
+- [x] Agrupar arquivos com prefixo comum:  
 `video-ep01.mp4`, `video-ep02.mp4` → grupo `video`
-- [ ] Arquivos com nomes distintos vão para grupos separados:  
+- [x] Arquivos com nomes distintos vão para grupos separados:  
 `intro.mp4`, `trailer.mp4` → grupos `intro` e `trailer`
-- [ ] Arquivos sem padrão numérico caem em grupos individuais (ou com nome completo)
-- [ ] Ignora extensão ao agrupar (usa apenas o nome do arquivo)
+- [x] Arquivos sem padrão numérico caem em grupos individuais (ou com nome completo)
+- [x] Ignora extensão ao agrupar (usa apenas o nome do arquivo)
 
 ### 📝 2. Normalização de nomes (NormalizeGroupName)
 Testa se o nome da pasta é limpo conforme esperado.
