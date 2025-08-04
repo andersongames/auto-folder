@@ -9,10 +9,11 @@ namespace AutoFolder.Tests;
 /// </summary>
 public class FileOrganizerTests
 {
+    // Region: GroupFilesByPrefix
+
     /// <summary>
     /// Test case: files with a common prefix should be grouped under the same key.
     /// </summary>
-    // Region: GroupFilesByPrefix
     [Fact]
     public void GroupFilesByPrefix_ShouldGroupFilesWithSamePrefix()
     {
@@ -100,10 +101,27 @@ public class FileOrganizerTests
     }
 
     // Region: NormalizeGroupName
-    [Theory]
-    public void ShouldNormalizeProperly()
-    {
 
+    /// <summary>
+    /// Test case: check that NormalizeGroupName handles various formatting scenarios.
+    /// </summary>
+    [Theory]
+    [InlineData("  My Folder  ", "my-folder")]
+    [InlineData("folder_name", "folder-name")]
+    [InlineData("Proj@ct!", "projct")]
+    [InlineData("Project", "project")]
+    [InlineData(" Série_01 (Completa)", "srie-01-completa")]
+    [InlineData("EXTRA__  Spaces__", "extra-spaces")]
+    public void NormalizeGroupName_ShouldFormatProperly(string input, string expected)
+    {
+        // Arrange
+        var organizer = new FileOrganizer();
+
+        // Act
+        string result = organizer.NormalizeGroupName(input);
+
+        // Assert
+        Assert.Equal(expected, result);
     }
 
     // Region: Extension Filtering

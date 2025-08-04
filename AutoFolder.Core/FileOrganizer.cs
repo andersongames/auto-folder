@@ -45,7 +45,7 @@ public class FileOrganizer
       // Optionally normalize group name
       if (normalizeGroupNames)
       {
-        groupName = normalizeGroupName(groupName);
+        groupName = NormalizeGroupName(groupName);
       }
 
       // Generate the target folder path
@@ -155,7 +155,7 @@ public class FileOrganizer
   /// Normalizes a folder name by trimming, removing special characters,
   /// replacing spaces with dashes, and converting to lowercase.
   /// </summary>
-  internal string normalizeGroupName(string name)
+  internal string NormalizeGroupName(string name)
   {
     // Trim leading/trailing spaces
     string result = name.Trim();
@@ -163,8 +163,14 @@ public class FileOrganizer
     // Replace spaces and underscores with dashes
     result = result.Replace(" ", "-").Replace("_", "-");
 
+    // After replacing symbols and spaces with '-':
+    result = Regex.Replace(result, "-{2,}", "-");
+
     // Remove unwanted symbols (keep letters, numbers, dashes)
     result = Regex.Replace(result, @"[^a-zA-Z0-9\-]", "");
+
+    // Remove trailing dash (if any)
+    result = Regex.Replace(result, @"-+$", "");
 
     // Convert to lowercase
     return result.ToLower();
