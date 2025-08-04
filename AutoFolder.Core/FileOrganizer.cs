@@ -127,7 +127,7 @@ public class FileOrganizer
   /// </summary>
   /// <param name="filePaths">Array of file paths to group</param>
   /// <returns>Dictionary with group name as key and list of files as value</returns>
-  private Dictionary<string, List<string>> GroupFilesByPrefix(string[] filePaths)
+  internal Dictionary<string, List<string>> GroupFilesByPrefix(string[] filePaths)
   {
     var groups = new Dictionary<string, List<string>>();
 
@@ -155,7 +155,7 @@ public class FileOrganizer
   /// Normalizes a folder name by trimming, removing special characters,
   /// replacing spaces with dashes, and converting to lowercase.
   /// </summary>
-  private string normalizeGroupName(string name)
+  internal string normalizeGroupName(string name)
   {
     // Trim leading/trailing spaces
     string result = name.Trim();
