@@ -163,16 +163,32 @@ public class FileOrganizer
     // Replace spaces and underscores with dashes
     result = result.Replace(" ", "-").Replace("_", "-");
 
-    // After replacing symbols and spaces with '-':
+    // Collapse multiple dashes into one
     result = Regex.Replace(result, "-{2,}", "-");
 
-    // Remove unwanted symbols (keep letters, numbers, dashes)
-    result = Regex.Replace(result, @"[^a-zA-Z0-9\-]", "");
+    // Define which symbols are allowed at the end of the group name
+    string allowedFinalSymbols = "!?+]";
 
-    // Remove trailing dash (if any)
-    result = Regex.Replace(result, @"-+$", "");
+    // Separate last character to preserve allowed symbols
+    string lastChar = result.Length > 0 ? result[^1].ToString() : "";
+    string core = result;
 
-    // Convert to lowercase
-    return result.ToLower();
+    if (!string.IsNullOrEmpty(lastChar) && allowedFinalSymbols.Contains(lastChar))
+    {
+        core = result.Substring(0, result.Length - 1);
+    }
+    else
+    {
+        lastChar = "";
+    }
+
+    // Remove unwanted characters from the core (only keep a-z, A-Z, 0-9 and dash)
+    core = Regex.Replace(core, @"[^a-zA-Z0-9\-]", "");
+
+    // Remove trailing dash if any
+    core = Regex.Replace(core, @"-+$", "");
+
+    // Combine core with final allowed character
+    return (core + lastChar).ToLower();
   }
 }
