@@ -16,11 +16,12 @@ public class FileOrganizer
   /// based on common name prefixes.
   /// </summary>
   /// <param name="sourceDirectory">Directory to scan for files</param>
+  /// <param name="destinationDirectory">Directory to move the organized files</param>
   /// <param name="extensionFilter">Optional file extension to filter (e.g. ".mp4")</param>
   /// <param name="deleteOriginals">If true, original files will be deleted after copying</param>
   /// <param name="normalizeGroupNames">If true, group names will be normaized (remove spaces/symbols, use lowercase)</param>
   /// <param name="dryRun">If true, it will show the actions that will be performed, but no files will actually be copied or deleted.</param>
-  public void Organize(string sourceDirectory, string? extensionFilter, bool deleteOriginals, bool normalizeGroupNames, bool dryRun)
+  public void Organize(string sourceDirectory, string? destinationDirectory, string? extensionFilter, bool deleteOriginals, bool normalizeGroupNames, bool dryRun)
   {
     // Get all files in the directory (not recursive)
     string[] allFiles = Directory.GetFiles(sourceDirectory);
@@ -49,7 +50,7 @@ public class FileOrganizer
       }
 
       // Generate the target folder path
-      string targetFolder = Path.Combine(sourceDirectory, groupName);
+      string targetFolder = Path.Combine(destinationDirectory ?? sourceDirectory, groupName);
 
       Logger.Log($"Starting group '{groupName}' with {group.Value.Count} file(s).");
 

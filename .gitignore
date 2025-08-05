@@ -41,6 +41,7 @@ desktop.ini
 publish/
 
 #Test results
+test/output/
 test/test-files/*
 !test/test-files/*.pdf
 !test/test-files/*.txt

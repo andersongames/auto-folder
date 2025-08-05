@@ -14,6 +14,9 @@ class Program
     // Request the source directory path from the user
     string sourceDirectory = AskForSourceDirectory();
 
+    // Request the destination directory path from the user
+    string? destinationDirectory = AskForDestinationDirectory();
+
     // Ask for an optional extension filter (e.g., .mp4 or .pdf)
     Console.WriteLine("Enter the file extension to filter (or leave blank for all files): ");
     string? extension = Console.ReadLine()?.Trim().ToLower();
@@ -31,14 +34,14 @@ class Program
     bool dryRun = Console.ReadLine()?.Trim().ToLower() == "y";
 
     Console.WriteLine();
-     Console.WriteLine(dryRun ? "Starting dry-run simulation..." : "Starting file organization...");
+    Console.WriteLine(dryRun ? "Starting dry-run simulation..." : "Starting file organization...");
 
     try
     {
       var organizer = new FileOrganizer();
 
       // First execution (could be dry-run or real)
-      organizer.Organize(sourceDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun);
+      organizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun);
 
       Console.WriteLine();
 
@@ -57,7 +60,7 @@ class Program
         {
           Console.WriteLine();
           Console.WriteLine("Executing for real...");
-          organizer.Organize(sourceDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun = false);
+          organizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun = false);
           Console.WriteLine();
           Console.WriteLine("✅ File organization completed successfully!");
         }
@@ -96,6 +99,37 @@ class Program
       {
         Console.WriteLine("⚠️  Directory path cannot be empty.");
         continue;
+      }
+
+      string path = input.Trim().Trim('"');
+
+      // Check if the provided directory actually exists
+      if (Directory.Exists(path))
+      {
+        return path;
+      }
+      else
+      {
+        Console.WriteLine("❌ Directory not found. Please try again.");
+      }
+    }
+  }
+  
+  /// <summary>
+  /// Asks the user to input a directory path and validates its existence.
+  /// Keeps prompting until a valid directory is entered.
+  /// </summary>
+  /// <returns>Absolute path to the valid destination directory</returns>
+  static string? AskForDestinationDirectory()
+  {
+    while (true)
+    {
+      Console.Write("Enter the path to the destination directory (or leave blank to use the source directory): ");
+      string? input = Console.ReadLine();
+
+      if (string.IsNullOrWhiteSpace(input))
+      {
+        return null;
       }
 
       string path = input.Trim().Trim('"');
