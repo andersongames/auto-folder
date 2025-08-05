@@ -20,15 +20,14 @@ Testa se o nome da pasta é limpo conforme esperado.
 `Proj@ct! V1` → `projct-v1`
 - [ ] Converte tudo para minúsculas  
 `MyProject` → `myproject`
-
 - [ ] Casos combinados (espaço, símbolo, maiúscula, underline)  
 ` Série_01 (Completa)` → `srie-01-completa`
 
 ### 📄 3. Filtro por extensão (Organize)
 Testa se apenas arquivos com a extensão desejada são processados.
 
-- [ ] Se extensão for .pdf, arquivos .docx e .mp4 são ignorados
-- [ ] Se nenhuma extensão for passada, todos os arquivos são considerados
+- [x] Se extensão for .pdf, arquivos .docx e .mp4 são ignorados
+- [x] Se nenhuma extensão for passada, todos os arquivos são considerados
 
 ### 🚫 4. Modo dry-run (Organize)
 Garante que no modo simulação:
@@ -43,3 +42,9 @@ Garante que erros em um arquivo:
 
 - [ ] Não interrompem o processamento dos demais
 - [ ] São registrados corretamente no log ou saída
+
+### 🗑️ 6.  Exclusão de arquivos originais
+Testa se os arquivos originais são excluídos apos o processamento:
+
+- [ ] Se selecionada a opção excluír arquivos originais, eles devem ser excluídos apos o processamento
+- [ ] Se nao selecionada a opção os arquivos devem ser mantidos

@@ -129,12 +129,132 @@ public class FileOrganizerTests
         Assert.Equal(expected, result);
     }
 
-    // // Region: Extension Filtering
-    // [Fact]
-    // public void ShouldFilterByExtension()
-    // {
+    // Region: Extension Filtering
 
-    // }
+    /// <summary>
+    /// Test case: only files matching the given extension should be processed.
+    /// </summary>
+    [Fact]
+    public void Organize_ShouldOnlyProcessFilesWithGivenExtension()
+    {
+        // Arrange
+        string tempSourceDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        // Note: tempDestDir is unused for now; kept for future use when Organize supports destination dir
+        string tempDestDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        Directory.CreateDirectory(tempSourceDir);
+        Directory.CreateDirectory(tempDestDir);
+
+        try
+        {
+            // Create test files with different extensions
+            string[] testFiles =
+            {
+                "file1.pdf",
+                "file2.pdf",
+                "file3.docx",
+                "video.mp4"
+            };
+
+            foreach (var file in testFiles)
+            {
+                File.WriteAllText(Path.Combine(tempSourceDir, file), "test content");
+            }
+
+            var organizer = new FileOrganizer();
+
+            // Act: filter only ".pdf"
+            organizer.Organize(tempSourceDir, ".pdf", false, false, false);
+
+            // Derive programmatically the group name
+            var groups = organizer.GroupFilesByPrefix(
+                Directory.GetFiles(tempSourceDir)
+                    .Where(f => f.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+                    .ToArray()
+            );
+            string groupName = groups.Keys.First();
+
+            // Assert: new directory for organized files exists
+            string groupFolder = Path.Combine(tempSourceDir, groupName);
+            Assert.True(Directory.Exists(groupFolder));
+
+            // Assert: only PDF files should have been copied
+            string[] copiedFiles = Directory.GetFiles(groupFolder);
+            Assert.All(copiedFiles, f => Assert.EndsWith(".pdf", f));
+            Assert.Equal(2, copiedFiles.Length);
+
+            // Assert: no directory is created for non-PDF files
+            string ignoredFile3 = Path.Combine(tempSourceDir, "file3");
+            string ignoredVideo = Path.Combine(tempSourceDir, "video");
+            Assert.False(Directory.Exists(ignoredFile3));
+            Assert.False(Directory.Exists(ignoredVideo));
+        }
+        finally
+        {
+            // Cleanup
+            if (Directory.Exists(tempSourceDir)) Directory.Delete(tempSourceDir, true);
+            if (Directory.Exists(tempDestDir)) Directory.Delete(tempDestDir, true);
+        }
+    }
+
+    /// <summary>
+    /// Test case: if no extension is provided, all files should be processed.
+    /// </summary>
+    [Fact]
+    public void Organize_ShouldProcessAllFiles_WhenNoExtensionProvided()
+    {
+        string tempSourceDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        // Note: tempDestDir is unused for now; kept for future use when Organize supports destination dir
+        string tempDestDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        Directory.CreateDirectory(tempSourceDir);
+        Directory.CreateDirectory(tempDestDir);
+
+        try
+        {
+            string[] testFiles =
+            {
+                "data1.csv",
+                "report.docx",
+                "slide.pptx",
+                "audio.mp3"
+            };
+
+            foreach (var file in testFiles)
+            {
+                File.WriteAllText(Path.Combine(tempSourceDir, file), "test content");
+            }
+
+            var organizer = new FileOrganizer();
+
+            // Act: pass null as extension (process all files)
+            organizer.Organize(tempSourceDir, null, false, false, false);
+
+            // Derive programmatically the group names
+            var groups = organizer.GroupFilesByPrefix(Directory.GetFiles(tempSourceDir));
+            int totalCopied = groups
+                .Select(g => Directory.GetFiles(Path.Combine(tempSourceDir, g.Key)).Length)
+                .Sum();
+
+            // Assert: all files should  be processed
+            Assert.Equal(testFiles.Length, totalCopied);
+
+            foreach (var group in groups)
+            {
+                string groupFolder = Path.Combine(tempSourceDir, group.Key);
+
+                // Assert: new directories for organized files exists
+                Assert.True(Directory.Exists(groupFolder));
+
+                // Assert: all files should have been copied
+                string[] copiedFiles = Directory.GetFiles(groupFolder);
+                Assert.Equal(1, copiedFiles.Length);
+            }
+        }
+        finally
+        {
+            if (Directory.Exists(tempSourceDir)) Directory.Delete(tempSourceDir, true);
+            if (Directory.Exists(tempDestDir)) Directory.Delete(tempDestDir, true);
+        }
+    }
 
     // // Region: Dry-run behavior
     // [Fact]
