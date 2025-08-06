@@ -144,7 +144,7 @@ class Program
         Console.WriteLine("⚠️ Directory not found. Do you want to create it? (y/n): ");
         if (Console.ReadLine()?.Trim().ToLower() == "y")
         {
-            Directory.CreateDirectory(path);
+            // The directory will be created in the organize method, only if not in dry-run mode
             return path;
         }
       }

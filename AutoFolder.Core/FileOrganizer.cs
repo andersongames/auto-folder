@@ -52,6 +52,12 @@ public class FileOrganizer
       // Generate the target folder path
       string targetFolder = Path.Combine(destinationDirectory ?? sourceDirectory, groupName);
 
+      // Create the target directory if it does not exist (only if not in dry-run mode)
+      if (!Directory.Exists(targetFolder) && !dryRun)
+      {
+        Directory.CreateDirectory(targetFolder);
+      }
+
       Logger.Log($"Starting group '{groupName}' with {group.Value.Count} file(s).");
 
       if (!dryRun)

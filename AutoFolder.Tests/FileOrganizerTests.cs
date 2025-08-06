@@ -163,7 +163,7 @@ public class FileOrganizerTests
             var organizer = new FileOrganizer();
 
             // Act: filter only ".pdf"
-            organizer.Organize(tempSourceDir, ".pdf", false, false, false);
+            organizer.Organize(tempSourceDir, null, ".pdf", false, false, false);
 
             // Derive programmatically the group name
             var groups = organizer.GroupFilesByPrefix(
@@ -226,15 +226,15 @@ public class FileOrganizerTests
             var organizer = new FileOrganizer();
 
             // Act: pass null as extension (process all files)
-            organizer.Organize(tempSourceDir, null, false, false, false);
+            organizer.Organize(tempSourceDir, null, null, false, false, false);
 
             // Derive programmatically the group names
             var groups = organizer.GroupFilesByPrefix(Directory.GetFiles(tempSourceDir));
+
+            // Assert: all files should  be processed
             int totalCopied = groups
                 .Select(g => Directory.GetFiles(Path.Combine(tempSourceDir, g.Key)).Length)
                 .Sum();
-
-            // Assert: all files should  be processed
             Assert.Equal(testFiles.Length, totalCopied);
 
             foreach (var group in groups)
@@ -246,7 +246,7 @@ public class FileOrganizerTests
 
                 // Assert: all files should have been copied
                 string[] copiedFiles = Directory.GetFiles(groupFolder);
-                Assert.Equal(1, copiedFiles.Length);
+                Assert.Single(copiedFiles);
             }
         }
         finally

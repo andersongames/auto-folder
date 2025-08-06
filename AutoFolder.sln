@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFolder.ConsoleApp", "Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFolder.Core", "AutoFolder.Core\AutoFolder.Core.csproj", "{823D913B-E06D-49F3-8EDA-E5FAAA08EFD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFolder.Tests", "AutoFolder.Tests\AutoFolder.Tests.csproj", "{2990FDFE-672D-4760-A6A5-21200BEDD931}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{823D913B-E06D-49F3-8EDA-E5FAAA08EFD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{823D913B-E06D-49F3-8EDA-E5FAAA08EFD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{823D913B-E06D-49F3-8EDA-E5FAAA08EFD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2990FDFE-672D-4760-A6A5-21200BEDD931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2990FDFE-672D-4760-A6A5-21200BEDD931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2990FDFE-672D-4760-A6A5-21200BEDD931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2990FDFE-672D-4760-A6A5-21200BEDD931}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
