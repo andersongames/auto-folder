@@ -18,19 +18,19 @@ class Program
     string? destinationDirectory = AskForDestinationDirectory();
 
     // Ask for an optional extension filter (e.g., .mp4 or .pdf)
-    Console.WriteLine("Enter the file extension to filter (or leave blank for all files): ");
+    Console.WriteLine("📄 Enter the file extension to filter (or leave blank for all files): ");
     string? extension = Console.ReadLine()?.Trim().ToLower();
 
     // Ask whether to delete the original files after organizing
-    Console.WriteLine("Delete original files after copy? (y/n): ");
+    Console.WriteLine("🗑️ Delete original files after copy? (y/n): ");
     bool deleteOriginals = Console.ReadLine()?.Trim().ToLower() == "y";
 
     // Ask for normalize folder names
-    Console.Write("Normalize group folder names? (remove spaces/symbols, use lowercase) (y/n): ");
+    Console.WriteLine("🔡 Normalize group folder names? (remove spaces/symbols, use lowercase) (y/n): ");
     bool normalizeGroupNames = Console.ReadLine()?.Trim().ToLower() == "y";
 
     // Ask for dry-run mode
-    Console.Write("Simulate actions only (dry-run mode)? (y/n): ");
+    Console.WriteLine("🧪 Simulate actions only (dry-run mode)? (y/n): ");
     bool dryRun = Console.ReadLine()?.Trim().ToLower() == "y";
 
     Console.WriteLine();
@@ -85,14 +85,14 @@ class Program
 
   /// <summary>
   /// Asks the user to input a directory path and validates its existence.
-  /// Keeps prompting until a valid directory is entered.
+  /// Prompts for directory creation if it does not exist, or continues prompting until a valid directory is entered.
   /// </summary>
   /// <returns>Absolute path to the valid source directory</returns>
   static string AskForSourceDirectory()
   {
     while (true)
     {
-      Console.Write("Enter the path to the source directory: ");
+      Console.WriteLine("📂 Enter the path to the source directory: ");
       string? input = Console.ReadLine();
 
       if (string.IsNullOrWhiteSpace(input))
@@ -124,7 +124,7 @@ class Program
   {
     while (true)
     {
-      Console.Write("Enter the path to the destination directory (or leave blank to use the source directory): ");
+      Console.WriteLine("🗂️ Enter the path to the destination directory (or leave blank to use the source directory): ");
       string? input = Console.ReadLine();
 
       if (string.IsNullOrWhiteSpace(input))
@@ -141,7 +141,12 @@ class Program
       }
       else
       {
-        Console.WriteLine("❌ Directory not found. Please try again.");
+        Console.WriteLine("⚠️ Directory not found. Do you want to create it? (y/n): ");
+        if (Console.ReadLine()?.Trim().ToLower() == "y")
+        {
+            Directory.CreateDirectory(path);
+            return path;
+        }
       }
     }
   }
