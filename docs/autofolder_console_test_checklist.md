@@ -11,9 +11,8 @@ Testa se arquivos com nomes semelhantes são agrupados corretamente.
 
 ### 🧪  2. Destination Directory
 
-- [ ] Files are organized into provided destination directory (if given)
+- [x] Files are organized into provided destination directory (if given)
 - [x] Fallback to source directory if no destination is given
-- [ ] Prevent deletion of original files if source == destination
 - [x] Create destination directory if it does not exist (optional logic)
 
 ### 📝 3. Normalização de nomes (NormalizeGroupName)
@@ -55,5 +54,5 @@ Garante que erros em um arquivo:
 ### 🗑️ 7.  Exclusão de arquivos originais
 Testa se os arquivos originais são excluídos apos o processamento:
 
-- [ ] Se selecionada a opção excluír arquivos originais, eles devem ser excluídos apos o processamento
-- [ ] Se nao selecionada a opção os arquivos devem ser mantidos
+- [x] Se selecionada a opção excluír arquivos originais, eles devem ser excluídos apos o processamento
+- [x] Se nao selecionada a opção os arquivos devem ser mantidos
