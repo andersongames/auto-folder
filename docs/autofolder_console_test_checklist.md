@@ -9,13 +9,7 @@ Testa se arquivos com nomes semelhantes são agrupados corretamente.
 - [x] Arquivos sem padrão numérico caem em grupos individuais (ou com nome completo)
 - [x] Ignora extensão ao agrupar (usa apenas o nome do arquivo)
 
-### 🧪  2. Destination Directory
-
-- [x] Files are organized into provided destination directory (if given)
-- [x] Fallback to source directory if no destination is given
-- [x] Create destination directory if it does not exist (optional logic)
-
-### 📝 3. Normalização de nomes (NormalizeGroupName)
+### 📝 2. Normalização de nomes (NormalizeGroupName)
 Testa se o nome da pasta é limpo conforme esperado.
 
 - [x] Remove espaços extras  
@@ -30,6 +24,12 @@ Testa se o nome da pasta é limpo conforme esperado.
 `MyProject` → `myproject`
 - [x] Casos combinados (espaço, símbolo, maiúscula, underline)  
 ` Série_01 (Completa)` → `srie-01-completa`
+
+### 🧪  3. Destination Directory
+
+- [x] Files are organized into provided destination directory (if given)
+- [x] Fallback to source directory if no destination is given
+- [x] Create destination directory if it does not exist (optional logic)
 
 ### 📄 4. Filtro por extensão (Organize)
 Testa se apenas arquivos com a extensão desejada são processados.
