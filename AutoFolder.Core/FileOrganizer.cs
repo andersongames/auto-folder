@@ -129,33 +129,79 @@ public class FileOrganizer
   }
 
   /// <summary>
-  /// Groups files by extracting a common prefix from the filename using regex.
-  /// Example: "project-report-v1.pdf" → group: "project-report"
+  /// Groups files by finding the longest common prefix in their file names (excluding extension).
+  /// All files sharing this prefix will be placed in the same group.
+  /// Example:
+  ///   "report_final_2024 (Q1).docx"
+  ///   "report_final_2024 (Q2).docx"
+  /// → group: "report_final_2024 (Q"
   /// </summary>
   /// <param name="filePaths">Array of file paths to group</param>
-  /// <returns>Dictionary with group name as key and list of files as value</returns>
+  /// <returns>Dictionary with the group name (longest common prefix) as key and list of files as value</returns>
   internal Dictionary<string, List<string>> GroupFilesByPrefix(string[] filePaths)
   {
-    var groups = new Dictionary<string, List<string>>();
+      var groups = new Dictionary<string, List<string>>();
 
-    // This regex captures the prefix before a version/episode/number pattern
-    var regex = new Regex(@"^(.*?)([-_ ]?(ep|part|v|vol|season)?[-_ ]?\d+)?$", RegexOptions.IgnoreCase);
+      foreach (var path in filePaths)
+      {
+          string fileName = Path.GetFileNameWithoutExtension(path);
 
-    foreach (var path in filePaths)
-    {
-      string fileName = Path.GetFileNameWithoutExtension(path);
-      var match = regex.Match(fileName);
+          bool added = false;
 
-      // Use the captured prefix group if matched, or the whole name as fallback
-      string groupKey = match.Success ? match.Groups[1].Value.Trim('-', '_', ' ') : fileName;
+          // Try to find an existing group that shares a common prefix with the current file
+          foreach (var existingGroup in groups.Keys.ToList())
+          {
+              // Get the longest common prefix between the current group key and the file name
+              string commonPrefix = GetCommonPrefix(existingGroup, fileName);
 
-      if (!groups.ContainsKey(groupKey))
-        groups[groupKey] = new List<string>();
+              // Require a minimum number of characters in common to consider it the same group
+              if (commonPrefix.Length >= 3)
+              {
+                  // We need to rename the group key if the new common prefix is shorter than the existing one
+                  // This ensures the group name always represents the actual shared prefix of all files inside it
+                  if (commonPrefix != existingGroup)
+                  {
+                      // Get the existing file list and reassign it under the new prefix
+                      var filesInGroup = groups[existingGroup];
+                      groups.Remove(existingGroup);
+                      groups[commonPrefix] = filesInGroup;
+                  }
 
-      groups[groupKey].Add(path);
-    }
+                  // Add the current file to the updated group
+                  groups[commonPrefix].Add(path);
+                  added = true;
+                  break;
+              }
+          }
 
-    return groups;
+          // If no matching group was found, create a new group with the filename as the starting "prefix"
+          if (!added)
+          {
+              groups[fileName] = new List<string> { path };
+          }
+      }
+
+      return groups;
+  }
+
+  /// <summary>
+  /// Finds the longest common prefix between two strings.
+  /// The prefix is trimmed to remove trailing separators or punctuation
+  /// so that folder names are cleaner.
+  /// </summary>
+  private string GetCommonPrefix(string a, string b)
+  {
+      int minLength = Math.Min(a.Length, b.Length);
+      int i = 0;
+
+      // Iterate character by character until they differ
+      while (i < minLength && a[i] == b[i])
+      {
+          i++;
+      }
+
+      // Trim any trailing separators or punctuation from the prefix
+      return a.Substring(0, i).Trim('-', '_', ' ', '.', '(', ')');
   }
 
   /// <summary>
@@ -182,11 +228,11 @@ public class FileOrganizer
 
     if (!string.IsNullOrEmpty(lastChar) && allowedFinalSymbols.Contains(lastChar))
     {
-        core = result.Substring(0, result.Length - 1);
+      core = result.Substring(0, result.Length - 1);
     }
     else
     {
-        lastChar = "";
+      lastChar = "";
     }
 
     // Remove unwanted characters from the core (only keep a-z, A-Z, 0-9 and dash)
