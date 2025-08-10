@@ -1,4 +1,6 @@
 ## ✅ Lista de Cenários de Teste para FileOrganizer
+### 1. GetCommonPrefix ???
+
 ### 📁 1. Agrupamento de arquivos (GroupFilesByPrefix)
 Testa se arquivos com nomes semelhantes são agrupados corretamente.
 
