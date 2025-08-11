@@ -29,10 +29,10 @@ public class FileOrganizerUnitTests
         // Act: perform the grouping logic
         var result = organizer.GroupFilesByPrefix(filePaths);
 
-        // Assert: all files should be grouped under "video"
+        // Assert: all files should be grouped under "video-ep0"
         Assert.Single(result); // Only one group
-        Assert.True(result.ContainsKey("video"));
-        Assert.Equal(3, result["video"].Count);
+        Assert.True(result.ContainsKey("video-ep0"));
+        Assert.Equal(3, result["video-ep0"].Count);
     }
 
     /// <summary>
