@@ -219,29 +219,15 @@ public class FileOrganizer
     // Collapse multiple dashes into one
     result = Regex.Replace(result, "-{2,}", "-");
 
-    // Define which symbols are allowed at the end of the group name
-    string allowedFinalSymbols = "!?+]";
-
-    // Separate last character to preserve allowed symbols
-    string lastChar = result.Length > 0 ? result[^1].ToString() : "";
-    string core = result;
-
-    if (!string.IsNullOrEmpty(lastChar) && allowedFinalSymbols.Contains(lastChar))
-    {
-      core = result.Substring(0, result.Length - 1);
-    }
-    else
-    {
-      lastChar = "";
-    }
-
     // Remove unwanted characters from the core (only keep a-z, A-Z, 0-9 and dash)
-    core = Regex.Replace(core, @"[^a-zA-Z0-9\-]", "");
+    result = Regex.Replace(result, @"[^a-zA-Z0-9\-]", "");
 
     // Remove trailing dash if any
-    core = Regex.Replace(core, @"-+$", "");
+    result = Regex.Replace(result, @"-+$", "");
 
-    // Combine core with final allowed character
-    return (core + lastChar).ToLower();
+    // Turn all chars to lower case
+    result = result.ToLower();
+
+    return result;
   }
 }
