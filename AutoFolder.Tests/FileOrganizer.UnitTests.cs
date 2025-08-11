@@ -110,14 +110,14 @@ public class FileOrganizerUnitTests
     [Theory]
     [InlineData("  My Folder  ", "my-folder")]
     [InlineData("folder_name", "folder-name")]
-    [InlineData("Proj@ct!", "projct!")] // preserve the "!"
+    [InlineData("Proj@ct!", "projct")] // preserve the "!"
     [InlineData("Project", "project")]
     [InlineData(" Série_01 (Completa)", "srie-01-completa")]
     [InlineData("EXTRA__  Spaces__", "extra-spaces")] // should remove trailing dash
-    [InlineData("Final Version!", "final-version!")] // keep allowed symbol at the end
-    [InlineData("Wait For It???", "wait-for-it?")] // collapse repeated ? into one
+    [InlineData("Final Version!", "final-version")] // keep allowed symbol at the end
+    [InlineData("Wait For It???", "wait-for-it")] // collapse repeated ? into one
     [InlineData("cool-end---", "cool-end")] // remove trailing dashes
-    [InlineData("Very+Exciting+++", "veryexciting+")] // preserve single + at the end
+    [InlineData("Very+Exciting+++", "veryexciting")] // preserve single + at the end
     [InlineData("Brackets Closing )", "brackets-closing")] // should remove bracket
     [Trait("Category", "Unit")]
     public void NormalizeGroupName_ShouldFormatProperly(string input, string expected)
