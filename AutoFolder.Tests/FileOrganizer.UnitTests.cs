@@ -7,6 +7,38 @@ namespace AutoFolder.Tests;
 /// </summary>
 public class FileOrganizerUnitTests
 {
+    // Region: 🔤 GetCommonPrefix
+
+    /// <summary>
+    /// Test case: compare o nome dos arquivos e encontre o prefixo comum mais longo.
+    /// </summary>
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void GetCommonPrefix_GetLongestCommomPrefix()
+    {
+        // Arrange: simulate a set of filenames
+        var filePaths = new[]
+        {
+            "report_final_2024 (Q1).docx",
+            "report_final_2024 (Q2).docx",
+            "aaa.txt",
+            "aab.txt",
+        };
+
+        var organizer = new FileOrganizer();
+
+        // Act: perform the grouping logic
+        var result = organizer.GroupFilesByPrefix(filePaths);
+
+        // Assert: 3 groups
+        Assert.Equal(3, result.Count);
+
+        // Assert: expected groups
+        Assert.True(result.ContainsKey("report_final_2024 (Q"));
+        Assert.True(result.ContainsKey("aaa"));
+        Assert.True(result.ContainsKey("aab"));
+    }
+
     // Region: 📁 GroupFilesByPrefix
 
     /// <summary>
