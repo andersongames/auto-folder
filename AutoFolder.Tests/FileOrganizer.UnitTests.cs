@@ -10,7 +10,7 @@ public class FileOrganizerUnitTests
     // Region: 🔤 GetCommonPrefix
 
     /// <summary>
-    /// Test case: compare o nome dos arquivos e encontre o prefixo comum mais longo.
+    /// Test case: compare file names and find the longest common prefix.
     /// </summary>
     [Fact]
     [Trait("Category", "Unit")]
