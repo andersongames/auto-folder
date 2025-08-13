@@ -58,7 +58,7 @@ Testa se o nome da pasta é limpo conforme esperado.
 - [ ] Substitui espaços e underscores por traços  
 - [ ] Remove símbolos indesejados  
 - [ ] Converte tudo para minúsculas  
-` report_final_2024 (Q1).docx` → `srie-01-completa`
+` report_final_2024 (Q1).docx`, `report_final_2024 (Q2).docx` → `report-final-2024q`
 
 ### 🧪 4. Destination Directory
 
