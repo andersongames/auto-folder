@@ -36,39 +36,34 @@ Testa se o nome da pasta é limpo conforme esperado.
 ### 1. 🔤 Encontrar o maior prefixo comum entre duas strings (GetCommonPrefix)
 Compara duas strings e encontra o prefixo comum mais longo.
 
-- [ ] Compara as strings e retorna o prefixo comum:  
+- [x] Compara as strings e retorna o prefixo comum:  
 `report_final_2024 (Q1).docx`, `report_final_2024 (Q1).docx` → prefixo `report_final_2024 (Q`
-- [ ] É necessário um mínimo de 3 caracteres em comum para ser considerado o mesmo grupo:
+- [x] É necessário um mínimo de 3 caracteres em comum para ser considerado o mesmo grupo:
 `aaa.txt`, `aab.txt` → prefixos `aaa` e `aab`
 
 ### 📁 2. Agrupamento de arquivos (GroupFilesByPrefix)
 Testa se arquivos com nomes semelhantes são agrupados corretamente.
 
-- [ ] Agrupar arquivos com prefixo comum:  
-`video-ep01.mp4`, `video-ep02.mp4` → grupo `video`
-- [ ] Arquivos com nomes distintos vão para grupos separados:  
-`intro.mp4`, `trailer.mp4` → grupos `intro` e `trailer`
-- [ ] Arquivos sem padrão numérico caem em grupos individuais (ou com nome completo)
-- [ ] Ignora extensão ao agrupar (usa apenas o nome do arquivo)
+- [x] Agrupar arquivos com prefixo comum:  
+`report_final_2024 (Q1).docx`, `report_final_2024 (Q2).docx` → grupo `report_final_2024 (Q`
+- [x] Arquivos com nomes distintos vão para grupos separados:  
+`data1.csv`, `slide.mp4` → grupos `data1` e `slide`
+- [x] Ignora extensão ao agrupar (usa apenas o nome do arquivo)
+`data1.csv`, `data2.pdf` → grupo `data`
 
 ### 📝 3. Normalização de nomes (NormalizeGroupName)
 Testa se o nome da pasta é limpo conforme esperado.
 
 - [ ] Remove espaços extras  
-` My Folder ` → `my-folder`
 - [ ] Substitui espaços e underscores por traços  
-`my_folder test` → `my-folder-test`
 - [ ] Remove símbolos indesejados  
-`Proj@ct! V1` → `projct-v1`
 - [ ] Converte tudo para minúsculas  
-`MyProject` → `myproject`
-- [ ] Casos combinados (espaço, símbolo, maiúscula, underline)  
-` Série_01 (Completa)` → `srie-01-completa`
+` report_final_2024 (Q1).docx` → `srie-01-completa`
 
 ### 🧪 4. Destination Directory
 
 - [ ] Files are organized into provided destination directory (if given)
-- [ ] Fallback to source directory if no destination is given
+- [x] Fallback to source directory if no destination is given
 - [ ] Create destination directory if it does not exist (optional logic)
 
 ### 📄 5. Filtro por extensão (Organize)
@@ -95,4 +90,4 @@ Garante que erros em um arquivo:
 Testa se os arquivos originais são excluídos apos o processamento:
 
 - [ ] Se selecionada a opção excluír arquivos originais, eles devem ser excluídos apos o processamento
-- [ ] Se nao selecionada a opção os arquivos devem ser mantidos
+- [x] Se nao selecionada a opção os arquivos devem ser mantidos

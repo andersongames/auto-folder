@@ -30,6 +30,7 @@ public class FileOrganizerIntegrationTests
             string[] testFiles =
             {
                 "data1.csv",
+                "data2.pdf",
                 "slide.pptx",
                 "audio.mp3",
                 "report_final_2024 (Q1).docx",
@@ -40,14 +41,15 @@ public class FileOrganizerIntegrationTests
 
             var expectedGroups = new Dictionary<string, List<string>>()
             {
-                {"data1", new List<string>()},
+                {"data", new List<string>()},
                 {"slide", new List<string>()},
                 {"audio", new List<string>()},
                 {"report_final_2024 (Q", new List<string>()},
                 {"aaa", new List<string>()},
                 {"aab", new List<string>()},
             };
-            expectedGroups["data1"].Add("data1.csv");
+            expectedGroups["data"].Add("data1.csv");
+            expectedGroups["data"].Add("data2.pdf");
             expectedGroups["slide"].Add("slide.pptx");
             expectedGroups["audio"].Add("audio.mp3");
             expectedGroups["report_final_2024 (Q"].Add("report_final_2024 (Q1).docx");
@@ -72,25 +74,7 @@ public class FileOrganizerIntegrationTests
                 dryRun: false
             );
 
-            // Derive programmatically the group names
-            // var groups = organizer.GroupFilesByPrefix(Directory.GetFiles(tempSourceDir));
-
-            // Assert: all files should  be processed
-            // int totalCopied = groups
-            //     .Select(g => Directory.GetFiles(Path.Combine(tempSourceDir, g.Key)).Length)
-            //     .Sum();
-            // Assert.Equal(testFiles.Length, totalCopied);
-
             string[] result = Directory.GetFileSystemEntries(tempDestDir);
-
-            // Debug
-            // string[] groupNames = groups.Keys.ToArray();
-            // Assert.False(false, $"Fail on purpose {groupNames[0]} {groupNames[1]} {groupNames[2]} {groupNames[3]} {groupNames[4]}");
-            // Assert.False(false, $"Fail on purpose {result[0]} {result[1]} {resul;t[2]} {result[3]} {result[4]} {result[5]} {result[6]} {result[7]} {result[8]} {result[9]} {result[10]} {result[11]} {result[12]}");
-            // Assert.False(false, $"Fail on purpose {groups.Count} {testFiles.Length} {result.Length}");
-
-            // Assert: all files should be processed, expect groups + orininal files
-            Assert.Equal(expectedGroups.Count + testFiles.Length, result.Length);
 
             foreach (var group in expectedGroups)
             {
@@ -101,9 +85,20 @@ public class FileOrganizerIntegrationTests
 
                 // Assert: all files should have been copied
                 string[] copiedFiles = Directory.GetFiles(groupFolder);
-                List<string> expectedFiles = group.Value;
-                Assert.Equal(expectedFiles.Count, copiedFiles.Length);
+                string[] copiedFileNames = copiedFiles.Select(f => Path.GetFileName(f)).ToArray();
+                string[] expectedFiles = group.Value.ToArray();
+                Assert.Equal(expectedFiles, copiedFileNames);
             }
+
+            foreach (var file in testFiles)
+            {
+                // Assert: the original files are not deleted
+                string originalFilePath = Path.Combine(tempSourceDir, file);
+                Assert.True(File.Exists(originalFilePath));
+            }
+
+            // Assert: all files should be processed, expect groups + orininal files
+            Assert.Equal(expectedGroups.Count + testFiles.Length, result.Length);
         }
         finally
         {
