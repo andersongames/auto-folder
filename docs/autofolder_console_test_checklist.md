@@ -54,23 +54,23 @@ Testa se arquivos com nomes semelhantes são agrupados corretamente.
 ### 📝 3. Normalização de nomes (NormalizeGroupName)
 Testa se o nome da pasta é limpo conforme esperado.
 
-- [ ] Remove espaços extras  
-- [ ] Substitui espaços e underscores por traços  
-- [ ] Remove símbolos indesejados  
-- [ ] Converte tudo para minúsculas  
+- [x] Remove espaços extras  
+- [x] Substitui espaços e underscores por traços  
+- [x] Remove símbolos indesejados  
+- [x] Converte tudo para minúsculas  
 ` report_final_2024 (Q1).docx`, `report_final_2024 (Q2).docx` → `report-final-2024q`
 
 ### 🧪 4. Destination Directory
 
-- [ ] Files are organized into provided destination directory (if given)
+- [x] Files are organized into provided destination directory (if given)
 - [x] Fallback to source directory if no destination is given
-- [ ] Create destination directory if it does not exist (optional logic)
+- [x] Create destination directory if it does not exist (optional logic)
 
 ### 📄 5. Filtro por extensão (Organize)
 Testa se apenas arquivos com a extensão desejada são processados.
 
-- [ ] Se extensão for .pdf, arquivos .docx e .mp4 são ignorados
-- [ ] Se nenhuma extensão for passada, todos os arquivos são considerados
+- [x] Se extensão for .docx, arquivos .pdf e .mp4 e outros são ignorados
+- [x] Se nenhuma extensão for passada, todos os arquivos são considerados
 
 ### 🚫 6. Modo dry-run (Organize)
 Garante que no modo simulação:
@@ -89,5 +89,5 @@ Garante que erros em um arquivo:
 ### 🗑️ 8.  Exclusão de arquivos originais
 Testa se os arquivos originais são excluídos apos o processamento:
 
-- [ ] Se selecionada a opção excluír arquivos originais, eles devem ser excluídos apos o processamento
+- [x] Se selecionada a opção excluír arquivos originais, eles devem ser excluídos apos o processamento
 - [x] Se nao selecionada a opção os arquivos devem ser mantidos
