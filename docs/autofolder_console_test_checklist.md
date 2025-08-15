@@ -75,10 +75,7 @@ Testa se apenas arquivos com a extensão desejada são processados.
 ### 🚫 6. Modo dry-run (Organize)
 Garante que no modo simulação:
 
-- [ ] Nenhum arquivo é copiado ou deletado
-- [ ] Ações simuladas são reportadas corretamente
-
-Esses testes geralmente requerem uso de arquivos reais ou mocks com File.Copy, File.Delete — podemos simular com arquivos temporários.
+- [x] Nenhum arquivo é copiado ou deletado
 
 ### 💥7. Tratamento de erros por arquivo (Organize)
 Garante que erros em um arquivo:

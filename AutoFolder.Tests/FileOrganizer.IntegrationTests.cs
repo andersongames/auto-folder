@@ -21,9 +21,7 @@ public class FileOrganizerIntegrationTests
     public void Organize_AllNullAndFalse()
     {
         string tempSourceDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-        string tempDestDir = tempSourceDir;
         Directory.CreateDirectory(tempSourceDir);
-        Directory.CreateDirectory(tempDestDir);
 
         try
         {
@@ -76,7 +74,7 @@ public class FileOrganizerIntegrationTests
 
             foreach (var group in expectedGroups)
             {
-                string groupFolder = Path.Combine(tempDestDir, group.Key);
+                string groupFolder = Path.Combine(tempSourceDir, group.Key);
 
                 // Assert: expected group
                 Assert.True(Directory.Exists(groupFolder));
@@ -96,13 +94,12 @@ public class FileOrganizerIntegrationTests
             }
 
             // Assert: all files should be processed, expect groups + orininal files
-            string[] result = Directory.GetFileSystemEntries(tempDestDir);
+            string[] result = Directory.GetFileSystemEntries(tempSourceDir);
             Assert.Equal(expectedGroups.Count + testFiles.Length, result.Length);
         }
         finally
         {
             if (Directory.Exists(tempSourceDir)) Directory.Delete(tempSourceDir, true);
-            if (Directory.Exists(tempDestDir)) Directory.Delete(tempDestDir, true);
         }
     }
 
@@ -198,6 +195,73 @@ public class FileOrganizerIntegrationTests
         {
             if (Directory.Exists(tempSourceDir)) Directory.Delete(tempSourceDir, true);
             if (Directory.Exists(tempDestDir)) Directory.Delete(tempDestDir, true);
+        }
+    }
+
+    /// <summary>
+    /// Test case:
+    /// destinationDirectory: null -> if no destination directory is provided, the source  directory must be used.
+    /// extensionFilter: null -> if no extension is provided, all files should be processed.
+    /// deleteOriginals: true -> if true, the original file must be kept because it is dry-run mode.
+    /// normalizeGroupNames: false -> if false, source directory names should not be normalized.
+    /// dryRun: false -> if true, no files are copied or deleted.
+    /// </summary>
+    [Fact]
+    [Trait("Category", "Integration")]
+    public void Organize_DryRun()
+    {
+        string tempSourceDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        Directory.CreateDirectory(tempSourceDir);
+
+        try
+        {
+            string[] testFiles =
+            {
+                "data1.csv",
+                "data2.pdf",
+                "slide.pptx",
+                "audio.mp3",
+                "report_final_2024 (Q1).docx",
+                "report_final_2024 (Q2).docx",
+                "aaa.txt",
+                "aab.txt",
+            };
+
+            foreach (var file in testFiles)
+            {
+                File.WriteAllText(Path.Combine(tempSourceDir, file), "test content");
+            }
+
+            var organizer = new FileOrganizer();
+
+            // Act
+            organizer.Organize(
+                sourceDirectory: tempSourceDir,
+                destinationDirectory: null,
+                extensionFilter: null,
+                deleteOriginals: true,
+                normalizeGroupNames: false,
+                dryRun: true
+            );
+
+            foreach (var file in testFiles)
+            {
+                // Assert: the original files are not deleted
+                string originalFilePath = Path.Combine(tempSourceDir, file);
+                Assert.True(File.Exists(originalFilePath));
+            }
+
+            string[] result = Directory.GetFileSystemEntries(tempSourceDir);
+
+            // Assert: directories are not created
+            Assert.All(result, e => Assert.False(Directory.Exists(e)));
+
+            // Assert: no files should be processed
+            Assert.Equal(testFiles.Length, result.Length);
+        }
+        finally
+        {
+            if (Directory.Exists(tempSourceDir)) Directory.Delete(tempSourceDir, true);
         }
     }
 }
