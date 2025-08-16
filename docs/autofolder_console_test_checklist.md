@@ -80,8 +80,7 @@ Garante que no modo simulação:
 ### 💥7. Tratamento de erros por arquivo (Organize)
 Garante que erros em um arquivo:
 
-- [ ] Não interrompem o processamento dos demais
-- [ ] São registrados corretamente no log ou saída
+- [x] Não interrompem o processamento dos demais
 
 ### 🗑️ 8.  Exclusão de arquivos originais
 Testa se os arquivos originais são excluídos apos o processamento:

@@ -264,4 +264,58 @@ public class FileOrganizerIntegrationTests
             if (Directory.Exists(tempSourceDir)) Directory.Delete(tempSourceDir, true);
         }
     }
+
+    /// <summary>
+    /// Test case:
+    /// - One file is locked (causing a copy failure).
+    /// - Organizer must skip this file gracefully and still process others.
+    /// </summary>
+    [Fact]
+    [Trait("Category", "Integration")]
+    public void Organize_ShouldContinue_WhenFileCopyFails()
+    {
+        string tempSourceDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        Directory.CreateDirectory(tempSourceDir);
+
+        try
+        {
+            // Arrange: create files
+            string lockedFile = Path.Combine(tempSourceDir, "locked.txt");
+            string freeFile = Path.Combine(tempSourceDir, "free.txt");
+
+            File.WriteAllText(lockedFile, "locked content");
+            File.WriteAllText(freeFile, "free content");
+
+            // Lock the "locked.txt" file by opening a FileStream with no sharing
+            using var fs = new FileStream(lockedFile, FileMode.Open, FileAccess.Read, FileShare.None);
+
+            var organizer = new FileOrganizer();
+
+            // Act: Run organizer (it should hit an exception on locked.txt)
+            organizer.Organize(
+                sourceDirectory: tempSourceDir,
+                destinationDirectory: null,
+                extensionFilter: ".txt",
+                deleteOriginals: false,
+                normalizeGroupNames: false,
+                dryRun: false
+            );
+
+            // Assert: the free file should have been copied
+            string groupDir = Path.Combine(tempSourceDir, "free");
+            string copiedFreeFile = Path.Combine(groupDir, "free.txt");
+            Assert.True(File.Exists(copiedFreeFile));
+
+            // Assert: the locked file should not appear in its group
+            string lockedGroupDir = Path.Combine(tempSourceDir, "locked");
+            Assert.False(File.Exists(Path.Combine(lockedGroupDir, "locked.txt")));
+
+            // Assert: original locked file still exists
+            Assert.True(File.Exists(lockedFile));
+        }
+        finally
+        {
+            if (Directory.Exists(tempSourceDir)) Directory.Delete(tempSourceDir, true);
+        }
+    }
 }
