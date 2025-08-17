@@ -1,16 +1,17 @@
-### ✅ Checklist de Desenvolvimento - AutoFolder Console
+### ✅ Development Checklist - AutoFolder Console
 
-- [ ] Pedir diretório de origem com `Console.ReadLine()`
-- [ ] Verificar se o diretório existe com `Directory.Exists()`
-- [ ] Pedir extensão opcional para filtro (ex: `.mp4`, `.pdf`, ou vazio para todos)
-- [ ] Listar arquivos com `Directory.GetFiles()`
-- [ ] Filtrar arquivos pela extensão (se fornecida)
-- [ ] Agrupar arquivos por prefixo usando `Regex`
-- [ ] Criar pastas para cada grupo com `Directory.CreateDirectory()`
-- [ ] Copiar arquivos com `File.Copy()`
-- [ ] Perguntar se deseja apagar os arquivos originais
-- [ ] Apagar arquivos originais com `File.Delete()`
-- [ ] Mostrar mensagens de status para cada grupo copiado
-- [ ] Tratar erros de I/O com `try/catch`
-- [ ] Testar com diferentes tipos de arquivos e nomes
-- [ ] Opcional: permitir selecionar diretório com `FolderBrowserDialog` (em modo gráfico)
+- [x] Ask for source directory with `Console.ReadLine()`
+- [x] Check if directory exists with `Directory.Exists()`
+- [x] Ask for optional extension for filtering (e.g., `.mp4`, `.pdf`, or empty for all)
+- [x] List files with `Directory.GetFiles()`
+- [x] Filter files by extension (if provided)
+- [x] Group files by the longest common prefix in their names
+- [x] Create folders for each group with `Directory.CreateDirectory()`
+- [x] Copy files with `File.Copy()`
+- [x] Ask if original files should be deleted
+- [x] Delete original files with `File.Delete()`
+- [x] Show status messages for each copied group
+- [x] Handle I/O errors with `try/catch`
+- [x] Test with different file types and names
+- [x] Allow running in dry-run mode (simulation, no files are copied or deleted)
+- [x] Allow selecting a destination directory

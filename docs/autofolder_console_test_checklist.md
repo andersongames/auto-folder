@@ -1,63 +1,63 @@
-# ✅ Lista de Cenários de Teste para FileOrganizer
-## Testes Unitários:
-### 1. 🔤 Encontrar o maior prefixo comum entre duas strings (GetCommonPrefix)
-Compara duas strings e encontra o prefixo comum mais longo.
+# ✅ Test Scenario Checklist for FileOrganizer
+## Unit Tests:
+### 1. 🔤 Find the longest common prefix between two strings (GetCommonPrefix)
+Compares two strings and finds the longest common prefix.
 
-- [x] Compara as strings e retorna o prefixo comum:  
-`report_final_2024 (Q1).docx`, `report_final_2024 (Q1).docx` → prefixo `report_final_2024 (Q`
-- [x] É necessário um mínimo de 3 caracteres em comum para ser considerado o mesmo grupo:
-`aaa.txt`, `aab.txt` → prefixos `aaa` e `aab`
+- [x] Compares the strings and returns the common prefix:
+`report_final_2024 (Q1).docx`, `report_final_2024 (Q1).docx` → prefix `report_final_2024 (Q`
+- [x] A minimum of 3 common characters is required to be considered the same group:
+`aaa.txt`, `aab.txt` → prefixes `aaa` and `aab`
 
-### 📁 2. Agrupamento de arquivos (GroupFilesByPrefix)
-Testa se arquivos com nomes semelhantes são agrupados corretamente.
+### 📁 2. File grouping (GroupFilesByPrefix)
+Tests if files with similar names are grouped correctly.
 
-- [x] Agrupar arquivos com prefixo comum:  
-`video-ep01.mp4`, `video-ep02.mp4` → grupo `video`
-- [x] Arquivos com nomes distintos vão para grupos separados:  
-`intro.mp4`, `trailer.mp4` → grupos `intro` e `trailer`
-- [x] Arquivos sem padrão numérico caem em grupos individuais (ou com nome completo)
-- [x] Ignora extensão ao agrupar (usa apenas o nome do arquivo)
+- [x] Group files with a common prefix:
+`video-ep01.mp4`, `video-ep02.mp4` → group `video`
+- [x] Files with distinct names go into separate groups:
+`intro.mp4`, `trailer.mp4` → groups `intro` and `trailer`
+- [x] Files without a numerical pattern fall into individual groups (or with full name)
+- [x] Ignores extension when grouping (uses only the filename)
 
-### 📝 3. Normalização de nomes (NormalizeGroupName)
-Testa se o nome da pasta é limpo conforme esperado.
+### 📝 3. Name normalization (NormalizeGroupName)
+Tests if the folder name is cleaned as expected.
 
-- [x] Remove espaços extras  
+- [x] Removes extra spaces
 ` My Folder ` → `my-folder`
-- [x] Substitui espaços e underscores por traços  
+- [x] Replaces spaces and underscores with hyphens
 `my_folder test` → `my-folder-test`
-- [x] Remove símbolos indesejados  
+- [x] Removes unwanted symbols
 `Proj@ct! V1` → `projct-v1`
-- [x] Converte tudo para minúsculas  
+- [x] Converts everything to lowercase
 `MyProject` → `myproject`
-- [x] Casos combinados (espaço, símbolo, maiúscula, underline)  
+- [x] Combined cases (space, symbol, uppercase, underline)
 ` Série_01 (Completa)` → `srie-01-completa`
 
-## Testes de Integração:
-### 1. 🔤 Encontrar o maior prefixo comum entre duas strings (GetCommonPrefix)
-Compara duas strings e encontra o prefixo comum mais longo.
+## Integration Tests:
+### 1. 🔤 Find the longest common prefix between two strings (GetCommonPrefix)
+Compares two strings and finds the longest common prefix.
 
-- [x] Compara as strings e retorna o prefixo comum:  
-`report_final_2024 (Q1).docx`, `report_final_2024 (Q1).docx` → prefixo `report_final_2024 (Q`
-- [x] É necessário um mínimo de 3 caracteres em comum para ser considerado o mesmo grupo:
-`aaa.txt`, `aab.txt` → prefixos `aaa` e `aab`
+- [x] Compares the strings and returns the common prefix:
+`report_final_2024 (Q1).docx`, `report_final_2024 (Q1).docx` → prefix `report_final_2024 (Q`
+- [x] A minimum of 3 common characters is required to be considered the same group:
+`aaa.txt`, `aab.txt` → prefixes `aaa` and `aab`
 
-### 📁 2. Agrupamento de arquivos (GroupFilesByPrefix)
-Testa se arquivos com nomes semelhantes são agrupados corretamente.
+### 📁 2. File grouping (GroupFilesByPrefix)
+Tests if files with similar names are grouped correctly.
 
-- [x] Agrupar arquivos com prefixo comum:  
-`report_final_2024 (Q1).docx`, `report_final_2024 (Q2).docx` → grupo `report_final_2024 (Q`
-- [x] Arquivos com nomes distintos vão para grupos separados:  
-`data1.csv`, `slide.mp4` → grupos `data1` e `slide`
-- [x] Ignora extensão ao agrupar (usa apenas o nome do arquivo)
-`data1.csv`, `data2.pdf` → grupo `data`
+- [x] Group files with a common prefix:
+`report_final_2024 (Q1).docx`, `report_final_2024 (Q2).docx` → group `report_final_2024 (Q`
+- [x] Files with distinct names go into separate groups:
+`data1.csv`, `slide.mp4` → groups `data1` and `slide`
+- [x] Ignores extension when grouping (uses only the filename)
+`data1.csv`, `data2.pdf` → group `data`
 
-### 📝 3. Normalização de nomes (NormalizeGroupName)
-Testa se o nome da pasta é limpo conforme esperado.
+### 📝 3. Name normalization (NormalizeGroupName)
+Tests if the folder name is cleaned as expected.
 
-- [x] Remove espaços extras  
-- [x] Substitui espaços e underscores por traços  
-- [x] Remove símbolos indesejados  
-- [x] Converte tudo para minúsculas  
+- [x] Removes extra spaces
+- [x] Replaces spaces and underscores with hyphens
+- [x] Removes unwanted symbols
+- [x] Converts everything to lowercase
 ` report_final_2024 (Q1).docx`, `report_final_2024 (Q2).docx` → `report-final-2024q`
 
 ### 🧪 4. Destination Directory
@@ -66,24 +66,24 @@ Testa se o nome da pasta é limpo conforme esperado.
 - [x] Fallback to source directory if no destination is given
 - [x] Create destination directory if it does not exist (optional logic)
 
-### 📄 5. Filtro por extensão (Organize)
-Testa se apenas arquivos com a extensão desejada são processados.
+### 📄 5. Filter by extension (Organize)
+Tests if only files with the desired extension are processed.
 
-- [x] Se extensão for .docx, arquivos .pdf e .mp4 e outros são ignorados
-- [x] Se nenhuma extensão for passada, todos os arquivos são considerados
+- [x] If extension is .docx, .pdf and .mp4 files and others are ignored
+- [x] If no extension is passed, all files are considered
 
-### 🚫 6. Modo dry-run (Organize)
-Garante que no modo simulação:
+### 🚫 6. Dry-run mode (Organize)
+Ensures that in simulation mode:
 
-- [x] Nenhum arquivo é copiado ou deletado
+- [x] No files are copied or deleted
 
-### 💥7. Tratamento de erros por arquivo (Organize)
-Garante que erros em um arquivo:
+### 💥7. Error handling per file (Organize)
+Ensures that errors in a file:
 
-- [x] Não interrompem o processamento dos demais
+- [x] Do not interrupt the processing of others
 
-### 🗑️ 8.  Exclusão de arquivos originais
-Testa se os arquivos originais são excluídos apos o processamento:
+### 🗑️ 8. Deletion of original files
+Tests if the original files are deleted after processing:
 
-- [x] Se selecionada a opção excluír arquivos originais, eles devem ser excluídos apos o processamento
-- [x] Se nao selecionada a opção os arquivos devem ser mantidos
+- [x] If the option to delete original files is selected, they must be deleted after processing
+- [x] If the option is not selected, the files must be kept
