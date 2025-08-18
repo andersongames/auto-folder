@@ -9,13 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFolder.Core", "AutoFold
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFolder.Tests", "AutoFolder.Tests\AutoFolder.Tests.csproj", "{2990FDFE-672D-4760-A6A5-21200BEDD931}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFolder.UI", "AutoFolder.UI\AutoFolder.UI.csproj", "{329CE9E2-9684-4406-8469-41D20269AF52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{162747B4-91BF-4F49-915A-10B5495B720F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +29,12 @@ Global
 		{2990FDFE-672D-4760-A6A5-21200BEDD931}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2990FDFE-672D-4760-A6A5-21200BEDD931}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2990FDFE-672D-4760-A6A5-21200BEDD931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{329CE9E2-9684-4406-8469-41D20269AF52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{329CE9E2-9684-4406-8469-41D20269AF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{329CE9E2-9684-4406-8469-41D20269AF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{329CE9E2-9684-4406-8469-41D20269AF52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

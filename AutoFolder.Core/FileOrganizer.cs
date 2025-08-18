@@ -6,22 +6,45 @@ using System.Text.RegularExpressions;
 namespace AutoFolder.Core;
 
 /// <summary>
+/// Lightweight progress payload reported by FileOrganizer during long operations.
+/// </summary>
+public readonly record struct ProgressInfo(
+    int Processed,     // number of files processed so far
+    int Total,         // total files planned to process
+    string CurrentFile, // file currently being copied/deleted/simulated
+    string Stage       // e.g., "copy", "delete", "dry-run", "scan"
+);
+
+/// <summary>
 /// Handles the logic for grouping and organizing files into folders
 /// based on shared naming patterns.
 /// </summary>
 public class FileOrganizer
 {
-  /// <summary>
-  /// Organizes files in the specified directory by grouping them into folders
-  /// based on common name prefixes.
-  /// </summary>
-  /// <param name="sourceDirectory">Directory to scan for files</param>
-  /// <param name="destinationDirectory">Directory to move the organized files</param>
-  /// <param name="extensionFilter">Optional file extension to filter (e.g. ".mp4")</param>
-  /// <param name="deleteOriginals">If true, original files will be deleted after copying</param>
-  /// <param name="normalizeGroupNames">If true, group names will be normaized (remove spaces/symbols, use lowercase)</param>
-  /// <param name="dryRun">If true, it will show the actions that will be performed, but no files will actually be copied or deleted.</param>
-  public void Organize(string sourceDirectory, string? destinationDirectory, string? extensionFilter, bool deleteOriginals, bool normalizeGroupNames, bool dryRun)
+    /// <summary>
+    /// Organizes files in the specified directory by grouping them into folders
+    /// based on common name prefixes.
+    /// </summary>
+    /// <param name="sourceDirectory">Directory to scan for files</param>
+    /// <param name="destinationDirectory">Directory to move the organized files</param>
+    /// <param name="extensionFilter">Optional file extension to filter (e.g. ".mp4")</param>
+    /// <param name="deleteOriginals">If true, original files will be deleted after copying</param>
+    /// <param name="normalizeGroupNames">If true, group names will be normaized (remove spaces/symbols, use lowercase)</param>
+    /// <param name="dryRun">If true, it will show the actions that will be performed, but no files will actually be copied or deleted.</param>
+    /// <param name="progress">OPTIONAL: UI progress bar hook.</param>
+    /// <param name="log">OPTIONAL: UI log sink.</param>
+    /// <param name="cancellationToken">OPTIONAL: allow cancel from UI.</param>
+    public void Organize(
+      string sourceDirectory,
+      string? destinationDirectory,
+      string? extensionFilter,
+      bool deleteOriginals,
+      bool normalizeGroupNames,
+      bool dryRun,
+      IProgress<ProgressInfo>? progress = null,
+      Action<string>? log = null,
+      CancellationToken cancellationToken = default
+  )
   {
     // Get all files in the directory (not recursive)
     string[] allFiles = Directory.GetFiles(sourceDirectory);
