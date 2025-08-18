@@ -1,6 +1,6 @@
 # AutoFolder
 
-AutoFolder is a utility tool written in **C# (.NET 6)** that helps organize files in a directory by grouping them into folders based on their filename patterns.  
+AutoFolder is a utility tool written in **C# (.NET 8)** that helps organize files in a directory by grouping them into folders based on their filename patterns.  
 It can optionally filter by extension, normalize folder names, delete original files, run in dry-run mode (simulation only), and log all operations.
 
 ---
@@ -60,7 +60,7 @@ C:\Downloads
 
 ## ⚙️ Requirements
 
-- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) (for building and running locally).  
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) (for building and running locally).  
 - Windows 10/11 (tested), but logic is cross-platform.  
 - Git (for cloning the repository).  
 
@@ -130,6 +130,16 @@ The executable will be available at:
   dotnet test
   ```
 
+- Run unit tests only:
+  ```bash
+  dotnet test --filter Category=Unit
+  ```
+
+- Run integration tests only:
+  ```bash
+  dotnet test --filter Category=Integration
+  ```
+
 - Clean build artifacts:
   ```bash
   dotnet clean
@@ -151,13 +161,6 @@ Tests are divided into:
 
 This project is licensed under the **MIT License**.  
 You are free to use, modify, and distribute it with attribution.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome!  
-Please fork the repository and submit a pull request with your improvements or bug fixes.
 
 ---
 
