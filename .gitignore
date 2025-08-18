@@ -11,6 +11,9 @@ obj/
 # VS Code settings
 .vscode/
 
+# VS settings
+.vs
+
 # Dotnet CLI
 .project.lock.json
 project.lock.json
