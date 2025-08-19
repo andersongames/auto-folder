@@ -137,9 +137,21 @@ namespace AutoFolder.UI
 
             try
             {
-                // For now, just simulate a quick check to keep things responsive
-                Log("Ready to organize files. (Core call will be added next step)");
-                await Task.Delay(300);
+                Log("Starting organization...");
+                // Offload to background thread so the UI stays responsive.
+                await Task.Run(() =>
+                {
+                    _organizer.Organize(
+                        sourceDirectory: source,
+                        destinationDirectory: dest,          // null => use source inside Core
+                        extensionFilter: ext,                // null => process all files
+                        deleteOriginals: deleteOriginals,
+                        normalizeGroupNames: normalize,
+                        dryRun: dryRun
+                    );
+                });
+
+                Log("Organization completed.");
             }
             catch (Exception ex)
             {
