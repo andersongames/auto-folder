@@ -38,10 +38,8 @@ class Program
 
     try
     {
-      var organizer = new FileOrganizer();
-
       // First execution (could be dry-run or real)
-      organizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun);
+      FileOrganizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun);
 
       Console.WriteLine();
 
@@ -60,7 +58,7 @@ class Program
         {
           Console.WriteLine();
           Console.WriteLine("Executing for real...");
-          organizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun = false);
+          FileOrganizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun = false);
           Console.WriteLine();
           Console.WriteLine("✅ File organization completed successfully!");
         }
@@ -135,17 +133,21 @@ class Program
       string path = input.Trim().Trim('"');
 
       // Check if the provided directory actually exists
-      if (Directory.Exists(path))
-      {
-        return path;
-      }
-      else
+        if (Directory.Exists(path))
+        {
+          return path;
+        }
+        else if (!FileOrganizer.IsPathSyntacticallyValid(input))
+        {
+          Console.WriteLine("❌ Invalid path. Please try again. ");
+        }
+        else
       {
         Console.WriteLine("⚠️ Directory not found. Do you want to create it? (y/n): ");
         if (Console.ReadLine()?.Trim().ToLower() == "y")
         {
-            // The directory will be created in the organize method, only if not in dry-run mode
-            return path;
+          // The directory will be created in the organize method, only if not in dry-run mode
+          return path;
         }
       }
     }

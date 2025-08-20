@@ -62,8 +62,8 @@ public class FileOrganizerIntegrationTests
 
             var organizer = new FileOrganizer();
 
-            // Act
-            organizer.Organize(
+      // Act
+      FileOrganizer.Organize(
                 sourceDirectory: tempSourceDir,
                 destinationDirectory: null,
                 extensionFilter: null,
@@ -147,8 +147,8 @@ public class FileOrganizerIntegrationTests
 
             var organizer = new FileOrganizer();
 
-            // Act
-            organizer.Organize(
+      // Act
+      FileOrganizer.Organize(
                 sourceDirectory: tempSourceDir,
                 destinationDirectory: tempDestDir,
                 extensionFilter: ".docx",
@@ -234,8 +234,8 @@ public class FileOrganizerIntegrationTests
 
             var organizer = new FileOrganizer();
 
-            // Act
-            organizer.Organize(
+      // Act
+      FileOrganizer.Organize(
                 sourceDirectory: tempSourceDir,
                 destinationDirectory: null,
                 extensionFilter: null,
@@ -291,8 +291,8 @@ public class FileOrganizerIntegrationTests
 
             var organizer = new FileOrganizer();
 
-            // Act: Run organizer (it should hit an exception on locked.txt)
-            organizer.Organize(
+      // Act: Run organizer (it should hit an exception on locked.txt)
+      FileOrganizer.Organize(
                 sourceDirectory: tempSourceDir,
                 destinationDirectory: null,
                 extensionFilter: ".txt",

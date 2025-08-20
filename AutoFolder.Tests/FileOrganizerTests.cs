@@ -38,8 +38,8 @@ public class FileOrganizerTests
 
             var organizer = new FileOrganizer();
 
-            // Act
-            organizer.Organize(
+      // Act
+      FileOrganizer.Organize(
                 sourceDirectory: tempSourceDir,
                 destinationDirectory: tempDestDir,
                 extensionFilter: ".docx",
@@ -83,8 +83,8 @@ public class FileOrganizerTests
 
         var organizer = new FileOrganizer();
 
-        // Act
-        organizer.Organize(
+    // Act
+    FileOrganizer.Organize(
             sourceDirectory: tempSourceDir,
             destinationDirectory: tempDestDir,
             extensionFilter: null,
@@ -137,11 +137,11 @@ public class FileOrganizerTests
 
             var organizer = new FileOrganizer();
 
-            // Act: filter only ".pdf"
-            organizer.Organize(tempSourceDir, null, ".pdf", false, false, false);
+      // Act: filter only ".pdf"
+      FileOrganizer.Organize(tempSourceDir, null, ".pdf", false, false, false);
 
             // Derive programmatically the group name
-            var groups = organizer.GroupFilesByPrefix(
+            var groups = FileOrganizer.GroupFilesByPrefix(
                 Directory.GetFiles(tempSourceDir)
                     .Where(f => f.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
                     .ToArray()
@@ -200,11 +200,11 @@ public class FileOrganizerTests
 
             var organizer = new FileOrganizer();
 
-            // Act: pass null as extension (process all files)
-            organizer.Organize(tempSourceDir, null, null, false, false, false);
+      // Act: pass null as extension (process all files)
+      FileOrganizer.Organize(tempSourceDir, null, null, false, false, false);
 
             // Derive programmatically the group names
-            var groups = organizer.GroupFilesByPrefix(Directory.GetFiles(tempSourceDir));
+            var groups = FileOrganizer.GroupFilesByPrefix(Directory.GetFiles(tempSourceDir));
 
             // Assert: all files should  be processed
             int totalCopied = groups
@@ -256,8 +256,8 @@ public class FileOrganizerTests
 
         var organizer = new FileOrganizer();
 
-        // Act: deleteOriginals = true
-        organizer.Organize(
+    // Act: deleteOriginals = true
+    FileOrganizer.Organize(
             sourceDirectory: tempSourceDir,
             destinationDirectory: null,
             extensionFilter: null,

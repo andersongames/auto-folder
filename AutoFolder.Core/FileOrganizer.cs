@@ -21,30 +21,30 @@ public readonly record struct ProgressInfo(
 /// </summary>
 public class FileOrganizer
 {
-    /// <summary>
-    /// Organizes files in the specified directory by grouping them into folders
-    /// based on common name prefixes.
-    /// </summary>
-    /// <param name="sourceDirectory">Directory to scan for files</param>
-    /// <param name="destinationDirectory">Directory to move the organized files</param>
-    /// <param name="extensionFilter">Optional file extension to filter (e.g. ".mp4")</param>
-    /// <param name="deleteOriginals">If true, original files will be deleted after copying</param>
-    /// <param name="normalizeGroupNames">If true, group names will be normaized (remove spaces/symbols, use lowercase)</param>
-    /// <param name="dryRun">If true, it will show the actions that will be performed, but no files will actually be copied or deleted.</param>
-    /// <param name="progress">OPTIONAL: UI progress bar hook.</param>
-    /// <param name="log">OPTIONAL: UI log sink.</param>
-    /// <param name="cancellationToken">OPTIONAL: allow cancel from UI.</param>
-    public void Organize(
-      string sourceDirectory,
-      string? destinationDirectory,
-      string? extensionFilter,
-      bool deleteOriginals,
-      bool normalizeGroupNames,
-      bool dryRun,
-      IProgress<ProgressInfo>? progress = null,
-      Action<string>? log = null,
-      CancellationToken cancellationToken = default
-  )
+  /// <summary>
+  /// Organizes files in the specified directory by grouping them into folders
+  /// based on common name prefixes.
+  /// </summary>
+  /// <param name="sourceDirectory">Directory to scan for files</param>
+  /// <param name="destinationDirectory">Directory to move the organized files</param>
+  /// <param name="extensionFilter">Optional file extension to filter (e.g. ".mp4")</param>
+  /// <param name="deleteOriginals">If true, original files will be deleted after copying</param>
+  /// <param name="normalizeGroupNames">If true, group names will be normaized (remove spaces/symbols, use lowercase)</param>
+  /// <param name="dryRun">If true, it will show the actions that will be performed, but no files will actually be copied or deleted.</param>
+  /// <param name="progress">OPTIONAL: UI progress bar hook.</param>
+  /// <param name="log">OPTIONAL: UI log sink.</param>
+  /// <param name="cancellationToken">OPTIONAL: allow cancel from UI.</param>
+  public static void Organize(
+    string sourceDirectory,
+    string? destinationDirectory,
+    string? extensionFilter,
+    bool deleteOriginals,
+    bool normalizeGroupNames,
+    bool dryRun,
+    IProgress<ProgressInfo>? progress = null,
+    Action<string>? log = null,
+    CancellationToken cancellationToken = default
+)
   {
     // Get all files in the directory (not recursive)
     string[] allFiles = Directory.GetFiles(sourceDirectory);
@@ -161,50 +161,50 @@ public class FileOrganizer
   /// </summary>
   /// <param name="filePaths">Array of file paths to group</param>
   /// <returns>Dictionary with the group name (longest common prefix) as key and list of files as value</returns>
-  internal Dictionary<string, List<string>> GroupFilesByPrefix(string[] filePaths)
+  internal static Dictionary<string, List<string>> GroupFilesByPrefix(string[] filePaths)
   {
-      var groups = new Dictionary<string, List<string>>();
+    var groups = new Dictionary<string, List<string>>();
 
-      foreach (var path in filePaths)
+    foreach (var path in filePaths)
+    {
+      string fileName = Path.GetFileNameWithoutExtension(path);
+
+      bool added = false;
+
+      // Try to find an existing group that shares a common prefix with the current file
+      foreach (var existingGroup in groups.Keys.ToList())
       {
-          string fileName = Path.GetFileNameWithoutExtension(path);
+        // Get the longest common prefix between the current group key and the file name
+        string commonPrefix = GetCommonPrefix(existingGroup, fileName);
 
-          bool added = false;
-
-          // Try to find an existing group that shares a common prefix with the current file
-          foreach (var existingGroup in groups.Keys.ToList())
+        // Require a minimum number of characters in common to consider it the same group
+        if (commonPrefix.Length >= 3)
+        {
+          // We need to rename the group key if the new common prefix is shorter than the existing one
+          // This ensures the group name always represents the actual shared prefix of all files inside it
+          if (commonPrefix != existingGroup)
           {
-              // Get the longest common prefix between the current group key and the file name
-              string commonPrefix = GetCommonPrefix(existingGroup, fileName);
-
-              // Require a minimum number of characters in common to consider it the same group
-              if (commonPrefix.Length >= 3)
-              {
-                  // We need to rename the group key if the new common prefix is shorter than the existing one
-                  // This ensures the group name always represents the actual shared prefix of all files inside it
-                  if (commonPrefix != existingGroup)
-                  {
-                      // Get the existing file list and reassign it under the new prefix
-                      var filesInGroup = groups[existingGroup];
-                      groups.Remove(existingGroup);
-                      groups[commonPrefix] = filesInGroup;
-                  }
-
-                  // Add the current file to the updated group
-                  groups[commonPrefix].Add(path);
-                  added = true;
-                  break;
-              }
+            // Get the existing file list and reassign it under the new prefix
+            var filesInGroup = groups[existingGroup];
+            groups.Remove(existingGroup);
+            groups[commonPrefix] = filesInGroup;
           }
 
-          // If no matching group was found, create a new group with the filename as the starting "prefix"
-          if (!added)
-          {
-              groups[fileName] = new List<string> { path };
-          }
+          // Add the current file to the updated group
+          groups[commonPrefix].Add(path);
+          added = true;
+          break;
+        }
       }
 
-      return groups;
+      // If no matching group was found, create a new group with the filename as the starting "prefix"
+      if (!added)
+      {
+        groups[fileName] = new List<string> { path };
+      }
+    }
+
+    return groups;
   }
 
   /// <summary>
@@ -212,26 +212,26 @@ public class FileOrganizer
   /// The prefix is trimmed to remove trailing separators or punctuation
   /// so that folder names are cleaner.
   /// </summary>
-  private string GetCommonPrefix(string a, string b)
+  private static string GetCommonPrefix(string a, string b)
   {
-      int minLength = Math.Min(a.Length, b.Length);
-      int i = 0;
+    int minLength = Math.Min(a.Length, b.Length);
+    int i = 0;
 
-      // Iterate character by character until they differ
-      while (i < minLength && a[i] == b[i])
-      {
-          i++;
-      }
+    // Iterate character by character until they differ
+    while (i < minLength && a[i] == b[i])
+    {
+      i++;
+    }
 
-      // Trim any trailing separators or punctuation from the prefix
-      return a.Substring(0, i).Trim('-', '_', ' ', '.', '(', ')');
+    // Trim any trailing separators or punctuation from the prefix
+    return a.Substring(0, i).Trim('-', '_', ' ', '.', '(', ')');
   }
 
   /// <summary>
   /// Normalizes a folder name by trimming, removing special characters,
   /// replacing spaces with dashes, and converting to lowercase.
   /// </summary>
-  internal string NormalizeGroupName(string name)
+  internal static string NormalizeGroupName(string name)
   {
     // Trim leading/trailing spaces
     string result = name.Trim();
@@ -253,4 +253,41 @@ public class FileOrganizer
 
     return result;
   }
+
+  /// <summary>
+  /// Validates whether the given string can represent a valid file system path.
+  /// This method checks only for invalid path characters, not for the existence
+  /// of the directory. It is useful when the path may be created later.
+  /// </summary>
+  /// <param name="path">The path string to validate.</param>
+  /// <returns>True if the path is syntactically valid, otherwise false.</returns>
+  public static bool IsPathSyntacticallyValid(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            return false;
+        }
+
+        // Check for invalid path characters
+        char[] invalidPathChars = Path.GetInvalidPathChars();
+        if (path.IndexOfAny(invalidPathChars) >= 0)
+        {
+            return false;
+        }
+
+        // Check for invalid file name characters if the path is intended for a file
+        // This is more restrictive than path characters
+        string fileName = Path.GetFileName(path);
+        if (!string.IsNullOrEmpty(fileName))
+        {
+            char[] invalidFileNameChars = Path.GetInvalidFileNameChars();
+            if (fileName.IndexOfAny(invalidFileNameChars) >= 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
+

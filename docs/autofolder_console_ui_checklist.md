@@ -1,19 +1,19 @@
 # ✅ Roadmap - AutoFolder.UI (WinForms)
 
 ## 🔹 Infraestrutura inicial
-- [ ] Criar projeto **WinForms** chamado `AutoFolder.UI` e adicioná-lo à solution.
-- [ ] Adicionar referência ao projeto **AutoFolder.Core**.
+- [x] Criar projeto **WinForms** chamado `AutoFolder.UI` e adicioná-lo à solution.
+- [x] Adicionar referência ao projeto **AutoFolder.Core**.
 - [ ] Configurar namespace e convenções de pastas (Forms, Services, etc).
 
 ## 🔹 Interface básica (Form principal)
-- [ ] Adicionar campo de seleção do **diretório de origem** (TextBox + Button "Browse").
-- [ ] Adicionar campo opcional para **diretório de destino** (TextBox + Button "Browse").
-- [ ] Adicionar campo opcional para **extensão de filtro** (TextBox, ex: `.mp4`).
-- [ ] Adicionar **checkboxes** para opções:
-  - [ ] "Delete originals after copy"
-  - [ ] "Normalize group names"
-  - [ ] "Dry-run (simulation only)"
-- [ ] Adicionar botão **Run** para executar a organização.
+- [x] Adicionar campo de seleção do **diretório de origem** (TextBox + Button "Browse").
+- [x] Adicionar campo opcional para **diretório de destino** (TextBox + Button "Browse").
+- [x] Adicionar campo opcional para **extensão de filtro** (TextBox, ex: `.mp4`).
+- [x] Adicionar **checkboxes** para opções:
+  - [x] "Delete originals after copy"
+  - [x] "Normalize group names"
+  - [x] "Dry-run (simulation only)"
+- [x] Adicionar botão **Run** para executar a organização.
 
 ## 🔹 Experiência do usuário
 - [ ] Adicionar **barra de progresso**.
@@ -21,7 +21,7 @@
 - [ ] Exibir **MessageBox** em caso de erros críticos.
 
 ## 🔹 Integração com Core
-- [ ] Conectar UI com `FileOrganizer.Organize()`.
+- [x] Conectar UI com `FileOrganizer.Organize()`.
 - [ ] Redirecionar mensagens do `Logger` também para a interface (além de arquivo/console).
 - [ ] Validar entradas do usuário (diretórios existem, extensão válida, etc).
 

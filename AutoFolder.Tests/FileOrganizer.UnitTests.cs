@@ -28,7 +28,7 @@ public class FileOrganizerUnitTests
         var organizer = new FileOrganizer();
 
         // Act: perform the grouping logic
-        var result = organizer.GroupFilesByPrefix(filePaths);
+        var result = FileOrganizer.GroupFilesByPrefix(filePaths);
 
         // Assert: 3 groups
         Assert.Equal(3, result.Count);
@@ -59,7 +59,7 @@ public class FileOrganizerUnitTests
         var organizer = new FileOrganizer();
 
         // Act: perform the grouping logic
-        var result = organizer.GroupFilesByPrefix(filePaths);
+        var result = FileOrganizer.GroupFilesByPrefix(filePaths);
 
         // Assert: all files should be grouped under "video-ep0"
         Assert.Single(result); // Only one group
@@ -82,7 +82,7 @@ public class FileOrganizerUnitTests
         };
 
         var organizer = new FileOrganizer();
-        var result = organizer.GroupFilesByPrefix(filePaths);
+        var result = FileOrganizer.GroupFilesByPrefix(filePaths);
 
         // Assert: each file forms its own group
         Assert.Equal(3, result.Count);
@@ -106,7 +106,7 @@ public class FileOrganizerUnitTests
         };
 
         var organizer = new FileOrganizer();
-        var result = organizer.GroupFilesByPrefix(filePaths);
+        var result = FileOrganizer.GroupFilesByPrefix(filePaths);
 
         // The actual grouping logic might vary depending on Regex
         // Here we just make sure files are not lost and all are grouped somehow
@@ -129,7 +129,7 @@ public class FileOrganizerUnitTests
         var filePaths = Array.Empty<string>();
         var organizer = new FileOrganizer();
 
-        var result = organizer.GroupFilesByPrefix(filePaths);
+        var result = FileOrganizer.GroupFilesByPrefix(filePaths);
 
         Assert.Empty(result);
     }
@@ -158,7 +158,7 @@ public class FileOrganizerUnitTests
         var organizer = new FileOrganizer();
 
         // Act
-        string result = organizer.NormalizeGroupName(input);
+        string result = FileOrganizer.NormalizeGroupName(input);
 
         // Assert
         Assert.Equal(expected, result);

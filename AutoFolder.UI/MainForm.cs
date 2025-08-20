@@ -26,8 +26,8 @@ namespace AutoFolder.UI
             btnCancel.Enabled = false; // We'll enable cancel when we add CancellationToken later.
 
             // Wire up basic events
-                btnBrowseSource.Click += (_, __) => BrowseFolder(txtSource);
-                btnBrowseDestination.Click += (_, __) => BrowseFolder(txtDestination);
+            btnBrowseSource.Click += (_, __) => BrowseFolder(txtSource);
+            btnBrowseDestination.Click += (_, __) => BrowseFolder(txtDestination);
             btnRun.Click += async (_, __) => await RunAsync();
             btnCancel.Click += (_, __) => MessageBox.Show("Cancel not implemented yet.", "Info");
         }
@@ -61,14 +61,14 @@ namespace AutoFolder.UI
             // Source directory is mandatory
             if (string.IsNullOrWhiteSpace(txtSource.Text) || !Directory.Exists(txtSource.Text))
             {
-                MessageBox.Show(this, "Please select a valid source directory.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, UiMessages.InvalidSource, "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             // Destination directory is optional, but if provided must exist (we could also create it automatically later)
             if (!string.IsNullOrWhiteSpace(txtDestination.Text) && !Directory.Exists(txtDestination.Text))
             {
-                MessageBox.Show(this, "Destination directory doesn't exist. Please choose an existing folder (or leave it empty).", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, UiMessages.InvalidDestination, "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
@@ -115,7 +115,7 @@ namespace AutoFolder.UI
         /// 1) Validates inputs
         /// 2) Reads parameters from the UI
         /// 3) Prepares the UI for a long-running operation (disable inputs)
-        /// 4) The actual Core call virá no próximo passo (mantemos o método async já pronto)
+        /// 4) The actual Core call virï¿½ no prï¿½ximo passo (mantemos o mï¿½todo async jï¿½ pronto)
         /// </summary>
         private async Task RunAsync()
         {
@@ -141,7 +141,7 @@ namespace AutoFolder.UI
                 // Offload to background thread so the UI stays responsive.
                 await Task.Run(() =>
                 {
-                    _organizer.Organize(
+                  FileOrganizer.Organize(
                         sourceDirectory: source,
                         destinationDirectory: dest,          // null => use source inside Core
                         extensionFilter: ext,                // null => process all files

@@ -62,6 +62,7 @@ Tests if the folder name is cleaned as expected.
 
 ### 🧪 4. Destination Directory
 
+- [ ] Validate if provided directoryiis valid
 - [x] Files are organized into provided destination directory (if given)
 - [x] Fallback to source directory if no destination is given
 - [x] Create destination directory if it does not exist (optional logic)
