@@ -38,8 +38,10 @@ class Program
 
     try
     {
+      var organizer = new FileOrganizer();
+
       // First execution (could be dry-run or real)
-      FileOrganizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun);
+      organizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun);
 
       Console.WriteLine();
 
@@ -58,7 +60,7 @@ class Program
         {
           Console.WriteLine();
           Console.WriteLine("Executing for real...");
-          FileOrganizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun = false);
+          organizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun = false);
           Console.WriteLine();
           Console.WriteLine("✅ File organization completed successfully!");
         }

@@ -34,7 +34,7 @@ public class FileOrganizer
   /// <param name="progress">OPTIONAL: UI progress bar hook.</param>
   /// <param name="log">OPTIONAL: UI log sink.</param>
   /// <param name="cancellationToken">OPTIONAL: allow cancel from UI.</param>
-  public static void Organize(
+  public void Organize(
     string sourceDirectory,
     string? destinationDirectory,
     string? extensionFilter,
@@ -90,7 +90,7 @@ public class FileOrganizer
       }
 
       // Keep track of the preocessed files per group
-      int totalFiles = group.Value.Count();
+      int totalGroupFiles = group.Value.Count();
       int groupProcessedCount = 0;
 
       foreach (var filePath in group.Value)
@@ -139,7 +139,7 @@ public class FileOrganizer
         }
 
         // Show progress line after each file
-        Console.WriteLine($"   [{groupProcessedCount}/{totalFiles}] {Path.GetFileName(filePath)} processed");
+        Console.WriteLine($"   [{groupProcessedCount}/{totalGroupFiles}] {Path.GetFileName(filePath)} processed");
       }
 
       Console.WriteLine($"📁 Group '{groupName}' organized with {group.Value.Count} file(s).");
@@ -262,32 +262,32 @@ public class FileOrganizer
   /// <param name="path">The path string to validate.</param>
   /// <returns>True if the path is syntactically valid, otherwise false.</returns>
   public static bool IsPathSyntacticallyValid(string path)
+  {
+    if (string.IsNullOrWhiteSpace(path))
     {
-        if (string.IsNullOrWhiteSpace(path))
-        {
-            return false;
-        }
-
-        // Check for invalid path characters
-        char[] invalidPathChars = Path.GetInvalidPathChars();
-        if (path.IndexOfAny(invalidPathChars) >= 0)
-        {
-            return false;
-        }
-
-        // Check for invalid file name characters if the path is intended for a file
-        // This is more restrictive than path characters
-        string fileName = Path.GetFileName(path);
-        if (!string.IsNullOrEmpty(fileName))
-        {
-            char[] invalidFileNameChars = Path.GetInvalidFileNameChars();
-            if (fileName.IndexOfAny(invalidFileNameChars) >= 0)
-            {
-                return false;
-            }
-        }
-
-        return true;
+      return false;
     }
+
+    // Check for invalid path characters
+    char[] invalidPathChars = Path.GetInvalidPathChars();
+    if (path.IndexOfAny(invalidPathChars) >= 0)
+    {
+      return false;
+    }
+
+    // Check for invalid file name characters if the path is intended for a file
+    // This is more restrictive than path characters
+    string fileName = Path.GetFileName(path);
+    if (!string.IsNullOrEmpty(fileName))
+    {
+      char[] invalidFileNameChars = Path.GetInvalidFileNameChars();
+      if (fileName.IndexOfAny(invalidFileNameChars) >= 0)
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
 

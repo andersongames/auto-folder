@@ -144,14 +144,14 @@ namespace AutoFolder.UI
                 // Offload to background thread so the UI stays responsive.
                 await Task.Run(() =>
                 {
-                  FileOrganizer.Organize(
-                        sourceDirectory: source,
-                        destinationDirectory: dest,          // null => use source inside Core
-                        extensionFilter: ext,                // null => process all files
-                        deleteOriginals: deleteOriginals,
-                        normalizeGroupNames: normalize,
-                        dryRun: dryRun
-                    );
+                    _organizer.Organize(
+                          sourceDirectory: source,
+                          destinationDirectory: dest,          // null => use source inside Core
+                          extensionFilter: ext,                // null => process all files
+                          deleteOriginals: deleteOriginals,
+                          normalizeGroupNames: normalize,
+                          dryRun: dryRun
+                      );
                 });
 
                 Log("Organization completed.");
