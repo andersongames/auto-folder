@@ -8,7 +8,7 @@
     internal static class UiMessages
     {
         public const string InvalidSource = "Please select a valid source directory.";
-        public const string InvalidDestination = "Please enter a valid folder path (or leave it empty).";
+        public const string InvalidDestination = "Please enter a valid destination directory (or leave it empty).";
         public const string Starting = "Starting organization...";
         public const string Completed = "Organization completed.";
     }

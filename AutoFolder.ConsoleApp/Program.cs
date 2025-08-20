@@ -133,15 +133,15 @@ class Program
       string path = input.Trim().Trim('"');
 
       // Check if the provided directory actually exists
-        if (Directory.Exists(path))
-        {
-          return path;
-        }
-        else if (!FileOrganizer.IsPathSyntacticallyValid(input))
-        {
-          Console.WriteLine("❌ Invalid path. Please try again. ");
-        }
-        else
+      if (Directory.Exists(path))
+      {
+        return path;
+      }
+      else if (!FileOrganizer.IsPathSyntacticallyValid(input))
+      {
+        Console.WriteLine("❌ Invalid path. Please try again. ");
+      }
+      else
       {
         Console.WriteLine("⚠️ Directory not found. Do you want to create it? (y/n): ");
         if (Console.ReadLine()?.Trim().ToLower() == "y")

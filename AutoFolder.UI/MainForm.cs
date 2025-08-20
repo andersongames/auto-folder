@@ -65,11 +65,14 @@ namespace AutoFolder.UI
                 return false;
             }
 
-            // Destination directory is optional, but if provided must exist (we could also create it automatically later)
-            if (!string.IsNullOrWhiteSpace(txtDestination.Text) && !Directory.Exists(txtDestination.Text))
+            // Destination directory is optional, but if provided must be valid
+            if (!string.IsNullOrWhiteSpace(txtDestination.Text))
             {
-                MessageBox.Show(this, UiMessages.InvalidDestination, "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                if (!Directory.Exists(txtDestination.Text) && !FileOrganizer.IsPathSyntacticallyValid(txtDestination.Text))
+                {
+                    MessageBox.Show(this, UiMessages.InvalidDestination, "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
             }
 
             // Extension is optional; if provided, normalize to start with dot (".pdf" not "pdf")
