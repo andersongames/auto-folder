@@ -112,6 +112,15 @@ public class FileOrganizer
 
             groupProcessedCount++;
             processedCount++;
+
+            // Report progress for dry-run
+            progress?.Report(new ProgressInfo(
+                processedCount,
+                filteredFiles.Length,
+                filePath,
+                "dry-run"
+            ));
+
             continue;
           }
 
@@ -129,6 +138,14 @@ public class FileOrganizer
           // Increment the counters only if the file was successfully handled
           groupProcessedCount++;
           processedCount++;
+
+          // Report progress to UI (if any observer is attached)
+          progress?.Report(new ProgressInfo(
+              processedCount,
+              filteredFiles.Length,
+              filePath,
+              dryRun ? "dry-run" : (deleteOriginals ? "copy+delete" : "copy")
+          ));
         }
         catch (Exception ex)
         {

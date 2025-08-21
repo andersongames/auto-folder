@@ -42,6 +42,7 @@
             chkNormalize = new CheckBox();
             chkDryRun = new CheckBox();
             btnCancel = new Button();
+            progressBar = new ProgressBar();
             SuspendLayout();
             // 
             // lblSource
@@ -123,7 +124,7 @@
             // 
             // btnRun
             // 
-            btnRun.Location = new Point(713, 389);
+            btnRun.Location = new Point(713, 369);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(75, 23);
             btnRun.TabIndex = 9;
@@ -162,18 +163,27 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(632, 389);
+            btnCancel.Location = new Point(632, 369);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(75, 23);
             btnCancel.TabIndex = 13;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = true;
             // 
+            // progressBar
+            // 
+            progressBar.Location = new Point(12, 398);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new Size(776, 23);
+            progressBar.Step = 1;
+            progressBar.TabIndex = 14;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(progressBar);
             Controls.Add(btnCancel);
             Controls.Add(chkDryRun);
             Controls.Add(chkNormalize);
@@ -210,5 +220,6 @@
         private CheckBox chkNormalize;
         private CheckBox chkDryRun;
         private Button btnCancel;
+        private ProgressBar progressBar;
     }
 }

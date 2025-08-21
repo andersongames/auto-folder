@@ -16,7 +16,7 @@
 - [x] Add **Run** button to execute the organization.
 
 ## 🔹 User Experience
-- [ ] Add **progress bar**.
+- [x] Add **progress bar**.
 - [ ] Add **logs/status** area (Multiline TextBox or ListBox).
 - [ ] Display **MessageBox** in case of critical errors.
 

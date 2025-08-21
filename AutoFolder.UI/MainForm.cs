@@ -17,6 +17,9 @@ namespace AutoFolder.UI
         // Keep a single instance; FileOrganizer is stateless and can be reused.
         private readonly FileOrganizer _organizer = new();
 
+        // This field will be responsible for receiving progress updates
+        private Progress<ProgressInfo> _progressReporter;
+
         public MainForm()
         {
             InitializeComponent();
@@ -30,6 +33,9 @@ namespace AutoFolder.UI
             btnBrowseDestination.Click += (_, __) => BrowseFolder(txtDestination);
             btnRun.Click += async (_, __) => await RunAsync();
             btnCancel.Click += (_, __) => MessageBox.Show("Cancel not implemented yet.", "Info");
+
+            // Initialize progress reporter
+            _progressReporter = new Progress<ProgressInfo>(OnProgressReported);
         }
 
         /// <summary>
@@ -150,7 +156,8 @@ namespace AutoFolder.UI
                           extensionFilter: ext,                // null => process all files
                           deleteOriginals: deleteOriginals,
                           normalizeGroupNames: normalize,
-                          dryRun: dryRun
+                          dryRun: dryRun,
+                          progress: _progressReporter
                       );
                 });
 
@@ -166,6 +173,29 @@ namespace AutoFolder.UI
             {
                 SetBusy(false);
             }
+        }
+
+        /// <summary>
+        /// Callback executed whenever FileOrganizer reports progress.
+        /// This method runs on the UI thread because Progress<T> automatically marshals calls.
+        /// </summary>
+        /// <param name="info">Progress information (processed count, total, current file, stage)</param>
+        private void OnProgressReported(ProgressInfo info)
+        {
+            if (info.Total > 0)
+            {
+                // Calculate percentage
+                int percent = (int)((info.Processed / (double)info.Total) * 100);
+
+                // Clamp to [0, 100] to avoid overflow
+                percent = Math.Max(0, Math.Min(100, percent));
+
+                progressBar.Value = percent;
+            }
+
+            // Optionally, you could also show current file in a Label or log
+            // Example:
+            // statusLabel.Text = $"[{info.Processed}/{info.Total}] {info.CurrentFile}";
         }
     }
 }
