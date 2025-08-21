@@ -161,7 +161,10 @@ namespace AutoFolder.UI
                       );
                 });
 
-                Log("Organization completed.");
+                MessageBox.Show(this, UiMessages.Completed, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Restore progress bar
+                progressBar.Value = 0;
             }
             catch (Exception ex)
             {
@@ -185,7 +188,7 @@ namespace AutoFolder.UI
             if (info.Total > 0)
             {
                 // Calculate percentage
-                int percent = (int)((info.Processed / (double)info.Total) * 100);
+                int percent = (int)(info.Processed / (double)info.Total * 100);
 
                 // Clamp to [0, 100] to avoid overflow
                 percent = Math.Max(0, Math.Min(100, percent));
