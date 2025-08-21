@@ -82,6 +82,7 @@ public class FileOrganizer
       }
 
       Logger.Log($"Starting group '{groupName}' with {group.Value.Count} file(s).");
+      log?.Invoke($"Starting group '{groupName}' with {group.Value.Count} file(s).");
 
       if (!dryRun)
       {
@@ -103,11 +104,13 @@ public class FileOrganizer
           {
             // Simulate copy
             Logger.Log($"[DRY-RUN] Would copy: {filePath} → {destinationPath}", true);
+            log?.Invoke($"[DRY-RUN] Would copy: {filePath} → {destinationPath}");
 
             if (deleteOriginals)
             {
               // Simulate deletion
               Logger.Log($"[DRY-RUN] Would delete: {filePath}", true);
+              log?.Invoke($"[DRY-RUN] Would delete: {filePath}");
             }
 
             groupProcessedCount++;
@@ -127,12 +130,14 @@ public class FileOrganizer
           // Attempt to copy the file to the target folder (overwrite if needed)
           File.Copy(filePath, destinationPath, overwrite: true);
           Logger.Log($"Copied: {filePath} → {destinationPath}");
+          log?.Invoke($"Copied: {filePath} → {destinationPath}");
 
           // Optionally delete the original file after a successful copy
           if (deleteOriginals)
           {
             File.Delete(filePath);
             Logger.Log($"Deleted: {filePath}");
+            log?.Invoke($"Deleted: {filePath}");
           }
 
           // Increment the counters only if the file was successfully handled
@@ -153,6 +158,7 @@ public class FileOrganizer
           Console.WriteLine($"⚠️ Failed to process file: {Path.GetFileName(filePath)}");
           Console.WriteLine($"   → Reason: {ex.Message}");
           Logger.Log($"ERROR: Failed to process {filePath} → {ex.Message}");
+          log?.Invoke($"ERROR: Failed to process {filePath} → {ex.Message}");
         }
 
         // Show progress line after each file
@@ -164,6 +170,9 @@ public class FileOrganizer
     Console.WriteLine();
     Console.WriteLine($"💯 Total of '{processedCount}' file(s) organized, under '{groupedFiles.Count}' group(s).");
     Logger.Log(dryRun
+      ? "Dry-run finished. No files were modified."
+      : "File organization completed.");
+    log?.Invoke(dryRun
       ? "Dry-run finished. No files were modified."
       : "File organization completed.");
   }

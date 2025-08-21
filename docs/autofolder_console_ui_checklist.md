@@ -17,13 +17,13 @@
 
 ## 🔹 User Experience
 - [x] Add **progress bar**.
-- [ ] Add **logs/status** area (Multiline TextBox or ListBox).
+- [x] Add **logs/status** area (Multiline TextBox or ListBox).
 - [ ] Display **MessageBox** in case of critical errors.
 
 ## 🔹 Core Integration
 - [x] Connect UI with `FileOrganizer.Organize()`.
-- [ ] Redirect `Logger` messages also to the interface (in addition to file/console).
-- [ ] Validate user inputs (directories exist, valid extension, etc.).
+- [x] Redirect `Logger` messages also to the interface (in addition to file/console).
+- [x] Validate user inputs (directories exist, valid extension, etc.).
 
 ## 🔹 Quality and Refinement
 - [ ] Handle unforeseen exceptions (show user-friendly error).

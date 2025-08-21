@@ -117,7 +117,19 @@ namespace AutoFolder.UI
         /// </summary>
         private void Log(string message)
         {
-            txtLog.AppendText($"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
+            if (txtLog.InvokeRequired)
+            {
+                // If the call is from a different thread, invoke the method on the UI thread
+                txtLog.Invoke(new Action(() =>
+                {
+                    txtLog.AppendText($"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
+                }));
+            }
+            else
+            {
+                // If already on the UI thread, directly access the control
+                txtLog.AppendText($"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
+            }
         }
 
         /// <summary>
@@ -141,7 +153,7 @@ namespace AutoFolder.UI
 
             // Prepare UI
             txtLog.Clear();
-            // progressBar.Value = 0; // We'll wire real progress later
+            progressBar.Value = 0;
             SetBusy(true);
 
             try
@@ -157,7 +169,8 @@ namespace AutoFolder.UI
                           deleteOriginals: deleteOriginals,
                           normalizeGroupNames: normalize,
                           dryRun: dryRun,
-                          progress: _progressReporter
+                          progress: _progressReporter,
+                          log: Log
                       );
                 });
 

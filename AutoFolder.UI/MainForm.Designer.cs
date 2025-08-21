@@ -43,6 +43,7 @@
             chkDryRun = new CheckBox();
             btnCancel = new Button();
             progressBar = new ProgressBar();
+            logBox = new Label();
             SuspendLayout();
             // 
             // lblSource
@@ -105,12 +106,12 @@
             // txtLog
             // 
             txtLog.Dock = DockStyle.Bottom;
-            txtLog.Location = new Point(0, 427);
+            txtLog.Location = new Point(0, 321);
             txtLog.Multiline = true;
             txtLog.Name = "txtLog";
             txtLog.ReadOnly = true;
             txtLog.ScrollBars = ScrollBars.Both;
-            txtLog.Size = new Size(800, 23);
+            txtLog.Size = new Size(800, 129);
             txtLog.TabIndex = 7;
             // 
             // btnBrowseDestination
@@ -124,7 +125,7 @@
             // 
             // btnRun
             // 
-            btnRun.Location = new Point(713, 369);
+            btnRun.Location = new Point(713, 267);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(75, 23);
             btnRun.TabIndex = 9;
@@ -163,7 +164,7 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(632, 369);
+            btnCancel.Location = new Point(632, 267);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(75, 23);
             btnCancel.TabIndex = 13;
@@ -172,17 +173,27 @@
             // 
             // progressBar
             // 
-            progressBar.Location = new Point(12, 398);
+            progressBar.Location = new Point(12, 267);
             progressBar.Name = "progressBar";
-            progressBar.Size = new Size(776, 23);
+            progressBar.Size = new Size(614, 23);
             progressBar.Step = 1;
             progressBar.TabIndex = 14;
+            // 
+            // logBox
+            // 
+            logBox.AutoSize = true;
+            logBox.Location = new Point(12, 303);
+            logBox.Name = "logBox";
+            logBox.Size = new Size(27, 15);
+            logBox.TabIndex = 15;
+            logBox.Text = "Log";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(logBox);
             Controls.Add(progressBar);
             Controls.Add(btnCancel);
             Controls.Add(chkDryRun);
@@ -221,5 +232,6 @@
         private CheckBox chkDryRun;
         private Button btnCancel;
         private ProgressBar progressBar;
+        private Label logBox;
     }
 }
