@@ -162,9 +162,6 @@ namespace AutoFolder.UI
                 });
 
                 MessageBox.Show(this, UiMessages.Completed, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Restore progress bar
-                progressBar.Value = 0;
             }
             catch (Exception ex)
             {
@@ -175,6 +172,9 @@ namespace AutoFolder.UI
             finally
             {
                 SetBusy(false);
+
+                // Restore progress bar
+                progressBar.Value = 0;
             }
         }
 
