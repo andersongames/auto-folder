@@ -1,37 +1,38 @@
 # ✅ Roadmap - AutoFolder.UI (WinForms)
 
-## 🔹 Infraestrutura inicial
-- [x] Criar projeto **WinForms** chamado `AutoFolder.UI` e adicioná-lo à solution.
-- [x] Adicionar referência ao projeto **AutoFolder.Core**.
-- [ ] Configurar namespace e convenções de pastas (Forms, Services, etc).
+## 🔹 Initial Infrastructure
+- [x] Create **WinForms** project named `AutoFolder.UI` and add it to the solution.
+- [x] Add reference to the **AutoFolder.Core** project.
+- [ ] Configure namespace and folder conventions (Forms, Services, etc.).
 
-## 🔹 Interface básica (Form principal)
-- [x] Adicionar campo de seleção do **diretório de origem** (TextBox + Button "Browse").
-- [x] Adicionar campo opcional para **diretório de destino** (TextBox + Button "Browse").
-- [x] Adicionar campo opcional para **extensão de filtro** (TextBox, ex: `.mp4`).
-- [x] Adicionar **checkboxes** para opções:
-  - [x] "Delete originals after copy"
-  - [x] "Normalize group names"
-  - [x] "Dry-run (simulation only)"
-- [x] Adicionar botão **Run** para executar a organização.
+## 🔹 Basic Interface (Main Form)
+- [x] Add field for **source directory** selection (TextBox + "Browse" Button).
+- [x] Add optional field for **destination directory** (TextBox + "Browse" Button).
+- [x] Add optional field for **filter extension** (TextBox, e.g., `.mp4`).
+- [x] Add **checkboxes** for options:
+  - [x] "Delete originals after copy"
+  - [x] "Normalize group names"
+  - [x] "Dry-run (simulation only)"
+- [x] Add **Run** button to execute the organization.
 
-## 🔹 Experiência do usuário
-- [ ] Adicionar **barra de progresso**.
-- [ ] Adicionar área de **logs/status** (TextBox multilinha ou ListBox).
-- [ ] Exibir **MessageBox** em caso de erros críticos.
+## 🔹 User Experience
+- [ ] Add **progress bar**.
+- [ ] Add **logs/status** area (Multiline TextBox or ListBox).
+- [ ] Display **MessageBox** in case of critical errors.
 
-## 🔹 Integração com Core
-- [x] Conectar UI com `FileOrganizer.Organize()`.
-- [ ] Redirecionar mensagens do `Logger` também para a interface (além de arquivo/console).
-- [ ] Validar entradas do usuário (diretórios existem, extensão válida, etc).
+## 🔹 Core Integration
+- [x] Connect UI with `FileOrganizer.Organize()`.
+- [ ] Redirect `Logger` messages also to the interface (in addition to file/console).
+- [ ] Validate user inputs (directories exist, valid extension, etc.).
 
-## 🔹 Qualidade e refinamento
-- [ ] Tratar exceções não previstas (mostrar erro amigável).
-- [ ] Adicionar **ícone** e nomear o Form como "AutoFolder".
-- [ ] Testar em cenários reais (diferentes extensões, dry-run, etc).
-- [ ] Empacotar release standalone com `dotnet publish`.
+## 🔹 Quality and Refinement
+- [ ] Handle unforeseen exceptions (show user-friendly error).
+- [ ] Add **icon** and name the Form "AutoFolder".
+- [ ] Test in real scenarios (different extensions, dry-run, etc.).
+- [ ] Package standalone release with `dotnet publish`.
 
-## 🔹 (Opcional / Futuro)
-- [ ] Melhorar layout com TableLayoutPanel ou FlowLayoutPanel.
-- [ ] Adicionar menu "Settings" para preferências.
-- [ ] Criar instalador (MSIX ou Setup).
+## 🔹 (Optional / Future)
+- [ ] Improve layout with TableLayoutPanel or FlowLayoutPanel.
+- [ ] Add "Settings" menu for preferences.
+- [ ] Create an installer (MSIX or Setup).
+- [ ] Update the README.md to include the AutoFolder.UI project
