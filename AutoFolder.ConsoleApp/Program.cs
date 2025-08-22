@@ -20,9 +20,14 @@ class Program
     // Ask for an optional extension filter (e.g., .mp4 or .pdf)
     Console.WriteLine("📄 Enter the file extension to filter (or leave blank for all files): ");
     string? extension = Console.ReadLine()?.Trim().ToLower();
+    // Normalize extension to start with dot (".pdf" not "pdf")
+    if (!string.IsNullOrWhiteSpace(extension))
+    {
+      extension = FileOrganizer.NormalizeFileExtension(extension);
+    }
 
     // Ask whether to delete the original files after organizing
-    Console.WriteLine("🗑️ Delete original files after copy? (y/n): ");
+      Console.WriteLine("🗑️ Delete original files after copy? (y/n): ");
     bool deleteOriginals = Console.ReadLine()?.Trim().ToLower() == "y";
 
     // Ask for normalize folder names

@@ -84,9 +84,7 @@ namespace AutoFolder.UI
             // Extension is optional; if provided, normalize to start with dot (".pdf" not "pdf")
             if (!string.IsNullOrWhiteSpace(txtExtension.Text))
             {
-                var ext = txtExtension.Text.Trim();
-                if (!ext.StartsWith(".")) ext = "." + ext;
-                txtExtension.Text = ext;
+                txtExtension.Text = FileOrganizer.NormalizeFileExtension(txtExtension.Text);
             }
 
             return true;

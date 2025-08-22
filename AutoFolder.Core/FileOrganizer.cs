@@ -165,18 +165,30 @@ public class FileOrganizer
         Console.WriteLine($"   [{groupProcessedCount}/{totalGroupFiles}] {Path.GetFileName(filePath)} processed");
       }
 
-      if (dryRun) Console.WriteLine($"📁 Group '{groupName}' would be organized with {group.Value.Count} file(s).");
-      else Console.WriteLine($"📁 Group '{groupName}' organized with {group.Value.Count} file(s).");
+      if (dryRun)
+      {
+        Console.WriteLine($"📁 Group '{groupName}' would be organized with {group.Value.Count} file(s).");
+        log?.Invoke($"📁 Group '{groupName}' would be organized with {group.Value.Count} file(s).");
+      }
+      else
+      {
+        Console.WriteLine($"📁 Group '{groupName}' organized with {group.Value.Count} file(s).");
+        log?.Invoke($"📁 Group '{groupName}' organized with {group.Value.Count} file(s).");
+      }
     }
     Console.WriteLine();
-    if (dryRun) Console.WriteLine($"💯 Total of '{processedCount}' file(s) would be organized, under '{groupedFiles.Count}' group(s).");
-    else Console.WriteLine($"💯 Total of '{processedCount}' file(s) organized, under '{groupedFiles.Count}' group(s).");
-    Logger.Log(dryRun
-      ? "Dry-run finished. No files were modified."
-      : "File organization completed.");
-    log?.Invoke(dryRun
-      ? "Dry-run finished. No files were modified."
-      : "File organization completed.");
+    if (dryRun)
+    {
+      Console.WriteLine($"💯 Total of '{processedCount}' file(s) would be organized, under '{groupedFiles.Count}' group(s).");
+      Logger.Log("Dry-run finished. No files were modified.");
+      log?.Invoke($"💯 Total of '{processedCount}' file(s) would be organized, under '{groupedFiles.Count}' group(s).");
+    }
+    else
+    {
+      Console.WriteLine($"💯 Total of '{processedCount}' file(s) organized, under '{groupedFiles.Count}' group(s).");
+      Logger.Log("File organization completed.");
+      log?.Invoke($"💯 Total of '{processedCount}' file(s) organized, under '{groupedFiles.Count}' group(s).");
+    }
   }
 
   /// <summary>
@@ -316,6 +328,25 @@ public class FileOrganizer
     }
 
     return true;
+  }
+
+  /// <summary>
+  /// Normalize the file extension to start with dot (".pdf" not "pdf").
+  /// </summary>
+  /// <param name="extension">The provided file extenssion.</param>
+  /// <returns>The normalized extension.</returns>
+  public static string NormalizeFileExtension(string extension)
+  {
+    string ext = extension.Trim();
+    if (!ext.StartsWith("."))
+    {
+      ext = "." + ext;
+      return ext;
+    }
+    else
+    {
+      return extension;
+    }
   }
 }
 
