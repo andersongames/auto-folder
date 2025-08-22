@@ -174,7 +174,7 @@ namespace AutoFolder.UI
                       );
                 });
 
-                MessageBox.Show(this, UiMessages.Completed, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(this, dryRun ? UiMessages.SimulationCompleted : UiMessages.OrganizationCompleted, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

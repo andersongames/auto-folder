@@ -25,8 +25,6 @@ public class FileOrganizerUnitTests
             "aab.txt",
         };
 
-        var organizer = new FileOrganizer();
-
         // Act: perform the grouping logic
         var result = FileOrganizer.GroupFilesByPrefix(filePaths);
 
@@ -56,8 +54,6 @@ public class FileOrganizerUnitTests
             "C:/mock/video-ep03.mp4",
         };
 
-        var organizer = new FileOrganizer();
-
         // Act: perform the grouping logic
         var result = FileOrganizer.GroupFilesByPrefix(filePaths);
 
@@ -81,7 +77,6 @@ public class FileOrganizerUnitTests
             "C:/mock/ending.mp4"
         };
 
-        var organizer = new FileOrganizer();
         var result = FileOrganizer.GroupFilesByPrefix(filePaths);
 
         // Assert: each file forms its own group
@@ -105,7 +100,6 @@ public class FileOrganizerUnitTests
             "C:/mock/random123.txt"
         };
 
-        var organizer = new FileOrganizer();
         var result = FileOrganizer.GroupFilesByPrefix(filePaths);
 
         // The actual grouping logic might vary depending on Regex
@@ -127,8 +121,6 @@ public class FileOrganizerUnitTests
     public void GroupFilesByPrefix_ShouldReturnEmpty_WhenNoFiles()
     {
         var filePaths = Array.Empty<string>();
-        var organizer = new FileOrganizer();
-
         var result = FileOrganizer.GroupFilesByPrefix(filePaths);
 
         Assert.Empty(result);
@@ -154,9 +146,6 @@ public class FileOrganizerUnitTests
     [Trait("Category", "Unit")]
     public void NormalizeGroupName_ShouldFormatProperly(string input, string expected)
     {
-        // Arrange
-        var organizer = new FileOrganizer();
-
         // Act
         string result = FileOrganizer.NormalizeGroupName(input);
 

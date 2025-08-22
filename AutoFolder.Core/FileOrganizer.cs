@@ -165,10 +165,12 @@ public class FileOrganizer
         Console.WriteLine($"   [{groupProcessedCount}/{totalGroupFiles}] {Path.GetFileName(filePath)} processed");
       }
 
-      Console.WriteLine($"📁 Group '{groupName}' organized with {group.Value.Count} file(s).");
+      if (dryRun) Console.WriteLine($"📁 Group '{groupName}' would be organized with {group.Value.Count} file(s).");
+      else Console.WriteLine($"📁 Group '{groupName}' organized with {group.Value.Count} file(s).");
     }
     Console.WriteLine();
-    Console.WriteLine($"💯 Total of '{processedCount}' file(s) organized, under '{groupedFiles.Count}' group(s).");
+    if (dryRun) Console.WriteLine($"💯 Total of '{processedCount}' file(s) would be organized, under '{groupedFiles.Count}' group(s).");
+    else Console.WriteLine($"💯 Total of '{processedCount}' file(s) organized, under '{groupedFiles.Count}' group(s).");
     Logger.Log(dryRun
       ? "Dry-run finished. No files were modified."
       : "File organization completed.");

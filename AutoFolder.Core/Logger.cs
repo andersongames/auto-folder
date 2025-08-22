@@ -29,7 +29,7 @@ public static class Logger
 
         if (alsoPrintToConsole)
         {
-            Console.WriteLine(line);
+            Console.WriteLine(message);
         }
     }
 }

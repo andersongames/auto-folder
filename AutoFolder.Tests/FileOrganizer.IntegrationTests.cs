@@ -62,8 +62,8 @@ public class FileOrganizerIntegrationTests
 
             var organizer = new FileOrganizer();
 
-      // Act
-      FileOrganizer.Organize(
+            // Act
+            organizer.Organize(
                 sourceDirectory: tempSourceDir,
                 destinationDirectory: null,
                 extensionFilter: null,
@@ -147,8 +147,8 @@ public class FileOrganizerIntegrationTests
 
             var organizer = new FileOrganizer();
 
-      // Act
-      FileOrganizer.Organize(
+            // Act
+            organizer.Organize(
                 sourceDirectory: tempSourceDir,
                 destinationDirectory: tempDestDir,
                 extensionFilter: ".docx",
@@ -204,7 +204,7 @@ public class FileOrganizerIntegrationTests
     /// extensionFilter: null -> if no extension is provided, all files should be processed.
     /// deleteOriginals: true -> if true, the original file must be kept because it is dry-run mode.
     /// normalizeGroupNames: false -> if false, source directory names should not be normalized.
-    /// dryRun: false -> if true, no files are copied or deleted.
+    /// dryRun: true -> if true, no files are copied or deleted.
     /// </summary>
     [Fact]
     [Trait("Category", "Integration")]
@@ -234,8 +234,8 @@ public class FileOrganizerIntegrationTests
 
             var organizer = new FileOrganizer();
 
-      // Act
-      FileOrganizer.Organize(
+            // Act
+            organizer.Organize(
                 sourceDirectory: tempSourceDir,
                 destinationDirectory: null,
                 extensionFilter: null,
@@ -291,8 +291,8 @@ public class FileOrganizerIntegrationTests
 
             var organizer = new FileOrganizer();
 
-      // Act: Run organizer (it should hit an exception on locked.txt)
-      FileOrganizer.Organize(
+            // Act: Run organizer (it should hit an exception on locked.txt)
+            organizer.Organize(
                 sourceDirectory: tempSourceDir,
                 destinationDirectory: null,
                 extensionFilter: ".txt",
