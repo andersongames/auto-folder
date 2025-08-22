@@ -96,7 +96,7 @@ public class FileOrganizer
 
       foreach (var filePath in group.Value)
       {
-        string destinationPath = Path.Combine(targetFolder, Path.GetFileName(filePath));
+        string destinationPath = Path.Combine(Path.GetFullPath(targetFolder), Path.GetFileName(filePath));
 
         try
         {
@@ -304,16 +304,12 @@ public class FileOrganizer
   public static bool IsPathSyntacticallyValid(string path)
   {
     if (string.IsNullOrWhiteSpace(path))
-    {
       return false;
-    }
 
     // Check for invalid path characters
     char[] invalidPathChars = Path.GetInvalidPathChars();
     if (path.IndexOfAny(invalidPathChars) >= 0)
-    {
       return false;
-    }
 
     // Check for invalid file name characters if the path is intended for a file
     // This is more restrictive than path characters
@@ -322,9 +318,7 @@ public class FileOrganizer
     {
       char[] invalidFileNameChars = Path.GetInvalidFileNameChars();
       if (fileName.IndexOfAny(invalidFileNameChars) >= 0)
-      {
         return false;
-      }
     }
 
     return true;
@@ -344,9 +338,7 @@ public class FileOrganizer
       return ext;
     }
     else
-    {
       return extension;
-    }
   }
 }
 

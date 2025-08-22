@@ -144,13 +144,14 @@ class Program
       {
         return path;
       }
-      else if (!FileOrganizer.IsPathSyntacticallyValid(input))
+      else if (!Path.IsPathRooted(path)  || !FileOrganizer.IsPathSyntacticallyValid(input))
       {
         Console.WriteLine("❌ Invalid path. Please try again. ");
       }
       else
       {
         Console.WriteLine("⚠️ Directory not found. Do you want to create it? (y/n): ");
+        Console.WriteLine($"🗂️ New directory: {Path.GetFullPath(path)}");
         if (Console.ReadLine()?.Trim().ToLower() == "y")
         {
           // The directory will be created in the organize method, only if not in dry-run mode

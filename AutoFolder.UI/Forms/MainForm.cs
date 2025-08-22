@@ -77,10 +77,42 @@ namespace AutoFolder.UI
                 return false;
             }
 
-            // Destination directory is optional, but if provided must be valid
             if (!string.IsNullOrWhiteSpace(txtDestination.Text))
             {
-                if (!Directory.Exists(txtDestination.Text) && !FileOrganizer.IsPathSyntacticallyValid(txtDestination.Text))
+                string dest = txtDestination.Text.Trim();
+
+                // Destination directory: Requires absolute path
+                if (!Path.IsPathRooted(dest))
+                {
+                    ErrorDialog.ShowWarning(this, UiMessages.InvalidDestination);
+                    return false;
+                }
+
+                if (!Directory.Exists(dest) && !FileOrganizer.IsPathSyntacticallyValid(dest))
+                {
+                    // Destination directory: If it does not exist, it must be syntactically valid
+                    ErrorDialog.ShowWarning(this, UiMessages.InvalidDestination);
+                    return false;
+                }
+                else
+                {
+                    // Destination directory: Ask for create the new  directory
+                    DialogResult result = MessageBox.Show(
+                        this,
+                        $"Destination directory not found. Do you want to create it?:\n{Path.GetFullPath(dest)} ",
+                        "Directory not found",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Question
+                    );
+
+                    if (result == DialogResult.Cancel)
+                        return false;
+                }
+
+
+                // Extra protection: prevents the destination directory from being the program directory
+                string exeDir = AppDomain.CurrentDomain.BaseDirectory;
+                if (string.Equals(Path.GetFullPath(dest), Path.GetFullPath(exeDir), StringComparison.OrdinalIgnoreCase))
                 {
                     ErrorDialog.ShowWarning(this, UiMessages.InvalidDestination);
                     return false;
