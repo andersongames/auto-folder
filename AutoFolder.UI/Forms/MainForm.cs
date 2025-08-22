@@ -1,4 +1,5 @@
 using AutoFolder.Core;
+using AutoFolder.UI.Infrastructure;
 using AutoFolder.UI.Resources;
 using System;
 using System.IO;
@@ -57,6 +58,10 @@ namespace AutoFolder.UI
 
             if (dlg.ShowDialog(this) == DialogResult.OK)
                 target.Text = dlg.SelectedPath;
+
+            // Auto-fill the destination text box
+            if (!string.IsNullOrWhiteSpace(lblDestination.Text))
+                txtDestination.Text = dlg.SelectedPath;
         }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace AutoFolder.UI
             // Source directory is mandatory
             if (string.IsNullOrWhiteSpace(txtSource.Text) || !Directory.Exists(txtSource.Text))
             {
-                MessageBox.Show(this, UiMessages.InvalidSource, "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ErrorDialog.ShowWarning(this, UiMessages.InvalidSource);
                 return false;
             }
 
@@ -77,16 +82,14 @@ namespace AutoFolder.UI
             {
                 if (!Directory.Exists(txtDestination.Text) && !FileOrganizer.IsPathSyntacticallyValid(txtDestination.Text))
                 {
-                    MessageBox.Show(this, UiMessages.InvalidDestination, "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    ErrorDialog.ShowWarning(this, UiMessages.InvalidDestination);
                     return false;
                 }
             }
 
             // Extension is optional; if provided, normalize to start with dot (".pdf" not "pdf")
             if (!string.IsNullOrWhiteSpace(txtExtension.Text))
-            {
                 txtExtension.Text = FileOrganizer.NormalizeFileExtension(txtExtension.Text);
-            }
 
             return true;
         }
@@ -99,7 +102,6 @@ namespace AutoFolder.UI
         {
             btnRun.Enabled = !isBusy;
             btnCancel.Enabled = false; // not implemented yet
-
             txtSource.Enabled = !isBusy;
             btnBrowseSource.Enabled = !isBusy;
             txtDestination.Enabled = !isBusy;
@@ -135,7 +137,7 @@ namespace AutoFolder.UI
         /// 1) Validates inputs
         /// 2) Reads parameters from the UI
         /// 3) Prepares the UI for a long-running operation (disable inputs)
-        /// 4) The actual Core call vir� no pr�ximo passo (mantemos o m�todo async j� pronto)
+        /// 4) The actual Core call
         /// </summary>
         private async Task RunAsync()
         {
@@ -178,7 +180,7 @@ namespace AutoFolder.UI
             catch (Exception ex)
             {
                 // Catch-all so the UI never crashes unexpectedly
-                MessageBox.Show(this, ex.Message, "Unexpected error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorDialog.ShowCritical(this, ex.Message);
                 Log($"ERROR: {ex}");
             }
             finally

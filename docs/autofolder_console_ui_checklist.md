@@ -18,7 +18,7 @@
 ## 🔹 User Experience
 - [x] Add **progress bar**.
 - [x] Add **logs/status** area (Multiline TextBox or ListBox).
-- [ ] Display **MessageBox** in case of critical errors.
+- [x] Display **MessageBox** in case of critical errors.
 
 ## 🔹 Core Integration
 - [x] Connect UI with `FileOrganizer.Organize()`.
