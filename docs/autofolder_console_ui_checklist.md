@@ -3,7 +3,7 @@
 ## 🔹 Initial Infrastructure
 - [x] Create **WinForms** project named `AutoFolder.UI` and add it to the solution.
 - [x] Add reference to the **AutoFolder.Core** project.
-- [ ] Configure namespace and folder conventions (Forms, Services, etc.).
+- [x] Configure namespace and folder conventions (Forms, Services, etc.).
 
 ## 🔹 Basic Interface (Main Form)
 - [x] Add field for **source directory** selection (TextBox + "Browse" Button).

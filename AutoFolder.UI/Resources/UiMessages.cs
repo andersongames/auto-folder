@@ -1,4 +1,4 @@
-﻿namespace AutoFolder.UI
+﻿namespace AutoFolder.UI.Resources
 {
     /// <summary>
     /// Centralized UI messages used across the application.

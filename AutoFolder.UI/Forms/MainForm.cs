@@ -1,4 +1,5 @@
 using AutoFolder.Core;
+using AutoFolder.UI.Resources;
 using System;
 using System.IO;
 using System.Threading.Tasks;
