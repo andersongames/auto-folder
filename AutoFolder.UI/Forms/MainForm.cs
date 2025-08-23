@@ -190,6 +190,7 @@ namespace AutoFolder.UI
             // Prepare UI
             txtLog.Clear();
             progressBar.Value = 0;
+            statusLabel.Text = "Status:";
             SetBusy(true);
 
             _cts = new CancellationTokenSource();
@@ -230,8 +231,9 @@ namespace AutoFolder.UI
             {
                 SetBusy(false);
 
-                // Restore progress bar
+                // Restore progress bar and status label
                 progressBar.Value = 0;
+                statusLabel.Text = "Status:";
             }
         }
 
@@ -253,9 +255,8 @@ namespace AutoFolder.UI
                 progressBar.Value = percent;
             }
 
-            // Optionally, you could also show current file in a Label or log
-            // Example:
-            // statusLabel.Text = $"[{info.Processed}/{info.Total}] {info.CurrentFile}";
+            // Update status label
+            statusLabel.Text = $"Status: [{info.Processed}/{info.Total}] {info.CurrentFile}";
         }
     }
 }

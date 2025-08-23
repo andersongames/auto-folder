@@ -110,7 +110,7 @@ public class FileOrganizer
           {
             // Simulate copy
             Logger.Log($"[DRY-RUN] Would copy: {filePath} → {destinationPath}", true);
-            log?.Invoke($"[DRY-RUN] Would copy: {filePath} → {destinationPath}");
+            log?.Invoke($"📄 Would copy: {filePath} → {destinationPath}");
 
             if (deleteOriginals)
             {
@@ -136,7 +136,7 @@ public class FileOrganizer
           // Attempt to copy the file to the target folder (overwrite if needed)
           File.Copy(filePath, destinationPath, overwrite: true);
           Logger.Log($"Copied: {filePath} → {destinationPath}");
-          log?.Invoke($"Copied: {filePath} → {destinationPath}");
+          log?.Invoke($"📄 Copied: {filePath} → {destinationPath}");
 
           // Optionally delete the original file after a successful copy
           if (deleteOriginals)
