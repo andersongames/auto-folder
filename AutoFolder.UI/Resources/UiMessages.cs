@@ -12,5 +12,6 @@
         public const string Starting = "Starting organization...";
         public const string OrganizationCompleted = "Organization complete. Check the log for details.";
         public const string SimulationCompleted = "Simulation completed. Check the log for details.";
+        public const string OperationCanceled = "Operation canceled by user.";
     }
 }

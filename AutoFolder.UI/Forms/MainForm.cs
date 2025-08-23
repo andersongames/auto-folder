@@ -22,6 +22,9 @@ namespace AutoFolder.UI
         // This field will be responsible for receiving progress updates
         private Progress<ProgressInfo> _progressReporter;
 
+        // Cancellation Token
+        private CancellationTokenSource? _cts;
+
         public MainForm()
         {
             InitializeComponent();
@@ -34,7 +37,7 @@ namespace AutoFolder.UI
             btnBrowseSource.Click += (_, __) => BrowseFolder(txtSource);
             btnBrowseDestination.Click += (_, __) => BrowseFolder(txtDestination);
             btnRun.Click += async (_, __) => await RunAsync();
-            btnCancel.Click += (_, __) => MessageBox.Show("Cancel not implemented yet.", "Info");
+            btnCancel.Click += (_, __) => _cts?.Cancel();
 
             // Initialize progress reporter
             _progressReporter = new Progress<ProgressInfo>(OnProgressReported);
@@ -133,7 +136,7 @@ namespace AutoFolder.UI
         private void SetBusy(bool isBusy)
         {
             btnRun.Enabled = !isBusy;
-            btnCancel.Enabled = false; // not implemented yet
+            btnCancel.Enabled = isBusy;
             txtSource.Enabled = !isBusy;
             btnBrowseSource.Enabled = !isBusy;
             txtDestination.Enabled = !isBusy;
@@ -189,6 +192,8 @@ namespace AutoFolder.UI
             progressBar.Value = 0;
             SetBusy(true);
 
+            _cts = new CancellationTokenSource();
+
             try
             {
                 Log(UiMessages.Starting);
@@ -203,11 +208,17 @@ namespace AutoFolder.UI
                           normalizeGroupNames: normalize,
                           dryRun: dryRun,
                           progress: _progressReporter,
-                          log: Log
+                          log: Log,
+                          cancellationToken: _cts.Token
                       );
                 });
 
                 MessageBox.Show(this, dryRun ? UiMessages.SimulationCompleted : UiMessages.OrganizationCompleted, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (OperationCanceledException)
+            {
+                Log(UiMessages.OperationCanceled);
+                MessageBox.Show(this, UiMessages.OperationCanceled, "Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

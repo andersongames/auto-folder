@@ -64,6 +64,9 @@ public class FileOrganizer
     // For each group, create a folder and copy the files into it
     foreach (var group in groupedFiles)
     {
+      // Check for cancellation request
+      cancellationToken.ThrowIfCancellationRequested();
+
       string groupName = group.Key;
 
       // Optionally normalize group name
@@ -96,6 +99,9 @@ public class FileOrganizer
 
       foreach (var filePath in group.Value)
       {
+        // Check for cancellation request
+        cancellationToken.ThrowIfCancellationRequested();
+
         string destinationPath = Path.Combine(Path.GetFullPath(targetFolder), Path.GetFileName(filePath));
 
         try
