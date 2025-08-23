@@ -191,7 +191,7 @@ namespace AutoFolder.UI
 
             try
             {
-                Log("Starting organization...");
+                Log(UiMessages.Starting);
                 // Offload to background thread so the UI stays responsive.
                 await Task.Run(() =>
                 {
