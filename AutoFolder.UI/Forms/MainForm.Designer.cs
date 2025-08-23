@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             lblSource = new Label();
             txtSource = new TextBox();
             btnBrowseSource = new Button();
@@ -261,6 +262,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(955, 621);
             Controls.Add(tableLayoutPanel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainForm";
             Text = "Auto Folder";
             tableLayoutPanel1.ResumeLayout(false);

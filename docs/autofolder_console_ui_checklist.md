@@ -27,8 +27,8 @@
 
 ## 🔹 Quality and Refinement
 - [x] Handle unforeseen exceptions (show user-friendly error).
-- [ ] Add **icon** and name the Form "AutoFolder".
-- [ ] Test in real scenarios (different extensions, dry-run, etc.).
+- [x] Add **icon** and name the Form "AutoFolder".
+- [x] Test in real scenarios (different extensions, dry-run, etc.).
 - [ ] Package standalone release with `dotnet publish`.
 
 ## 🔹 (Optional / Future)
