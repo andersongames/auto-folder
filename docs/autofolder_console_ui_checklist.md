@@ -26,13 +26,13 @@
 - [x] Validate user inputs (directories exist, valid extension, etc.).
 
 ## 🔹 Quality and Refinement
-- [ ] Handle unforeseen exceptions (show user-friendly error).
+- [x] Handle unforeseen exceptions (show user-friendly error).
 - [ ] Add **icon** and name the Form "AutoFolder".
 - [ ] Test in real scenarios (different extensions, dry-run, etc.).
 - [ ] Package standalone release with `dotnet publish`.
 
 ## 🔹 (Optional / Future)
-- [ ] Improve layout with TableLayoutPanel or FlowLayoutPanel.
+- [x] Improve layout with TableLayoutPanel or FlowLayoutPanel.
 - [ ] Add "Settings" menu for preferences.
 - [ ] Create an installer (MSIX or Setup).
 - [ ] Update the README.md to include the AutoFolder.UI project

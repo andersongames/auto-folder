@@ -44,12 +44,14 @@
             btnCancel = new Button();
             progressBar = new ProgressBar();
             logBox = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // lblSource
             // 
             lblSource.AutoSize = true;
-            lblSource.Location = new Point(12, 9);
+            lblSource.Location = new Point(11, 8);
             lblSource.Name = "lblSource";
             lblSource.Size = new Size(93, 15);
             lblSource.TabIndex = 0;
@@ -57,14 +59,16 @@
             // 
             // txtSource
             // 
-            txtSource.Location = new Point(12, 27);
+            tableLayoutPanel1.SetColumnSpan(txtSource, 3);
+            txtSource.Dock = DockStyle.Fill;
+            txtSource.Location = new Point(11, 26);
             txtSource.Name = "txtSource";
-            txtSource.Size = new Size(695, 23);
+            txtSource.Size = new Size(852, 23);
             txtSource.TabIndex = 1;
             // 
             // btnBrowseSource
             // 
-            btnBrowseSource.Location = new Point(713, 26);
+            btnBrowseSource.Location = new Point(869, 26);
             btnBrowseSource.Name = "btnBrowseSource";
             btnBrowseSource.Size = new Size(75, 23);
             btnBrowseSource.TabIndex = 2;
@@ -74,7 +78,7 @@
             // lblDestination
             // 
             lblDestination.AutoSize = true;
-            lblDestination.Location = new Point(12, 64);
+            lblDestination.Location = new Point(11, 52);
             lblDestination.Name = "lblDestination";
             lblDestination.Size = new Size(172, 15);
             lblDestination.TabIndex = 3;
@@ -83,7 +87,7 @@
             // lblExtension
             // 
             lblExtension.AutoSize = true;
-            lblExtension.Location = new Point(12, 126);
+            lblExtension.Location = new Point(11, 96);
             lblExtension.Name = "lblExtension";
             lblExtension.Size = new Size(195, 15);
             lblExtension.TabIndex = 4;
@@ -91,32 +95,36 @@
             // 
             // txtDestination
             // 
-            txtDestination.Location = new Point(12, 82);
+            tableLayoutPanel1.SetColumnSpan(txtDestination, 3);
+            txtDestination.Dock = DockStyle.Fill;
+            txtDestination.Location = new Point(11, 70);
             txtDestination.Name = "txtDestination";
-            txtDestination.Size = new Size(695, 23);
+            txtDestination.Size = new Size(852, 23);
             txtDestination.TabIndex = 5;
             // 
             // txtExtension
             // 
-            txtExtension.Location = new Point(12, 144);
+            txtExtension.Dock = DockStyle.Fill;
+            txtExtension.Location = new Point(11, 114);
             txtExtension.Name = "txtExtension";
-            txtExtension.Size = new Size(100, 23);
+            txtExtension.Size = new Size(195, 23);
             txtExtension.TabIndex = 6;
             // 
             // txtLog
             // 
-            txtLog.Dock = DockStyle.Bottom;
-            txtLog.Location = new Point(0, 321);
+            tableLayoutPanel1.SetColumnSpan(txtLog, 4);
+            txtLog.Dock = DockStyle.Fill;
+            txtLog.Location = new Point(11, 262);
             txtLog.Multiline = true;
             txtLog.Name = "txtLog";
             txtLog.ReadOnly = true;
             txtLog.ScrollBars = ScrollBars.Both;
-            txtLog.Size = new Size(800, 129);
+            txtLog.Size = new Size(933, 348);
             txtLog.TabIndex = 7;
             // 
             // btnBrowseDestination
             // 
-            btnBrowseDestination.Location = new Point(713, 82);
+            btnBrowseDestination.Location = new Point(869, 70);
             btnBrowseDestination.Name = "btnBrowseDestination";
             btnBrowseDestination.Size = new Size(75, 23);
             btnBrowseDestination.TabIndex = 8;
@@ -125,7 +133,7 @@
             // 
             // btnRun
             // 
-            btnRun.Location = new Point(713, 267);
+            btnRun.Location = new Point(869, 218);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(75, 23);
             btnRun.TabIndex = 9;
@@ -135,7 +143,7 @@
             // chkDeleteOriginals
             // 
             chkDeleteOriginals.AutoSize = true;
-            chkDeleteOriginals.Location = new Point(12, 182);
+            chkDeleteOriginals.Location = new Point(11, 143);
             chkDeleteOriginals.Name = "chkDeleteOriginals";
             chkDeleteOriginals.Size = new Size(163, 19);
             chkDeleteOriginals.TabIndex = 10;
@@ -145,7 +153,7 @@
             // chkNormalize
             // 
             chkNormalize.AutoSize = true;
-            chkNormalize.Location = new Point(12, 207);
+            chkNormalize.Location = new Point(11, 168);
             chkNormalize.Name = "chkNormalize";
             chkNormalize.Size = new Size(153, 19);
             chkNormalize.TabIndex = 11;
@@ -155,7 +163,7 @@
             // chkDryRun
             // 
             chkDryRun.AutoSize = true;
-            chkDryRun.Location = new Point(12, 232);
+            chkDryRun.Location = new Point(11, 193);
             chkDryRun.Name = "chkDryRun";
             chkDryRun.Size = new Size(160, 19);
             chkDryRun.TabIndex = 12;
@@ -164,7 +172,7 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(632, 267);
+            btnCancel.Location = new Point(788, 218);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(75, 23);
             btnCancel.TabIndex = 13;
@@ -173,44 +181,77 @@
             // 
             // progressBar
             // 
-            progressBar.Location = new Point(12, 267);
+            tableLayoutPanel1.SetColumnSpan(progressBar, 2);
+            progressBar.Dock = DockStyle.Fill;
+            progressBar.Location = new Point(11, 218);
             progressBar.Name = "progressBar";
-            progressBar.Size = new Size(614, 23);
+            progressBar.Size = new Size(771, 23);
             progressBar.Step = 1;
             progressBar.TabIndex = 14;
             // 
             // logBox
             // 
             logBox.AutoSize = true;
-            logBox.Location = new Point(12, 303);
+            logBox.Location = new Point(11, 244);
             logBox.Name = "logBox";
             logBox.Size = new Size(27, 15);
             logBox.TabIndex = 15;
             logBox.Text = "Log";
             // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.AutoSize = true;
+            tableLayoutPanel1.ColumnCount = 4;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.Controls.Add(lblSource, 0, 0);
+            tableLayoutPanel1.Controls.Add(txtExtension, 0, 5);
+            tableLayoutPanel1.Controls.Add(txtSource, 0, 1);
+            tableLayoutPanel1.Controls.Add(lblExtension, 0, 4);
+            tableLayoutPanel1.Controls.Add(chkDeleteOriginals, 0, 6);
+            tableLayoutPanel1.Controls.Add(lblDestination, 0, 2);
+            tableLayoutPanel1.Controls.Add(txtDestination, 0, 3);
+            tableLayoutPanel1.Controls.Add(txtLog, 0, 11);
+            tableLayoutPanel1.Controls.Add(logBox, 0, 10);
+            tableLayoutPanel1.Controls.Add(progressBar, 0, 9);
+            tableLayoutPanel1.Controls.Add(chkDryRun, 0, 8);
+            tableLayoutPanel1.Controls.Add(chkNormalize, 0, 7);
+            tableLayoutPanel1.Controls.Add(btnRun, 3, 9);
+            tableLayoutPanel1.Controls.Add(btnBrowseDestination, 3, 3);
+            tableLayoutPanel1.Controls.Add(btnBrowseSource, 3, 1);
+            tableLayoutPanel1.Controls.Add(btnCancel, 2, 9);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.Padding = new Padding(8);
+            tableLayoutPanel1.RowCount = 12;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(955, 621);
+            tableLayoutPanel1.TabIndex = 16;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(logBox);
-            Controls.Add(progressBar);
-            Controls.Add(btnCancel);
-            Controls.Add(chkDryRun);
-            Controls.Add(chkNormalize);
-            Controls.Add(chkDeleteOriginals);
-            Controls.Add(btnRun);
-            Controls.Add(btnBrowseDestination);
-            Controls.Add(txtLog);
-            Controls.Add(txtExtension);
-            Controls.Add(txtDestination);
-            Controls.Add(lblExtension);
-            Controls.Add(lblDestination);
-            Controls.Add(btnBrowseSource);
-            Controls.Add(txtSource);
-            Controls.Add(lblSource);
+            ClientSize = new Size(955, 621);
+            Controls.Add(tableLayoutPanel1);
             Name = "MainForm";
             Text = "Auto Folder";
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -233,5 +274,6 @@
         private Button btnCancel;
         private ProgressBar progressBar;
         private Label logBox;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }
