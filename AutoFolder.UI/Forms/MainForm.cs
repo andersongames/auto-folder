@@ -72,7 +72,7 @@ namespace AutoFolder.UI
                 target.Text = dlg.SelectedPath;
 
             // Auto-fill the destination text box
-            if (!string.IsNullOrWhiteSpace(lblDestination.Text))
+            if (string.IsNullOrWhiteSpace(txtDestination.Text))
                 txtDestination.Text = dlg.SelectedPath;
         }
 
@@ -100,14 +100,15 @@ namespace AutoFolder.UI
                     return false;
                 }
 
-                if (!Directory.Exists(dest) && !FileOrganizer.IsPathSyntacticallyValid(dest))
+                if (!Directory.Exists(dest))
                 {
-                    // Destination directory: If it does not exist, it must be syntactically valid
-                    ErrorDialog.ShowWarning(this, UiMessages.InvalidDestination);
-                    return false;
-                }
-                else
-                {
+                    if (!FileOrganizer.IsPathSyntacticallyValid(dest))
+                    {
+                        // Destination directory: If it does not exist, it must be syntactically valid
+                        ErrorDialog.ShowWarning(this, UiMessages.InvalidDestination);
+                        return false;
+                    }
+
                     if (!chkDryRun.Checked)
                     {
                         // Destination directory: Ask for create the new  directory
