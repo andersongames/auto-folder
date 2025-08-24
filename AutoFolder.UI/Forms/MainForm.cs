@@ -108,19 +108,21 @@ namespace AutoFolder.UI
                 }
                 else
                 {
-                    // Destination directory: Ask for create the new  directory
-                    DialogResult result = MessageBox.Show(
-                        this,
-                        $"Destination directory not found. Do you want to create it?:\n{Path.GetFullPath(dest)} ",
-                        "Directory not found",
-                        MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Question
-                    );
+                    if (!chkDryRun.Checked)
+                    {
+                        // Destination directory: Ask for create the new  directory
+                        DialogResult result = MessageBox.Show(
+                            this,
+                            $"Destination directory not found. Do you want to create it?:\n{Path.GetFullPath(dest)} ",
+                            "Directory not found",
+                            MessageBoxButtons.OKCancel,
+                            MessageBoxIcon.Question
+                        );
 
-                    if (result == DialogResult.Cancel)
-                        return false;
+                        if (result == DialogResult.Cancel)
+                            return false;
+                    }
                 }
-
 
                 // Extra protection: prevents the destination directory from being the program directory
                 string exeDir = AppDomain.CurrentDomain.BaseDirectory;
