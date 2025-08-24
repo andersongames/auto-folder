@@ -47,6 +47,8 @@
             logBox = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             statusLabel = new Label();
+            cmbTheme = new ComboBox();
+            lblTheme = new Label();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -226,6 +228,8 @@
             tableLayoutPanel1.Controls.Add(btnBrowseSource, 3, 1);
             tableLayoutPanel1.Controls.Add(btnCancel, 2, 10);
             tableLayoutPanel1.Controls.Add(statusLabel, 0, 9);
+            tableLayoutPanel1.Controls.Add(cmbTheme, 3, 5);
+            tableLayoutPanel1.Controls.Add(lblTheme, 3, 4);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -255,6 +259,24 @@
             statusLabel.Size = new Size(42, 15);
             statusLabel.TabIndex = 16;
             statusLabel.Text = "Status:";
+            // 
+            // cmbTheme
+            // 
+            cmbTheme.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbTheme.FormattingEnabled = true;
+            cmbTheme.Location = new Point(869, 114);
+            cmbTheme.Name = "cmbTheme";
+            cmbTheme.Size = new Size(75, 23);
+            cmbTheme.TabIndex = 17;
+            // 
+            // lblTheme
+            // 
+            lblTheme.AutoSize = true;
+            lblTheme.Location = new Point(869, 96);
+            lblTheme.Name = "lblTheme";
+            lblTheme.Size = new Size(43, 15);
+            lblTheme.TabIndex = 18;
+            lblTheme.Text = "Theme";
             // 
             // MainForm
             // 
@@ -291,5 +313,7 @@
         private Label logBox;
         private TableLayoutPanel tableLayoutPanel1;
         private Label statusLabel;
+        private ComboBox cmbTheme;
+        private Label lblTheme;
     }
 }

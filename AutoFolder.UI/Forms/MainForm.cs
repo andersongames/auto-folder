@@ -1,4 +1,5 @@
 using AutoFolder.Core;
+using AutoFolder.UI.Helpers;
 using AutoFolder.UI.Infrastructure;
 using AutoFolder.UI.Resources;
 using System;
@@ -32,6 +33,14 @@ namespace AutoFolder.UI
             // Initial UI state
             Text = "AutoFolder";
             btnCancel.Enabled = false; // We'll enable cancel when we add CancellationToken later.
+            ThemeHelper.ApplyTheme(this, ThemeHelper.ThemeMode.Auto);
+            cmbTheme.Items.AddRange(["Auto", "Light", "Dark"]);
+            cmbTheme.SelectedIndex = 0;
+            cmbTheme.SelectedIndexChanged += (_, __) =>
+            {
+                var mode = (ThemeHelper.ThemeMode)cmbTheme.SelectedIndex;
+                ThemeHelper.ApplyTheme(this, mode);
+            };
 
             // Wire up basic events
             btnBrowseSource.Click += (_, __) => BrowseFolder(txtSource);
@@ -137,6 +146,7 @@ namespace AutoFolder.UI
         {
             btnRun.Enabled = !isBusy;
             btnCancel.Enabled = isBusy;
+            cmbTheme.Enabled = !isBusy;
             txtSource.Enabled = !isBusy;
             btnBrowseSource.Enabled = !isBusy;
             txtDestination.Enabled = !isBusy;
