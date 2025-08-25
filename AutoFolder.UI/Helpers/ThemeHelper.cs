@@ -95,10 +95,6 @@ namespace AutoFolder.UI.Helpers
                     button.Paint -= null;
                 }
             }
-            else if (control is ProgressBar)
-            {
-                control.BackColor = backColor;
-            }
             else
             {
                 control.BackColor = backColor;

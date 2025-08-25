@@ -32,21 +32,19 @@ namespace AutoFolder.UI
 
             // Initial UI state
             Text = "AutoFolder";
-            btnCancel.Enabled = false; // We'll enable cancel when we add CancellationToken later.
+            btnCancel.Enabled = false;
             ThemeHelper.ApplyTheme(this, ThemeHelper.ThemeMode.Auto);
-            cmbTheme.Items.AddRange(["Auto", "Light", "Dark"]);
-            cmbTheme.SelectedIndex = 0;
-            cmbTheme.SelectedIndexChanged += (_, __) =>
-            {
-                var mode = (ThemeHelper.ThemeMode)cmbTheme.SelectedIndex;
-                ThemeHelper.ApplyTheme(this, mode);
-            };
 
             // Wire up basic events
             btnBrowseSource.Click += (_, __) => BrowseFolder(txtSource);
             btnBrowseDestination.Click += (_, __) => BrowseFolder(txtDestination);
             btnRun.Click += async (_, __) => await RunAsync();
             btnCancel.Click += (_, __) => _cts?.Cancel();
+            exitMenuItem.Click += (_, __) => Close();
+            themeAutoMenuItem.Click  += (_, __) => SetTheme(ThemeHelper.ThemeMode.Auto, themeAutoMenuItem);
+            themeLightMenuItem.Click += (_, __) => SetTheme(ThemeHelper.ThemeMode.Light, themeLightMenuItem);
+            themeDarkMenuItem.Click  += (_, __) => SetTheme(ThemeHelper.ThemeMode.Dark, themeDarkMenuItem);
+            aboutMenuItem.Click  += (_, __) => MessageBox.Show("AutoFolder v1.0\nDeveloped by Anderson Games", "About AutoFolder");
 
             // Initialize progress reporter
             _progressReporter = new Progress<ProgressInfo>(OnProgressReported);
@@ -149,7 +147,7 @@ namespace AutoFolder.UI
         {
             btnRun.Enabled = !isBusy;
             btnCancel.Enabled = isBusy;
-            cmbTheme.Enabled = !isBusy;
+            exitMenuItem.Enabled = !isBusy;
             txtSource.Enabled = !isBusy;
             btnBrowseSource.Enabled = !isBusy;
             txtDestination.Enabled = !isBusy;
@@ -272,6 +270,24 @@ namespace AutoFolder.UI
 
             // Update status label
             statusLabel.Text = $"{UiMessages.Status} [{info.Processed}/{info.Total}] / {stage} {Path.GetFileName(info.CurrentFile)}";
+        }
+
+        /// <summary>
+        /// Applies the selected theme to the application and updates the menu items' checked states.
+        /// Ensures that only the selected theme menu item is marked as checked while others are unchecked.
+        /// </summary>
+        private void SetTheme(ThemeHelper.ThemeMode mode, ToolStripMenuItem selectedItem)
+        {
+            // 1. Apply theme
+            ThemeHelper.ApplyTheme(this, mode);
+
+            // 2. Uncheck all theme items first
+            themeAutoMenuItem.Checked = false;
+            themeLightMenuItem.Checked = false;
+            themeDarkMenuItem.Checked = false;
+
+            // 3. Check only the selected one
+            selectedItem.Checked = true;
         }
     }
 }
