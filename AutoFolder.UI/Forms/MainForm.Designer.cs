@@ -185,8 +185,10 @@
             // 
             // progressBar
             // 
+            progressBar.BackColor = SystemColors.Control;
             tableLayoutPanel1.SetColumnSpan(progressBar, 2);
             progressBar.Dock = DockStyle.Fill;
+            progressBar.ForeColor = SystemColors.ControlDark;
             progressBar.Location = new Point(11, 238);
             progressBar.Name = "progressBar";
             progressBar.Size = new Size(771, 23);

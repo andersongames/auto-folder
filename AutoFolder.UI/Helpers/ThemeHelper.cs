@@ -95,6 +95,10 @@ namespace AutoFolder.UI.Helpers
                     button.Paint -= null;
                 }
             }
+            else if (control is ProgressBar)
+            {
+                control.BackColor = backColor;
+            }
             else
             {
                 control.BackColor = backColor;
@@ -107,6 +111,12 @@ namespace AutoFolder.UI.Helpers
             }
         }
 
+        /// <summary>
+        /// Configures a Button control for dark mode appearance by applying a flat style,
+        /// custom background, foreground, and border colors. Also overrides the default 
+        /// disabled rendering behavior to ensure the text remains visible by drawing it 
+        /// with a custom gray color when the button is disabled.
+        /// </summary>
         private static void CustomizeButtonForDarkMode(Button button)
         {
             button.FlatStyle = FlatStyle.Flat;

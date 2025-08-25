@@ -112,23 +112,31 @@ public class FileOrganizer
             Logger.Log($"[DRY-RUN] Would copy: {filePath} → {destinationPath}", true);
             log?.Invoke($"📄 Would copy: {filePath} → {destinationPath}");
 
+            // Report copy progress for dry-run
+            progress?.Report(new ProgressInfo(
+                deleteOriginals ? processedCount : processedCount + 1,
+                filteredFiles.Length,
+                filePath,
+                "dry-run-copy"
+            ));
+
             if (deleteOriginals)
             {
               // Simulate deletion
               Logger.Log($"[DRY-RUN] Would delete: {filePath}", true);
-              log?.Invoke($"[DRY-RUN] Would delete: {filePath}");
+              log?.Invoke($"🗑️ Would delete: {filePath}");
+
+              // Report delete progress for dry-run
+              progress?.Report(new ProgressInfo(
+                  processedCount + 1,
+                  filteredFiles.Length,
+                  filePath,
+                  "dry-run-delete"
+              ));
             }
 
             groupProcessedCount++;
             processedCount++;
-
-            // Report progress for dry-run
-            progress?.Report(new ProgressInfo(
-                processedCount,
-                filteredFiles.Length,
-                filePath,
-                "dry-run"
-            ));
 
             continue;
           }
@@ -138,25 +146,33 @@ public class FileOrganizer
           Logger.Log($"Copied: {filePath} → {destinationPath}");
           log?.Invoke($"📄 Copied: {filePath} → {destinationPath}");
 
+          // Report copy progress to UI (if any observer is attached)
+          progress?.Report(new ProgressInfo(
+              deleteOriginals ? processedCount : processedCount + 1,
+              filteredFiles.Length,
+              filePath,
+              "copy"
+          ));
+
           // Optionally delete the original file after a successful copy
           if (deleteOriginals)
           {
             File.Delete(filePath);
             Logger.Log($"Deleted: {filePath}");
             log?.Invoke($"Deleted: {filePath}");
+
+            // Report delete progress to UI (if any observer is attached)
+            progress?.Report(new ProgressInfo(
+                processedCount + 1,
+                filteredFiles.Length,
+                filePath,
+                "delete"
+            ));
           }
 
           // Increment the counters only if the file was successfully handled
           groupProcessedCount++;
           processedCount++;
-
-          // Report progress to UI (if any observer is attached)
-          progress?.Report(new ProgressInfo(
-              processedCount,
-              filteredFiles.Length,
-              filePath,
-              dryRun ? "dry-run" : (deleteOriginals ? "copy+delete" : "copy")
-          ));
         }
         catch (Exception ex)
         {

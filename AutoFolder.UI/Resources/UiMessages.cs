@@ -13,5 +13,11 @@
         public const string OrganizationCompleted = "Organization complete. Check the log for details.";
         public const string SimulationCompleted = "Simulation completed. Check the log for details.";
         public const string OperationCanceled = "Operation canceled by user.";
+        public const string DestinationNotFound = "Destination directory not found. Do you want to create it?";
+        public const string DirectoryNotFound = "Directory not found";
+        public const string DirectorySelection = "Select a folder";
+        public const string Status = "Status:";
+        public const string CopyStage = "Copying:";
+        public const string DeleteStage = "Deleting:";
     }
 }

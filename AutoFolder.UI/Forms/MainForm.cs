@@ -60,7 +60,7 @@ namespace AutoFolder.UI
         {
             using var dlg = new FolderBrowserDialog
             {
-                Description = "Select a folder",
+                Description = UiMessages.DirectorySelection,
                 UseDescriptionForTitle = true
             };
 
@@ -114,8 +114,8 @@ namespace AutoFolder.UI
                         // Destination directory: Ask for create the new  directory
                         DialogResult result = MessageBox.Show(
                             this,
-                            $"Destination directory not found. Do you want to create it?:\n{Path.GetFullPath(dest)} ",
-                            "Directory not found",
+                            $"{UiMessages.DestinationNotFound}\n{Path.GetFullPath(dest)} ",
+                            UiMessages.DirectoryNotFound,
                             MessageBoxButtons.OKCancel,
                             MessageBoxIcon.Question
                         );
@@ -246,7 +246,7 @@ namespace AutoFolder.UI
 
                 // Restore progress bar and status label
                 progressBar.Value = 0;
-                statusLabel.Text = "Status:";
+                statusLabel.Text = UiMessages.Status;
             }
         }
 
@@ -268,8 +268,10 @@ namespace AutoFolder.UI
                 progressBar.Value = percent;
             }
 
+            string stage = info.Stage == "copy" || info.Stage == "dry-run-copy" ? UiMessages.CopyStage : UiMessages.DeleteStage;
+
             // Update status label
-            statusLabel.Text = $"Status: [{info.Processed}/{info.Total}] {info.CurrentFile}";
+            statusLabel.Text = $"{UiMessages.Status} [{info.Processed}/{info.Total}] / {stage} {Path.GetFileName(info.CurrentFile)}";
         }
     }
 }
