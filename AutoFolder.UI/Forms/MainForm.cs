@@ -34,6 +34,8 @@ namespace AutoFolder.UI
             Text = "AutoFolder";
             btnCancel.Enabled = false;
             ThemeHelper.ApplyTheme(this, ThemeHelper.ThemeMode.Auto);
+            // Control the text color of the Strip Menu, to look good in Dark mode
+            ThemeHelper.ApplyMenuStripColors(menuStripMain);
 
             // Wire up basic events
             btnBrowseSource.Click += (_, __) => BrowseFolder(txtSource);
@@ -41,10 +43,10 @@ namespace AutoFolder.UI
             btnRun.Click += async (_, __) => await RunAsync();
             btnCancel.Click += (_, __) => _cts?.Cancel();
             exitMenuItem.Click += (_, __) => Close();
-            themeAutoMenuItem.Click  += (_, __) => SetTheme(ThemeHelper.ThemeMode.Auto, themeAutoMenuItem);
+            themeAutoMenuItem.Click += (_, __) => SetTheme(ThemeHelper.ThemeMode.Auto, themeAutoMenuItem);
             themeLightMenuItem.Click += (_, __) => SetTheme(ThemeHelper.ThemeMode.Light, themeLightMenuItem);
-            themeDarkMenuItem.Click  += (_, __) => SetTheme(ThemeHelper.ThemeMode.Dark, themeDarkMenuItem);
-            aboutMenuItem.Click  += (_, __) => MessageBox.Show("AutoFolder v1.0\nDeveloped by Anderson Games", "About AutoFolder");
+            themeDarkMenuItem.Click += (_, __) => SetTheme(ThemeHelper.ThemeMode.Dark, themeDarkMenuItem);
+            aboutMenuItem.Click += (_, __) => MessageBox.Show("AutoFolder v1.0\nDeveloped by Anderson Games", "About AutoFolder");
 
             // Initialize progress reporter
             _progressReporter = new Progress<ProgressInfo>(OnProgressReported);
@@ -288,6 +290,12 @@ namespace AutoFolder.UI
 
             // 3. Check only the selected one
             selectedItem.Checked = true;
+
+            // 4. Control the text color of the View Strip Menu
+            if (ThemeHelper.IsDarkMode)
+                viewMenuItem.ForeColor = Color.WhiteSmoke;
+            else
+                viewMenuItem.ForeColor = SystemColors.ControlText;
         }
     }
 }

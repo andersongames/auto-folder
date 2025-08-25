@@ -292,7 +292,7 @@
             // exitMenuItem
             // 
             exitMenuItem.Name = "exitMenuItem";
-            exitMenuItem.Size = new Size(180, 22);
+            exitMenuItem.Size = new Size(93, 22);
             exitMenuItem.Text = "Exit";
             // 
             // viewMenuItem
@@ -306,7 +306,7 @@
             // 
             themeMenuItem.DropDownItems.AddRange(new ToolStripItem[] { themeAutoMenuItem, themeLightMenuItem, themeDarkMenuItem });
             themeMenuItem.Name = "themeMenuItem";
-            themeMenuItem.Size = new Size(110, 22);
+            themeMenuItem.Size = new Size(180, 22);
             themeMenuItem.Text = "Theme";
             // 
             // themeAutoMenuItem

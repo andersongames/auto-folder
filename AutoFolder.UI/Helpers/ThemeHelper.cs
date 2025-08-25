@@ -27,6 +27,13 @@ namespace AutoFolder.UI.Helpers
         public static ThemeMode CurrentThemeMode { get; private set; } = ThemeMode.Auto;
 
         /// <summary>
+        /// Stores the current theme (light or dark).
+        /// </summary>
+        public static bool IsDarkMode { get; private set; } =
+            (CurrentThemeMode == ThemeMode.Dark) ||
+            (CurrentThemeMode == ThemeMode.Auto && IsSystemDarkMode());
+
+        /// <summary>
         /// Determines if Windows is currently set to dark mode for apps.
         /// </summary>
         private static bool IsSystemDarkMode()
@@ -67,10 +74,12 @@ namespace AutoFolder.UI.Helpers
             if (useDark)
             {
                 ApplyColors(form, Color.FromArgb(45, 45, 48), Color.WhiteSmoke, useDark);
+                IsDarkMode = true;
             }
             else
             {
                 ApplyColors(form, SystemColors.Control, SystemColors.ControlText);
+                IsDarkMode = false;
             }
         }
 
@@ -138,6 +147,32 @@ namespace AutoFolder.UI.Helpers
                     );
                 }
             };
+        }
+
+        /// <summary>
+        /// Applies dark or light mode styling to a MenuStrip and its top-level items.
+        /// Ensures proper text color so that items remain visible when selected.
+        /// </summary>
+        public static void ApplyMenuStripColors(MenuStrip menuStrip)
+        {
+            if (menuStrip == null) return;
+
+            foreach (ToolStripMenuItem item in menuStrip.Items)
+            {
+                item.DropDownOpened += (_, __) => item.Checked = true;
+                item.DropDownClosed += (_, __) => item.Checked = false;
+
+                item.CheckedChanged += (_, __) =>
+                {
+                    if (IsDarkMode)
+                    {
+                        if (item.Checked)
+                            item.ForeColor = SystemColors.ControlText;
+                        else
+                            item.ForeColor = Color.WhiteSmoke;
+                    }
+                };
+            }
         }
     }
 }
