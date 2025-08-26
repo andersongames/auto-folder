@@ -1,12 +1,16 @@
 # Build results
 bin/
 obj/
+BundleArtifacts/
+AppPackages/
 
 # User-specific files
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+*.pfx
+*.cache
 
 # VS Code settings
 .vscode/

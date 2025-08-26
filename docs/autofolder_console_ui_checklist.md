@@ -35,4 +35,4 @@
 - [x] Improve layout with TableLayoutPanel or FlowLayoutPanel.
 - [x] Add "Settings" menu for preferences.
 - [x] Update the README.md to include the AutoFolder.UI project.
-- [ ] Create an installer (MSIX or Setup).
+- [x] Create an installer (MSIX).
