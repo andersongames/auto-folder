@@ -150,6 +150,33 @@ namespace AutoFolder.UI.Helpers
         }
 
         /// <summary>
+        /// Applies the selected theme to the given form, updates the theme menu items, 
+        /// and ensures only the chosen item is checked. 
+        /// Also updates all MenuStrip items to match the current theme colors.
+        /// </summary>
+        public static void SetTheme(Form form, ThemeMode mode, ToolStripMenuItem themeMenu, ToolStripMenuItem selectedItem, MenuStrip menuStrip)
+        {
+            // 1. Apply theme
+            ApplyTheme(form, mode);
+
+            // 2. Uncheck all theme items first
+            foreach (ToolStripMenuItem item in themeMenu.DropDownItems)
+                item.Checked = false;
+
+            // 3. Check only the selected one
+            selectedItem.Checked = true;
+
+            // 4. Apply colors to all menu items (to fix visibility in dark mode)
+            foreach (ToolStripMenuItem item in menuStrip.Items)
+            {
+                if (IsDarkMode)
+                    item.ForeColor = Color.WhiteSmoke;
+                else
+                    item.ForeColor = SystemColors.ControlText;
+            }
+        }
+
+        /// <summary>
         /// Applies dark or light mode styling to a MenuStrip and its top-level items.
         /// Ensures proper text color so that items remain visible when selected.
         /// </summary>

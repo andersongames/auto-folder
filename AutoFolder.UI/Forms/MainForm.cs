@@ -34,7 +34,7 @@ namespace AutoFolder.UI
             Text = "AutoFolder";
             btnCancel.Enabled = false;
             ThemeHelper.ApplyTheme(this, ThemeHelper.ThemeMode.Auto);
-            // Control the text color of the Strip Menu, to look good in Dark mode
+            // Control the text color of the Strip Menu, so text is not invisible when selected in Dark Mode
             ThemeHelper.ApplyMenuStripColors(menuStripMain);
 
             // Wire up basic events
@@ -43,9 +43,9 @@ namespace AutoFolder.UI
             btnRun.Click += async (_, __) => await RunAsync();
             btnCancel.Click += (_, __) => _cts?.Cancel();
             exitMenuItem.Click += (_, __) => Close();
-            themeAutoMenuItem.Click += (_, __) => SetTheme(ThemeHelper.ThemeMode.Auto, themeAutoMenuItem);
-            themeLightMenuItem.Click += (_, __) => SetTheme(ThemeHelper.ThemeMode.Light, themeLightMenuItem);
-            themeDarkMenuItem.Click += (_, __) => SetTheme(ThemeHelper.ThemeMode.Dark, themeDarkMenuItem);
+            themeAutoMenuItem.Click += (_, __) => ThemeHelper.SetTheme(this, ThemeHelper.ThemeMode.Auto, themeMenuItem, themeAutoMenuItem, menuStripMain);
+            themeLightMenuItem.Click += (_, __) => ThemeHelper.SetTheme(this, ThemeHelper.ThemeMode.Light, themeMenuItem, themeLightMenuItem, menuStripMain);
+            themeDarkMenuItem.Click += (_, __) => ThemeHelper.SetTheme(this, ThemeHelper.ThemeMode.Dark, themeMenuItem, themeDarkMenuItem, menuStripMain);
             aboutMenuItem.Click += (_, __) => MessageBox.Show("AutoFolder v1.0\nDeveloped by Anderson Games", "About AutoFolder");
 
             // Initialize progress reporter
@@ -272,30 +272,6 @@ namespace AutoFolder.UI
 
             // Update status label
             statusLabel.Text = $"{UiMessages.Status} [{info.Processed}/{info.Total}] / {stage} {Path.GetFileName(info.CurrentFile)}";
-        }
-
-        /// <summary>
-        /// Applies the selected theme to the application and updates the menu items' checked states.
-        /// Ensures that only the selected theme menu item is marked as checked while others are unchecked.
-        /// </summary>
-        private void SetTheme(ThemeHelper.ThemeMode mode, ToolStripMenuItem selectedItem)
-        {
-            // 1. Apply theme
-            ThemeHelper.ApplyTheme(this, mode);
-
-            // 2. Uncheck all theme items first
-            themeAutoMenuItem.Checked = false;
-            themeLightMenuItem.Checked = false;
-            themeDarkMenuItem.Checked = false;
-
-            // 3. Check only the selected one
-            selectedItem.Checked = true;
-
-            // 4. Control the text color of the View Strip Menu
-            if (ThemeHelper.IsDarkMode)
-                viewMenuItem.ForeColor = Color.WhiteSmoke;
-            else
-                viewMenuItem.ForeColor = SystemColors.ControlText;
         }
     }
 }
