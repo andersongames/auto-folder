@@ -9,7 +9,7 @@
   <Identity
     Name="e7d05fdf-b011-4504-9692-a5cd7ad1c2a5"
     Publisher="CN=anderson games"
-    Version="1.0.1.0" />
+    Version="1.0.0.0" />
 
   <Properties>
     <DisplayName>AutoFolder</DisplayName>
