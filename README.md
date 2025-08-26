@@ -18,7 +18,12 @@ The solution currently contains **3 projects**:
    - Accepts user input (directory, extension, flags).  
    - Uses the core library internally.
 
-3. **AutoFolder.Tests**  
+3. **AutoFolder.UI**  
+   - Windows Forms graphical interface.  
+   - Provides a more user-friendly way to configure and run AutoFolder.  
+   - Supports progress bar, cancellation, logging messages inside the UI, theming (light/dark/auto), and accessible menu options.
+
+43. **AutoFolder.Tests**  
    - Unit and integration tests.  
    - Uses **xUnit** to validate all functionality.
 
@@ -99,6 +104,8 @@ dotnet test
 
 ## 📦 Publishing Standalone Executable
 
+### ConsoleApp
+
 To publish a self-contained `.exe` for Windows 10/11 (x64):
 
 ```bash
@@ -109,6 +116,20 @@ The executable will be available at:
 
 ```
 /AutoFolder.ConsoleApp/bin/Release/net6.0/win10-x64/publish/AutoFolder.ConsoleApp.exe
+```
+
+### AutoFolder.UI
+
+To generate a standalone `.exe` for **AutoFolder.UI** (no installer, no dependency on .NET runtime):
+
+```bash
+dotnet publish AutoFolder.UI -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true
+```
+
+The executable will be available at:
+
+```
+AutoFolder.UI\bin\Release\net8.0-windows\win-x64\publish\AutoFolder.UI.exe
 ```
 
 ---
@@ -161,12 +182,3 @@ Tests are divided into:
 
 This project is licensed under the **MIT License**.  
 You are free to use, modify, and distribute it with attribution.
-
----
-
-## 📌 Roadmap
-
-- [ ] Add GUI project (`AutoFolder.UI`)  
-- [ ] Add more customizable grouping strategies  
-- [ ] Improve logging system (configurable log location, severity levels)  
-- [ ] Add installer for Windows  

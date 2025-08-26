@@ -29,10 +29,9 @@
 - [x] Handle unforeseen exceptions (show user-friendly error).
 - [x] Add **icon** and name the Form "AutoFolder".
 - [x] Test in real scenarios (different extensions, dry-run, etc.).
-- [ ] Package standalone release with `dotnet publish`.
+- [x] Package standalone release with `dotnet publish`.
 
 ## 🔹 (Optional / Future)
 - [x] Improve layout with TableLayoutPanel or FlowLayoutPanel.
-- [ ] Add "Settings" menu for preferences.
-- [ ] Create an installer (MSIX or Setup).
-- [ ] Update the README.md to include the AutoFolder.UI project.
+- [x] Add "Settings" menu for preferences.
+- [x] Update the README.md to include the AutoFolder.UI project.
