@@ -8,6 +8,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>Resources\autofolder.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <!-- Application name (appears in Task Manager, dialogs, etc.) -->
+    <AssemblyTitle>AutoFolder</AssemblyTitle>
+    <!-- Description shown in file properties -->
+    <Description>Utility to organize files automatically by common prefix</Description>
+    <!-- Publisher / Company name -->
+    <Company>Andeson Games</Company>
+    <!-- Product name -->
+    <Product>AutoFolder</Product>
+    <!-- Versioning -->
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

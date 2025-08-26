@@ -10,6 +10,7 @@ namespace AutoFolder.UI
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+            // Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);  // Configured in .csproj
             ApplicationConfiguration.Initialize();
             Application.Run(new MainForm());
         }

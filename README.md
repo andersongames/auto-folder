@@ -114,7 +114,7 @@ dotnet publish AutoFolder.ConsoleApp -c Release -r win10-x64 --self-contained tr
 
 The executable will be available at:
 
-```
+```bash
 /AutoFolder.ConsoleApp/bin/Release/net6.0/win10-x64/publish/AutoFolder.ConsoleApp.exe
 ```
 
@@ -128,10 +128,15 @@ dotnet publish AutoFolder.UI -c Release -r win-x64 --self-contained true -p:Publ
 
 The executable will be available at:
 
-```
+```bash
 AutoFolder.UI\bin\Release\net8.0-windows\win-x64\publish\AutoFolder.UI.exe
 ```
 
+To generate a installer `.msix` for **AutoFolder.UI**:
+
+```bash
+dotnet publish AutoFolder.UI -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:GenerateAppxPackageOnBuild=true
+```
 ---
 
 ## 🔧 Useful Commands
