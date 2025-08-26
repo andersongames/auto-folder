@@ -132,11 +132,6 @@ The executable will be available at:
 AutoFolder.UI\bin\Release\net8.0-windows\win-x64\publish\AutoFolder.UI.exe
 ```
 
-To generate a installer `.msix` for **AutoFolder.UI**:
-
-```bash
-dotnet publish AutoFolder.UI -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeAllContentForSelfExtract=true -p:GenerateAppxPackageOnBuild=true
-```
 ---
 
 ## 🔧 Useful Commands
