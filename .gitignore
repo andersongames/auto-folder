@@ -48,7 +48,8 @@ desktop.ini
 publish/
 
 #Test results
-test/output/
-test/test-files/*
-!test/test-files/*.pdf
-!test/test-files/*.txt
+test-files/output/
+test-files/*
+!test-files/*.pdf
+!test-files/*.txt
+!test-files/*.docx
