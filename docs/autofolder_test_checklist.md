@@ -32,6 +32,60 @@ Tests if the folder name is cleaned as expected.
 - [x] Combined cases (space, symbol, uppercase, underline)
 ` Série_01 (Completa)` → `srie-01-completa`
 
+### 📂 4. Path validation  (IsPathSyntacticallyValid)
+Tests if the given path is being validated correctly.
+
+**1. General cases:**
+- [x] Returns **false** if path is empty string `""` .
+- [x] Returns **false** if the path is all whitespace `" "`.
+- [x] Returns **true** for a valid, simple directory path `"C:\\Users\\Test"`.
+- [x] Returns **true** for a valid relative path `"..\\folder\\file.txt"`.
+
+**2. Invalid characters:**
+- [x] Returns **false** if the path contains any invalid character. `Path.GetInvalidPathChars()` (ex: `"C:\\Inva|id\\path"`).
+- [x] Returns **false** for disallowed special characters `"C:\\Test<Folder>"`.
+
+**3. Invalid characters in file name:**
+- [x] Returns **false** if the file name contains invalid characters `"C:\\Test\\file?.txt"`.
+- [x] Returns **true** if the file name is valid `"C:\\Test\\file.txt"`.
+
+**4. Edge and special cases:**
+- [x] Returns **true** if the path points to only a drive `"C:\\"`.
+- [x] Returns **true** for a valid UNC path `"\\\\server\\share\\folder"`.
+- [x] Returns **false** for an invalid UNC path `"\\\\server\\sh|are\\folder"`.
+- [x] Returns **true** for valid long names within the limit `"C:\\folder\\subfolder\\file123456789.txt"`.
+- [x] Returns **true** for paths with valid spaces `"C:\\My Documents\\file.txt"`.
+
+**5. No existence verification:**
+- [x] Returns **true** even if the directory does not exist  `"C:\\NonExistent\\folder"`, as long as the path is syntactically valid.
+- [x] Returns **true** even if the file does not exist `"C:\\folder\\ghost.txt"`, if there are no invalid characters.
+
+### 📄 4. File extenssion normalization (NormalizeFileExtension)
+Tests if the file extension is being normalized as expected.
+
+**1. Valid entries without a starting point:**
+- [x] Returns `.txt` when input is `txt`.
+- [x] Returns `.pdf` when input is `pdf`.
+- [x] Returns `.docx` when input is `docx`.
+
+**2. Entradas válidas já com ponto inicial**
+- [x] Returns `.txt` when input is `.txt`.
+- [x] Returns `.config` when input is `.config`.
+- [x] Returns `.PDF` (keeps upper/lower case) when input is `.PDF`.
+
+**3. Tratamento de espaços**
+- [x] Returns `.txt` when input is  ` txt ` (with spaces before/after).
+- [x] Returns `.png` when input is  ` png ` (with spaces).
+
+**4. Casos especiais**
+- [x] Returns `.` when input is  `.` (just one dot).
+- [x] Returns `..` when input is  `..`.
+- [x] Returns `.hiddenfile` when input is  `hiddenfile` (interpretation as a valid extension).
+
+**5. Entradas vazias ou inválidas**
+- [x] Throws exception or returns `.` when input is `""`.
+- [x] Throws exception or returns `.` if the input is only spaces (` `).
+
 ## Integration Tests:
 ### 1. 🔤 Find the longest common prefix between two strings (GetCommonPrefix)
 Compares two strings and finds the longest common prefix.

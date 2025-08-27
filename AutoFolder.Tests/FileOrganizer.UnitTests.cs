@@ -152,4 +152,64 @@ public class FileOrganizerUnitTests
         // Assert
         Assert.Equal(expected, result);
     }
+
+    // Region: 📂 IsPathSyntacticallyValid
+
+    /// <summary>
+    /// Test case: check that IsPathSyntacticallyValid handles various scenarios.
+    /// </summary>
+    [Theory]
+    [InlineData("", false)]
+    [InlineData(" ", false)]
+    [InlineData("C:\\Users\\Test", true)]
+    [InlineData("..\\folder\\file.txt", true)]
+    [InlineData("C:\\Inva|id\\path", false)]
+    [InlineData("C:\\Test<Folder>", false)]
+    [InlineData("C:\\Test\\file?.txt", false)]
+    [InlineData("C:\\Test\\file.txt", true)]
+    [InlineData("C:\\", true)]
+    [InlineData("\\\\server\\share\\folder", true)]
+    [InlineData("\\\\server\\sh|are\\folder", false)]
+    [InlineData("C:\\folder\\subfolder\\file123456789.txt", true)]
+    [InlineData("C:\\My Documents\\file.txt", true)]
+    [InlineData("C:\\NonExistent\\folder", true)]
+    [InlineData("C:\\folder\\ghost.txt", true)]
+    [Trait("Category", "Unit")]
+    public void IsPathSyntacticallyValid_ShouldValidateProperly(string input, bool expected)
+    {
+        // Act
+        bool result = FileOrganizer.IsPathSyntacticallyValid(input);
+
+        // Assert
+        Assert.Equal(expected, result);
+    }
+
+    // Region: 📄 NormalizeFileExtension
+
+    /// <summary>
+    /// Test case: check that NormalizeFileExtension handles various scenarios.
+    /// </summary>
+    [Theory]
+    [InlineData("txt", ".txt")]
+    [InlineData("pdf", ".pdf")]
+    [InlineData("docx", ".docx")]
+    [InlineData(".txt", ".txt")]
+    [InlineData(".config", ".config")]
+    [InlineData(".PDF", ".PDF")]
+    [InlineData(" txt ", ".txt")]
+    [InlineData(" png ", ".png")]
+    [InlineData(".", ".")]
+    [InlineData("..", "..")]
+    [InlineData("hiddenfile", ".hiddenfile")]
+    [InlineData("", ".")]
+    [InlineData(" ", ".")]
+    [Trait("Category", "Unit")]
+    public void NormalizeFileExtension_ShouldFormatProperly(string input, string expected)
+    {
+        // Act
+        string result = FileOrganizer.NormalizeFileExtension(input);
+
+        // Assert
+        Assert.Equal(expected, result);
+    }
 }
