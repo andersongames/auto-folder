@@ -7,7 +7,7 @@ It can optionally filter by extension, normalize folder names, delete original f
 
 ## 📂 Projects in this Solution
 
-The solution currently contains **3 projects**:
+The solution currently contains **5 projects**:
 
 1. **AutoFolder.Core**  
    - Contains the main logic (`FileOrganizer` and helpers).  
@@ -23,7 +23,11 @@ The solution currently contains **3 projects**:
    - Provides a more user-friendly way to configure and run AutoFolder.  
    - Supports progress bar, cancellation, logging messages inside the UI, theming (light/dark/auto), and accessible menu options.
 
-43. **AutoFolder.Tests**  
+4. **AutoFolder.Package**  
+   - Windows Application Packaging Project.  
+   - Generates MSIX installer for deployment on Windows 10/11.  
+
+5. **AutoFolder.Tests**  
    - Unit and integration tests.  
    - Uses **xUnit** to validate all functionality.
 
@@ -102,7 +106,7 @@ dotnet test
 
 ---
 
-## 📦 Publishing Standalone Executable
+## 📦 Publishing Executables
 
 ### ConsoleApp
 
@@ -118,7 +122,19 @@ The executable will be available at:
 /AutoFolder.ConsoleApp/bin/Release/net6.0/win10-x64/publish/AutoFolder.ConsoleApp.exe
 ```
 
-### AutoFolder.UI
+### AutoFolder.Package (MSIX Installer)
+
+To generate a MSIX installer for **AutoFolder.UI**:
+
+1. Open the solution in Visual Studio.
+2. Right-click on **AutoFolder.Package** → *Publish* → *Create App Packages...*.
+3. Follow the wizard to generate a `.msix` installer.
+
+️⚠️ *For more detailed steps see: '**docs/create_installer_MSIX.md**'*
+
+The generated installer can be distributed to end-users and installed like a regular Windows app.
+
+### AutoFolder.UI Standalone
 
 To generate a standalone `.exe` for **AutoFolder.UI** (no installer, no dependency on .NET runtime):
 
