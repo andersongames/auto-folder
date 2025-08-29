@@ -117,10 +117,9 @@
             // 
             // txtExtension
             // 
-            txtExtension.Dock = DockStyle.Fill;
             txtExtension.Location = new Point(11, 142);
             txtExtension.Name = "txtExtension";
-            txtExtension.Size = new Size(195, 23);
+            txtExtension.Size = new Size(100, 23);
             txtExtension.TabIndex = 6;
             // 
             // txtLog
@@ -306,7 +305,7 @@
             // 
             themeMenuItem.DropDownItems.AddRange(new ToolStripItem[] { themeAutoMenuItem, themeLightMenuItem, themeDarkMenuItem });
             themeMenuItem.Name = "themeMenuItem";
-            themeMenuItem.Size = new Size(180, 22);
+            themeMenuItem.Size = new Size(110, 22);
             themeMenuItem.Text = "Theme";
             // 
             // themeAutoMenuItem

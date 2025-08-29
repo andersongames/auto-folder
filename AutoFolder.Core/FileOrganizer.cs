@@ -157,26 +157,44 @@ public class FileOrganizer
               "copy"
           ));
 
-          // Attempt to copy the file to the target folder (overwrite if needed)
-          File.Copy(filePath, destinationPath, overwrite: true);
-          Logger.Log($"Copied: {filePath} → {destinationPath}");
-          log?.Invoke($"📄 Copied: {filePath} → {destinationPath}");
-
-
-          // Optionally delete the original file after a successful copy
-          if (deleteOriginals)
+          if (string.Equals(filePath, destinationPath, StringComparison.OrdinalIgnoreCase))
           {
-            // Report current delete task to UI
-            progress?.Report(new ProgressInfo(
-                processedCount,
-                filteredFiles.Length,
-                filePath,
-                "delete"
-            ));
+            if (deleteOriginals)
+            {
+              // Special case: source == destination and user wants to delete originals
+              // → This would cause data loss if skipped.
+              // Solution: treat as a "move within same path" (no-op).
+              Logger.Log($"Skipped delete+copy (same source and destination): {filePath}");
+              log?.Invoke($"⚠️ Skipped dangerous operation (same source and destination): {filePath}");
+            }
+            else
+            {
+              Logger.Log($"Skipped copy (same source and destination): {filePath}");
+              log?.Invoke($"⏭️ Skipped (already in correct location): {filePath}");
+            }
+          }
+          else
+          {
+            // Attempt to copy the file to the target folder (overwrite if needed)
+            File.Copy(filePath, destinationPath, overwrite: true);
+            Logger.Log($"Copied: {filePath} → {destinationPath}");
+            log?.Invoke($"📄 Copied: {filePath} → {destinationPath}");
 
-            File.Delete(filePath);
-            Logger.Log($"Deleted: {filePath}");
-            log?.Invoke($"Deleted: {filePath}");
+            // Optionally delete the original file after a successful copy
+            if (deleteOriginals)
+            {
+              // Report current delete task to UI
+              progress?.Report(new ProgressInfo(
+                  processedCount,
+                  filteredFiles.Length,
+                  filePath,
+                  "delete"
+              ));
+
+              File.Delete(filePath);
+              Logger.Log($"Deleted: {filePath}");
+              log?.Invoke($"Deleted: {filePath}");
+            }
           }
 
           // Increment the counters only if the file was successfully handled
