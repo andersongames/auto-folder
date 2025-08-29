@@ -269,9 +269,12 @@ namespace AutoFolder.UI
             }
 
             string stage = info.Stage == "copy" || info.Stage == "dry-run-copy" ? UiMessages.CopyStage : UiMessages.DeleteStage;
+            string statusMessge = info.Stage == "success"
+                    ? $"{UiMessages.Status} [{info.Processed}/{info.Total}] / {UiMessages.OrganizationCompleted}"
+                    : $"{UiMessages.Status} [{info.Processed}/{info.Total}] / {stage} {Path.GetFileName(info.CurrentFile)}";
 
             // Update status label
-            statusLabel.Text = $"{UiMessages.Status} [{info.Processed}/{info.Total}] / {stage} {Path.GetFileName(info.CurrentFile)}";
+            statusLabel.Text = statusMessge;
         }
     }
 }
