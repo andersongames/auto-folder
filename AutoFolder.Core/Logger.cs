@@ -8,7 +8,7 @@ namespace AutoFolder.Core;
 /// </summary>
 public static class Logger
 {
-    private static readonly string LogFillePath = "autofolder.log";
+    private static readonly string LogFilleName = "autofolder.log";
 
     /// <summary>
     /// Appends a timestamped log message to the log file.
@@ -20,6 +20,10 @@ public static class Logger
 
         try
         {
+            // Resolve the real directory of the executable (stable in single-file publish)
+            string exeDirectory = Path.GetDirectoryName(Environment.ProcessPath!)!;
+            string LogFillePath = Path.Combine(exeDirectory, LogFilleName);
+
             File.AppendAllText(LogFillePath, line + Environment.NewLine);
         }
         catch

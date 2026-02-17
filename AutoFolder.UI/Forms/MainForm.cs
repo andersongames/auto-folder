@@ -1,4 +1,5 @@
 using AutoFolder.Core;
+using AutoFolder.Core.Models;
 using AutoFolder.UI.Helpers;
 using AutoFolder.UI.Infrastructure;
 using AutoFolder.UI.Resources;
@@ -26,9 +27,16 @@ namespace AutoFolder.UI
         // Cancellation Token
         private CancellationTokenSource? _cts;
 
+        // Service responsible for persisting user configuration between sessions
+        private readonly UserSettingsService _settingsService = new();
+
         public MainForm()
         {
             InitializeComponent();
+
+            // Load persisted user settings (if available)
+            var settings = _settingsService.Load();
+            ApplySettingsToUi(settings);
 
             // Initial UI state
             Text = "AutoFolder";
@@ -192,6 +200,10 @@ namespace AutoFolder.UI
             if (!ValidateInputs())
                 return;
 
+            // Persist current configuration so next launch restores this state
+            var settings = CaptureSettingsFromUi();
+            _settingsService.Save(settings);
+
             // Read parameters
             string source = txtSource.Text.Trim();
             string? dest = string.IsNullOrWhiteSpace(txtDestination.Text) ? null : txtDestination.Text.Trim();
@@ -275,6 +287,40 @@ namespace AutoFolder.UI
 
             // Update status label
             statusLabel.Text = statusMessge;
+        }
+        
+        /// <summary>
+        /// Applies persisted user settings to the UI controls.
+        /// This is called once during form initialization.
+        /// </summary>
+        private void ApplySettingsToUi(UserSettings settings)
+        {
+            // Populate text fields
+            txtSource.Text = settings.SourceDirectory ?? string.Empty;
+            txtDestination.Text = settings.DestinationDirectory ?? string.Empty;
+            txtExtension.Text = settings.ExtensionFilter ?? string.Empty;
+
+            // Populate checkboxes
+            chkDeleteOriginals.Checked = settings.DeleteOriginals;
+            chkNormalize.Checked = settings.NormalizeGroupNames;
+            chkDryRun.Checked = settings.DryRun;
+        }
+
+        /// <summary>
+        /// Captures the current UI state and converts it into a UserSettings object.
+        /// This is used before persisting configuration.
+        /// </summary>
+        private UserSettings CaptureSettingsFromUi()
+        {
+            return new UserSettings
+            {
+                SourceDirectory = string.IsNullOrWhiteSpace(txtSource.Text) ? null : txtSource.Text.Trim(),
+                DestinationDirectory = string.IsNullOrWhiteSpace(txtDestination.Text) ? null : txtDestination.Text.Trim(),
+                ExtensionFilter = string.IsNullOrWhiteSpace(txtExtension.Text) ? null : txtExtension.Text.Trim(),
+                DeleteOriginals = chkDeleteOriginals.Checked,
+                NormalizeGroupNames = chkNormalize.Checked,
+                DryRun = chkDryRun.Checked
+            };
         }
     }
 }
