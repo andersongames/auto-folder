@@ -21,33 +21,60 @@ public readonly record struct ProgressInfo(
 /// </summary>
 public class FileOrganizer
 {
-  /// <summary>
-  /// Organizes files in the specified directory by grouping them into folders
-  /// based on common name prefixes.
-  /// </summary>
-  /// <param name="sourceDirectory">Directory to scan for files</param>
-  /// <param name="destinationDirectory">Directory to move the organized files</param>
-  /// <param name="extensionFilter">Optional file extension to filter (e.g. ".mp4")</param>
-  /// <param name="deleteOriginals">If true, original files will be deleted after copying</param>
-  /// <param name="normalizeGroupNames">If true, group names will be normaized (remove spaces/symbols, use lowercase)</param>
-  /// <param name="dryRun">If true, it will show the actions that will be performed, but no files will actually be copied or deleted.</param>
-  /// <param name="progress">OPTIONAL: UI progress bar hook.</param>
-  /// <param name="log">OPTIONAL: UI log sink.</param>
-  /// <param name="cancellationToken">OPTIONAL: allow cancel from UI.</param>
-  public void Organize(
+    /// <summary>
+    /// Organizes files in the specified directory by grouping them into folders
+    /// based on common name prefixes.
+    /// </summary>
+    /// <param name="sourceDirectory">Directory to scan for files</param>
+    /// <param name="destinationDirectory">Directory to move the organized files</param>
+    /// <param name="extensionFilter">Optional file extension to filter (e.g. ".mp4")</param>
+    /// <param name="deleteOriginals">If true, original files will be deleted after copying</param>
+    /// <param name="normalizeGroupNames">If true, group names will be normaized (remove spaces/symbols, use lowercase)</param>
+    /// <param name="dryRun">If true, it will show the actions that will be performed, but no files will actually be copied or deleted.</param>
+    /// <param name="progress">OPTIONAL: UI progress bar hook.</param>
+    /// <param name="includeSubdirectories">If true, it will process sub-directories.</param>
+    /// <param name="log">OPTIONAL: UI log sink.</param>
+    /// <param name="cancellationToken">OPTIONAL: allow cancel from UI.</param>
+    public void Organize(
     string sourceDirectory,
     string? destinationDirectory,
     string? extensionFilter,
     bool deleteOriginals,
     bool normalizeGroupNames,
     bool dryRun,
+    bool includeSubdirectories,
     IProgress<ProgressInfo>? progress = null,
     Action<string>? log = null,
     CancellationToken cancellationToken = default
 )
   {
-    // Get all files in the directory (not recursive)
-    string[] allFiles = Directory.GetFiles(sourceDirectory);
+    // Determine search mode based on user selection
+    SearchOption searchOption = includeSubdirectories
+        ? SearchOption.AllDirectories
+        : SearchOption.TopDirectoryOnly;
+
+    // Enumerate files using streaming (better memory usage for large trees)
+    string[] allFiles = Directory
+        .GetFiles(sourceDirectory, "*", searchOption);
+
+    string effectiveDestination = destinationDirectory ?? sourceDirectory;
+    string fullDestination = Path.GetFullPath(effectiveDestination);
+
+    string resolvedDestination = destinationDirectory ?? sourceDirectory;
+
+    string fullSource = Path.GetFullPath(sourceDirectory);
+
+    // Allow same directory (in-place organization)
+    bool sameDirectory = string.Equals(fullSource, fullDestination, StringComparison.OrdinalIgnoreCase);
+
+    // But forbid destination being a child of source
+    if (!sameDirectory &&
+        fullDestination.StartsWith(fullSource, StringComparison.OrdinalIgnoreCase))
+    {
+        throw new InvalidOperationException(
+            "Destination directory cannot be inside the source directory when including subdirectories. " +
+            "This would cause recursive reprocessing.");
+    }
 
     // If an extension filter is provided, apply it (e.g., only ".pdf" files)
     var filteredFiles = string.IsNullOrWhiteSpace(extensionFilter)

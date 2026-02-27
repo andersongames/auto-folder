@@ -57,6 +57,7 @@
             themeDarkMenuItem = new ToolStripMenuItem();
             helpMenuItem = new ToolStripMenuItem();
             aboutMenuItem = new ToolStripMenuItem();
+            chkIncludeSubdirectories = new CheckBox();
             tableLayoutPanel1.SuspendLayout();
             menuStripMain.SuspendLayout();
             SuspendLayout();
@@ -126,12 +127,12 @@
             // 
             tableLayoutPanel1.SetColumnSpan(txtLog, 4);
             txtLog.Dock = DockStyle.Fill;
-            txtLog.Location = new Point(11, 310);
+            txtLog.Location = new Point(11, 335);
             txtLog.Multiline = true;
             txtLog.Name = "txtLog";
             txtLog.ReadOnly = true;
             txtLog.ScrollBars = ScrollBars.Both;
-            txtLog.Size = new Size(933, 300);
+            txtLog.Size = new Size(933, 275);
             txtLog.TabIndex = 7;
             // 
             // btnBrowseDestination
@@ -145,7 +146,7 @@
             // 
             // btnRun
             // 
-            btnRun.Location = new Point(869, 266);
+            btnRun.Location = new Point(869, 291);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(75, 23);
             btnRun.TabIndex = 9;
@@ -165,7 +166,7 @@
             // chkNormalize
             // 
             chkNormalize.AutoSize = true;
-            chkNormalize.Location = new Point(11, 196);
+            chkNormalize.Location = new Point(11, 221);
             chkNormalize.Name = "chkNormalize";
             chkNormalize.Size = new Size(153, 19);
             chkNormalize.TabIndex = 11;
@@ -175,7 +176,7 @@
             // chkDryRun
             // 
             chkDryRun.AutoSize = true;
-            chkDryRun.Location = new Point(11, 221);
+            chkDryRun.Location = new Point(11, 246);
             chkDryRun.Name = "chkDryRun";
             chkDryRun.Size = new Size(160, 19);
             chkDryRun.TabIndex = 12;
@@ -184,7 +185,7 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(788, 266);
+            btnCancel.Location = new Point(788, 291);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(75, 23);
             btnCancel.TabIndex = 13;
@@ -196,7 +197,7 @@
             progressBar.BackColor = SystemColors.Control;
             tableLayoutPanel1.SetColumnSpan(progressBar, 2);
             progressBar.Dock = DockStyle.Fill;
-            progressBar.Location = new Point(11, 266);
+            progressBar.Location = new Point(11, 291);
             progressBar.Name = "progressBar";
             progressBar.Size = new Size(771, 23);
             progressBar.Step = 1;
@@ -205,7 +206,7 @@
             // logBox
             // 
             logBox.AutoSize = true;
-            logBox.Location = new Point(11, 292);
+            logBox.Location = new Point(11, 317);
             logBox.Name = "logBox";
             logBox.Size = new Size(27, 15);
             logBox.TabIndex = 15;
@@ -226,22 +227,24 @@
             tableLayoutPanel1.Controls.Add(chkDeleteOriginals, 0, 7);
             tableLayoutPanel1.Controls.Add(lblDestination, 0, 3);
             tableLayoutPanel1.Controls.Add(txtDestination, 0, 4);
-            tableLayoutPanel1.Controls.Add(txtLog, 0, 13);
-            tableLayoutPanel1.Controls.Add(logBox, 0, 12);
-            tableLayoutPanel1.Controls.Add(progressBar, 0, 11);
-            tableLayoutPanel1.Controls.Add(chkDryRun, 0, 9);
-            tableLayoutPanel1.Controls.Add(chkNormalize, 0, 8);
-            tableLayoutPanel1.Controls.Add(btnRun, 3, 11);
+            tableLayoutPanel1.Controls.Add(txtLog, 0, 14);
+            tableLayoutPanel1.Controls.Add(logBox, 0, 13);
+            tableLayoutPanel1.Controls.Add(progressBar, 0, 12);
+            tableLayoutPanel1.Controls.Add(chkDryRun, 0, 10);
+            tableLayoutPanel1.Controls.Add(chkNormalize, 0, 9);
+            tableLayoutPanel1.Controls.Add(btnRun, 3, 12);
             tableLayoutPanel1.Controls.Add(btnBrowseDestination, 3, 4);
             tableLayoutPanel1.Controls.Add(btnBrowseSource, 3, 2);
-            tableLayoutPanel1.Controls.Add(btnCancel, 2, 11);
-            tableLayoutPanel1.Controls.Add(statusLabel, 0, 10);
+            tableLayoutPanel1.Controls.Add(btnCancel, 2, 12);
+            tableLayoutPanel1.Controls.Add(statusLabel, 0, 11);
             tableLayoutPanel1.Controls.Add(menuStripMain, 0, 0);
+            tableLayoutPanel1.Controls.Add(chkIncludeSubdirectories, 0, 8);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.Padding = new Padding(8);
-            tableLayoutPanel1.RowCount = 14;
+            tableLayoutPanel1.RowCount = 15;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
@@ -262,7 +265,7 @@
             // statusLabel
             // 
             statusLabel.AutoSize = true;
-            statusLabel.Location = new Point(11, 243);
+            statusLabel.Location = new Point(11, 268);
             statusLabel.Name = "statusLabel";
             statusLabel.Size = new Size(42, 15);
             statusLabel.TabIndex = 16;
@@ -344,6 +347,15 @@
             aboutMenuItem.Size = new Size(107, 22);
             aboutMenuItem.Text = "About";
             // 
+            // chkIncludeSubdirectories
+            // 
+            chkIncludeSubdirectories.AutoSize = true;
+            chkIncludeSubdirectories.Location = new Point(11, 196);
+            chkIncludeSubdirectories.Name = "chkIncludeSubdirectories";
+            chkIncludeSubdirectories.Size = new Size(142, 19);
+            chkIncludeSubdirectories.TabIndex = 20;
+            chkIncludeSubdirectories.Text = "Include subdirectories";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -392,5 +404,6 @@
         private ToolStripMenuItem themeDarkMenuItem;
         private ToolStripMenuItem helpMenuItem;
         private ToolStripMenuItem aboutMenuItem;
+        private CheckBox chkIncludeSubdirectories;
     }
 }

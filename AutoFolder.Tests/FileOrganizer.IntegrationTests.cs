@@ -15,6 +15,7 @@ public class FileOrganizerIntegrationTests
     /// deleteOriginals: false -> if false, the original file must be kept.
     /// normalizeGroupNames: false -> if false, source directory names should not be normalized.
     /// dryRun: false -> if false, files are copied or deleted.
+    /// includeSubdirectories: false -> if false, subdirectories should not be processed.
     /// </summary>
     [Fact]
     [Trait("Category", "Integration")]
@@ -22,6 +23,10 @@ public class FileOrganizerIntegrationTests
     {
         string tempSourceDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         Directory.CreateDirectory(tempSourceDir);
+
+        // Create a subdirectory
+        string subDir = Path.Combine(tempSourceDir, "sub");
+        Directory.CreateDirectory(subDir);
 
         try
         {
@@ -35,6 +40,12 @@ public class FileOrganizerIntegrationTests
                 "report_final_2024 (Q2).docx",
                 "aaa.txt",
                 "aab.txt",
+            };
+
+            string[] subDirTestFiles =
+            {
+                "subfile1.txt",
+                "subfile2.txt",
             };
 
             var expectedGroups = new Dictionary<string, List<string>>()
@@ -55,9 +66,21 @@ public class FileOrganizerIntegrationTests
             expectedGroups["aaa"].Add("aaa.txt");
             expectedGroups["aab"].Add("aab.txt");
 
+            var subDirExpectedGroups = new Dictionary<string, List<string>>()
+            {
+                {"subfile", new List<string>()},
+            };
+            subDirExpectedGroups["subfile"].Add("subfile1.txt");
+            subDirExpectedGroups["subfile"].Add("subfile2.txt");
+
             foreach (var file in testFiles)
             {
                 File.WriteAllText(Path.Combine(tempSourceDir, file), "test content");
+            }
+
+            foreach (var file in subDirTestFiles)
+            {
+                File.WriteAllText(Path.Combine(subDir, file), "test content");
             }
 
             var organizer = new FileOrganizer();
@@ -69,7 +92,8 @@ public class FileOrganizerIntegrationTests
                 extensionFilter: null,
                 deleteOriginals: false,
                 normalizeGroupNames: false,
-                dryRun: false
+                dryRun: false,
+                includeSubdirectories: false
             );
 
             foreach (var group in expectedGroups)
@@ -93,9 +117,22 @@ public class FileOrganizerIntegrationTests
                 Assert.True(File.Exists(originalFilePath));
             }
 
+            // Assert: subdirectory must remain untouched (not reorganized)
+            Assert.True(Directory.Exists(subDir));
+
+            // Files inside subdirectory must still be there
+            foreach (var file in subDirTestFiles)
+            {
+                string originalFilePath = Path.Combine(subDir, file);
+                Assert.True(File.Exists(originalFilePath));
+            }
+
             // Assert: all files should be processed, expect groups + orininal files
             string[] result = Directory.GetFileSystemEntries(tempSourceDir);
-            Assert.Equal(expectedGroups.Count + testFiles.Length, result.Length);
+            Assert.Equal(expectedGroups.Count + testFiles.Length, result.Length - subDirExpectedGroups.Count);
+
+            // And no grouping folder should have been created inside it
+            Assert.Empty(Directory.GetDirectories(subDir));
         }
         finally
         {
@@ -110,14 +147,19 @@ public class FileOrganizerIntegrationTests
     /// deleteOriginals: true -> if true, the original file should be deleted after successful operation.
     /// normalizeGroupNames: true -> if true, source directory names should be normalized.
     /// dryRun: false -> if false, files are copied or deleted.
+    /// includeSubdirectories: true -> if true, subdirectories should be processed.
     /// </summary>
     [Fact]
     [Trait("Category", "Integration")]
-    public void Organize_DestinationFilterDeleteNormalize()
+    public void Organize_DestinationFilterDeleteSubdirectoriesNormalize()
     {
         string tempSourceDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         string tempDestDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         Directory.CreateDirectory(tempSourceDir);
+
+        // Create a subdirectory
+        string subDir = Path.Combine(tempSourceDir, "sub");
+        Directory.CreateDirectory(subDir);
 
         try
         {
@@ -133,6 +175,12 @@ public class FileOrganizerIntegrationTests
                 "aab.txt",
             };
 
+            string[] subDirTestFiles =
+            {
+                "subfile1.docx",
+                "subfile2.docx",
+            };
+
             var expectedGroups = new Dictionary<string, List<string>>()
             {
                 {"report-final-2024-q", new List<string>()},
@@ -140,9 +188,21 @@ public class FileOrganizerIntegrationTests
             expectedGroups["report-final-2024-q"].Add("report_final_2024 (Q1).docx");
             expectedGroups["report-final-2024-q"].Add("report_final_2024 (Q2).docx");
 
+            var subDirExpectedGroups = new Dictionary<string, List<string>>()
+            {
+                {"subfile", new List<string>()},
+            };
+            subDirExpectedGroups["subfile"].Add("subfile1.docx");
+            subDirExpectedGroups["subfile"].Add("subfile2.docx");
+
             foreach (var file in testFiles)
             {
                 File.WriteAllText(Path.Combine(tempSourceDir, file), "test content");
+            }
+
+            foreach (var file in subDirTestFiles)
+            {
+                File.WriteAllText(Path.Combine(subDir, file), "test content");
             }
 
             var organizer = new FileOrganizer();
@@ -154,10 +214,25 @@ public class FileOrganizerIntegrationTests
                 extensionFilter: ".docx",
                 deleteOriginals: true,
                 normalizeGroupNames: true,
-                dryRun: false
+                dryRun: false,
+                includeSubdirectories: true
             );
 
             foreach (var group in expectedGroups)
+            {
+                string groupFolder = Path.Combine(tempDestDir, group.Key);
+
+                // Assert: expected group
+                Assert.True(Directory.Exists(groupFolder));
+
+                // Assert: all expected files should have been copied
+                string[] copiedFiles = Directory.GetFiles(groupFolder);
+                string[] copiedFileNames = copiedFiles.Select(f => Path.GetFileName(f)).ToArray();
+                string[] expectedFiles = group.Value.ToArray();
+                Assert.Equal(expectedFiles, copiedFileNames);
+            }
+
+            foreach (var group in subDirExpectedGroups)
             {
                 string groupFolder = Path.Combine(tempDestDir, group.Key);
 
@@ -187,9 +262,25 @@ public class FileOrganizerIntegrationTests
                 }
             }
 
+            foreach (var file in subDirTestFiles)
+            {
+                string originalFilePath = Path.Combine(subDir, file);
+
+                // Assert: the processed files are deleted
+                if (subDirExpectedGroups["subfile"].Contains(file))
+                {
+                    Assert.False(File.Exists(originalFilePath));
+                }
+                // Assert: the ignored files are not deleted
+                else
+                {
+                    Assert.True(File.Exists(originalFilePath));
+                }
+            }
+
             // Assert: ony expected files should be processed
             string[] result = Directory.GetFileSystemEntries(tempDestDir);
-            Assert.Equal(expectedGroups.Count, result.Length);
+            Assert.Equal(expectedGroups.Count + subDirExpectedGroups.Count, result.Length);
         }
         finally
         {
@@ -205,6 +296,7 @@ public class FileOrganizerIntegrationTests
     /// deleteOriginals: true -> if true, the original file must be kept because it is dry-run mode.
     /// normalizeGroupNames: false -> if false, source directory names should not be normalized.
     /// dryRun: true -> if true, no files are copied or deleted.
+    /// includeSubdirectories: false -> if false, subdirectories should not be processed.
     /// </summary>
     [Fact]
     [Trait("Category", "Integration")]
@@ -212,6 +304,10 @@ public class FileOrganizerIntegrationTests
     {
         string tempSourceDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         Directory.CreateDirectory(tempSourceDir);
+
+        // Create a subdirectory
+        string subDir = Path.Combine(tempSourceDir, "sub");
+        Directory.CreateDirectory(subDir);
 
         try
         {
@@ -227,9 +323,27 @@ public class FileOrganizerIntegrationTests
                 "aab.txt",
             };
 
+            string[] subDirTestFiles =
+{
+                "subfile1.docx",
+                "subfile2.docx",
+            };
+
+            var subDirExpectedGroups = new Dictionary<string, List<string>>()
+            {
+                {"subfile", new List<string>()},
+            };
+            subDirExpectedGroups["subfile"].Add("subfile1.docx");
+            subDirExpectedGroups["subfile"].Add("subfile2.docx");
+
             foreach (var file in testFiles)
             {
                 File.WriteAllText(Path.Combine(tempSourceDir, file), "test content");
+            }
+
+            foreach (var file in subDirTestFiles)
+            {
+                File.WriteAllText(Path.Combine(subDir, file), "test content");
             }
 
             var organizer = new FileOrganizer();
@@ -241,7 +355,8 @@ public class FileOrganizerIntegrationTests
                 extensionFilter: null,
                 deleteOriginals: true,
                 normalizeGroupNames: false,
-                dryRun: true
+                dryRun: true,
+                includeSubdirectories: false
             );
 
             foreach (var file in testFiles)
@@ -251,13 +366,30 @@ public class FileOrganizerIntegrationTests
                 Assert.True(File.Exists(originalFilePath));
             }
 
+            foreach (var file in subDirTestFiles)
+            {
+                // Assert: the original subdirectorie files are not deleted
+                string originalFilePath = Path.Combine(subDir, file);
+                Assert.True(File.Exists(originalFilePath));
+            }
+
             string[] result = Directory.GetFileSystemEntries(tempSourceDir);
 
             // Assert: directories are not created
-            Assert.All(result, e => Assert.False(Directory.Exists(e)));
+            //Assert.Equal(testFiles.Length + subDirExpectedGroups.Count, result.Length);
+            Assert.All(result, e => {
+                if (e.Equals(subDir))
+                {
+                    Assert.True(Directory.Exists(e));
+                }
+                else
+                {
+                    Assert.False(Directory.Exists(e));
+                }
+            });
 
             // Assert: no files should be processed
-            Assert.Equal(testFiles.Length, result.Length);
+            Assert.Equal(testFiles.Length + subDirExpectedGroups.Count, result.Length);
         }
         finally
         {
@@ -298,7 +430,8 @@ public class FileOrganizerIntegrationTests
                 extensionFilter: ".txt",
                 deleteOriginals: false,
                 normalizeGroupNames: false,
-                dryRun: false
+                dryRun: false,
+                includeSubdirectories: false
             );
 
             // Assert: the free file should have been copied

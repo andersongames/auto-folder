@@ -166,6 +166,7 @@ namespace AutoFolder.UI
             chkDeleteOriginals.Enabled = !isBusy;
             chkNormalize.Enabled = !isBusy;
             chkDryRun.Enabled = !isBusy;
+            chkIncludeSubdirectories.Enabled = !isBusy;
         }
 
         /// <summary>
@@ -211,6 +212,8 @@ namespace AutoFolder.UI
             bool deleteOriginals = chkDeleteOriginals.Checked;
             bool normalize = chkNormalize.Checked;
             bool dryRun = chkDryRun.Checked;
+            bool includeSubdirectories = chkIncludeSubdirectories.Checked;
+
 
             // Prepare UI
             txtLog.Clear();
@@ -233,6 +236,7 @@ namespace AutoFolder.UI
                           deleteOriginals: deleteOriginals,
                           normalizeGroupNames: normalize,
                           dryRun: dryRun,
+                          includeSubdirectories: includeSubdirectories,
                           progress: _progressReporter,
                           log: Log,
                           cancellationToken: _cts.Token
@@ -288,7 +292,7 @@ namespace AutoFolder.UI
             // Update status label
             statusLabel.Text = statusMessge;
         }
-        
+
         /// <summary>
         /// Applies persisted user settings to the UI controls.
         /// This is called once during form initialization.
@@ -304,6 +308,7 @@ namespace AutoFolder.UI
             chkDeleteOriginals.Checked = settings.DeleteOriginals;
             chkNormalize.Checked = settings.NormalizeGroupNames;
             chkDryRun.Checked = settings.DryRun;
+            chkIncludeSubdirectories.Checked = settings.IncludeSubdirectories;
         }
 
         /// <summary>
@@ -319,7 +324,8 @@ namespace AutoFolder.UI
                 ExtensionFilter = string.IsNullOrWhiteSpace(txtExtension.Text) ? null : txtExtension.Text.Trim(),
                 DeleteOriginals = chkDeleteOriginals.Checked,
                 NormalizeGroupNames = chkNormalize.Checked,
-                DryRun = chkDryRun.Checked
+                DryRun = chkDryRun.Checked,
+                IncludeSubdirectories = chkIncludeSubdirectories.Checked
             };
         }
     }

@@ -27,8 +27,12 @@ class Program
     }
 
     // Ask whether to delete the original files after organizing
-      Console.WriteLine("🗑️ Delete original files after copy? (y/n): ");
+    Console.WriteLine("🗑️ Delete original files after copy? (y/n): ");
     bool deleteOriginals = Console.ReadLine()?.Trim().ToLower() == "y";
+
+    // Ask whether to include subdirectories
+    Console.WriteLine("📂 Include subdirectories? (y/n): ");
+    bool includeSubdirectories = Console.ReadLine()?.Trim().ToLower() == "y";
 
     // Ask for normalize folder names
     Console.WriteLine("🔡 Normalize group folder names? (remove spaces/symbols, use lowercase) (y/n): ");
@@ -46,7 +50,14 @@ class Program
       var organizer = new FileOrganizer();
 
       // First execution (could be dry-run or real)
-      organizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun);
+      organizer.Organize(
+          sourceDirectory,
+          destinationDirectory,
+          extension, deleteOriginals,
+          normalizeGroupNames,
+          dryRun,
+          includeSubdirectories
+      );
 
       Console.WriteLine();
 
@@ -65,7 +76,15 @@ class Program
         {
           Console.WriteLine();
           Console.WriteLine("Executing for real...");
-          organizer.Organize(sourceDirectory, destinationDirectory, extension, deleteOriginals, normalizeGroupNames, dryRun = false);
+          organizer.Organize(
+              sourceDirectory,
+              destinationDirectory,
+              extension,
+              deleteOriginals,
+              normalizeGroupNames,
+              dryRun = false,
+              includeSubdirectories
+          );
           Console.WriteLine();
           Console.WriteLine("✅ File organization completed successfully!");
         }

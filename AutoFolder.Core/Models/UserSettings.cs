@@ -38,6 +38,11 @@ public class UserSettings
     public bool DryRun { get; set; }
 
     /// <summary>
+    /// Whether to includdee subdirectoriees.
+    /// </summary>
+    public bool IncludeSubdirectories { get; set; }
+
+    /// <summary>
     /// Returns default settings when no persisted file exists.
     /// Centralizing defaults avoids spreading magic values in the UI.
     /// </summary>
@@ -48,6 +53,7 @@ public class UserSettings
         ExtensionFilter = null,
         DeleteOriginals = false,
         NormalizeGroupNames = true,
-        DryRun = false
+        DryRun = false,
+        IncludeSubdirectories = false,
     };
 }
